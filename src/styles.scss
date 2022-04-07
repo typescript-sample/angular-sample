@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import "mixins";
+/* @import "~ng-pick-datetime/assets/style/picker.min.css";
+@import '../node_modules/leaflet/dist/leaflet.css'; */
+
+* {
+  @include font-roboto();
+}
+
+a, .cp {
+  cursor: pointer;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}

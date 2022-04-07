@@ -1,0 +1,100 @@
+<div class='sidebar-parent' [ngClass]="{'sidebar-off': isToggleSidebar, 'menu-on': isToggleMenu, 'search': isToggleSearch}">
+  <div class='top-banner'>
+    <div class='logo-banner-wrapper'>
+      <img src='assets/images/logo-title.png' alt='Logo of The Company'/>
+      <img src='assets/images/logo-title.png' class='banner-logo-title' alt='Logo of The Company'/>
+    </div>
+  </div>
+  <div class='menu sidebar' (mouseover)='onMouseHover($event)'>
+    <nav>
+      <ul>
+        <li>
+          <a class='toggle-menu' href='javascript:void(0)'></a>
+            <p class='sidebar-off-menu'>
+              <i class='toggle'></i>
+              <i class='expand' *ngIf="!isToggleSidebar" (click)='onShowAllMenu'></i>
+              <i class='expand' *ngIf="!isToggleSidebar" (click)='onHideAllMenu'></i>
+            </p>
+        </li>
+        <li class='open' *ngFor='let pinnedModuleParent of pinnedModules,let index = index'>
+          <a class='menu-item' href='javascript:void(0)' (click)='toggleMenuItem($event)'>
+            <i [class]="'mdi mdi-' + pinnedModuleParent.icon"></i><span>{{pinnedModuleParent.name}}</span>
+            <button type='button' class='btn-pin pinned' (click)='pinModulesHandler($event, index, pinnedModuleParent.order)'></button>
+            <i class='entity-icon down'></i>
+          </a>
+          <ul class='list-child' *ngIf='pinnedModuleParent.modules'>
+            <a *ngFor='let moduleChild of pinnedModuleParent.modules' href='javascript:void(0)' (click)='gotoURL(moduleChild.path)'>
+              <li>
+                <i class="mdi " [ngClass]="'mdi-' + moduleChild.icon"></i><span>{{moduleChild.name}}</span>
+              </li>
+            </a>
+          </ul>
+        </li>
+        <li class='open' *ngFor='let moduleParent of privileges, let index = index'>
+          <a class='menu-item' href='javascript:void(0)' (click)='toggleMenuItem($event)'>
+            <i  class="mdi " [ngClass]="'mdi-' + moduleParent.icon"></i><span>{{moduleParent.name}}</span>
+            <button type='button' class='btn-pin' (click)='pinModulesHandler($event, index, moduleParent.order)'></button>
+            <i class='entity-icon down'></i>
+          </a>
+          <ul class='list-child' *ngIf='moduleParent.children'>
+            <a *ngFor='let moduleChild of moduleParent.children' href='javascript:void(0)' (click)='gotoURL(moduleChild.path)'>
+              <li>
+                <i class="mdi " [class]="'mdi-' + moduleChild.icon"></i><span>{{moduleChild.name}}</span>
+              </li>
+            </a>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class='page-container'>
+    <div class='page-header'>
+      <form>
+        <div class='search-group'>
+          <section>
+            <button type='button' class='toggle-menu' onclick='toggleMenu()'></button>
+            <button type='button' class='toggle-search' onclick='toggleSearch()'></button>
+            <button type='button' class='close-search' onclick='toggleSearch()'></button>
+          </section>
+          <div class='logo-wrapper'><img class='logo' src='assets/images/logo.png' alt='Logo of The Company' /></div>
+          <label class='search-input'>
+            <select>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="60">60</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="400">400</option>
+              <option value="10000">10000</option>
+            </select>
+            <input type='text' id='keyword' name='keyword' [(ngModel)]='se.keyword' class='form-control'
+                   placeholder='keyword' resource-key='keyword' />
+            <button type='button' *ngIf='se.keyword' class='btn-remove-text' onclick='toggleSearch()'></button>
+            <button type='submit' class='btn-search' (click)='searchOnClick()'></button>
+          </label>
+          <section>
+            <button type='button'><i class='fa fa-bell-o' aria-hidden='true'></i></button>
+            <button type='button'><i class='fa fa-envelope-o'></i></button>
+            <div dropdown class ="dropdown-menu-profile">
+              <i id='btnProfile' class='material-icons dropdown-toggle' dropdownToggle (click)="toggleMenuProfile()" aria-controls='dropdown-basic'>person</i>
+              <ul id='dropdown-basic' *dropdownMenu [class]="classProfile +' dropdown-content-profile'"  aria-labelledby='btnProfile'>
+                <li><a class='dropdown-item-profile' (click)='viewMyProfile()'
+                       href='javascript:void(0)'>{{resource.my_profile}}</a></li>
+                <li><a class='dropdown-item-profile' (click)='viewMySettings()'
+                       href='javascript:void(0)'>{{resource.my_settings}}</a></li>
+                <li><a class='dropdown-item-profile' (click)='changeMyPassword()'
+                       href='javascript:void(0)'>{{resource.my_password}}</a></li>
+                <li><a class='dropdown-item-profile' (click)='signout()'
+                                       href='javascript:void(0)'>{{resource.button_signout}}</a></li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </form>
+    </div>
+    <div class='page-body'>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

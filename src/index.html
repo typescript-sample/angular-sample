@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>AngularSample</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body id="sysBody" class="full-header classic2 top-menu">
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TF7QP5M" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe>
+      style="display:none;visibility:hidden"></iframe>
   </noscript>
   <div id="sysToast" class="toast-message alert-success"></div>
   <div id="sysLoading" class="loader-wrapper" style="display:none">
@@ -44,12 +47,12 @@
   </div>
   <script>
     var sysAlert, sysYes;
-  
+
     function initDoc() {
       sysAlert = document.getElementById("sysAlert");
       sysYes = document.getElementById("sysYes");
     }
-  
+
     initDoc();
     var yesOnClick = function () {
       sysAlert.style.display = 'none';
@@ -60,7 +63,7 @@
       if (input) {
         try {
           input.focus();
-        } catch (err) {}
+        } catch (err) { }
       }
       sysYes['activeElement'] = null;
     };
@@ -73,13 +76,14 @@
       if (input) {
         try {
           input.focus();
-        } catch (err) {}
+        } catch (err) { }
       }
       sysYes['activeElement'] = null;
     };
-  
+
     var callCount = 0;
   </script>
   <app-root>Loading...</app-root>
 </body>
+
 </html>

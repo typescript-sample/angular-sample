@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, Injectable, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { buildFromUrl, initElement, navigate, BaseSearchComponent } from '@/app/common';
-import { RoleFilter } from 'onecore';
 import { handleError, inputSearch, registerEvents, storage } from 'uione';
 import { MasterDataClient } from './service/master-data';
-import { Role, RoleClient } from './service/role';
+import { Role, RoleClient, RoleFilter } from './service/role';
 
 @Component({
   selector: 'app-access-role-list',
@@ -15,20 +14,22 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
   constructor(protected viewContainerRef: ViewContainerRef, protected router: Router, roleService: RoleClient, private masterDataService: MasterDataClient) {
     super(roleService, inputSearch());
   }
+  
   status = [];
 
   ngOnInit() {
     this.form = initElement(this.viewContainerRef, registerEvents);
-    const s = this.mergeFilter(buildFromUrl(), null, ['ctrlStatus', 'userType']);
-    this.load(s, storage.autoSearch);
+    const s = this.mergeFilter(buildFromUrl(), ['ctrlStatus', 'userType']);
+    this.init(s, storage.autoSearch);
+    
   }
-  load(s: RoleFilter, auto: boolean) {
+  init(s: RoleFilter, auto: boolean) {
     Promise.all([
       this.masterDataService.getStatus()
     ]).then(values => {
       const [status] = values;
       this.status = status;
-      super.load(s, auto);
+      this.load(s, auto);
     }).catch(handleError);
   }
   viewRole(roleId) {
@@ -39,7 +40,7 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
     navigate(this.router, 'roles', [roleId]);
   }
 
-  addRole() {
+  addRole() {    
     navigate(this.router, 'roles/add');
   }
 

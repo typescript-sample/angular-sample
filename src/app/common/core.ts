@@ -156,8 +156,10 @@ export class resources {
 }
 
 export type Type = 'ObjectId' | 'date' | 'datetime' | 'time'
-    | 'boolean' | 'number' | 'integer' | 'string' | 'text'
-    | 'object' | 'array' | 'primitives' | 'binary';
+| 'boolean' | 'number' | 'integer' | 'string' | 'text'
+| 'object' | 'array' | 'binary'
+| 'primitives' | 'booleans' | 'numbers' | 'integers' | 'strings' | 'dates' | 'datetimes' | 'times';
+
 export type Format = 'currency' | 'percentage' | 'email' | 'url' | 'phone' | 'fax' | 'ipv4' | 'ipv6';
 
 export interface StringMap {

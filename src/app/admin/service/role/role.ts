@@ -3,7 +3,7 @@ import { Attributes, Filter, Service, Tracking } from 'onecore';
 export interface RoleFilter extends Filter {
   roleId: string;
   roleName: string;
-  status: string[] | string;
+  status: string[] |string;
   remark: string;
   description?: string;
 }

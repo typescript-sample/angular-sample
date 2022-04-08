@@ -217,17 +217,17 @@ export class BaseComponent extends RootComponent {
     }
     // return 'state';
   }
-  protected includes(checkedList: Array<string|number>, v: string|number): boolean {
+  includes(checkedList: Array<string>|string, v: string): boolean {
     return v && checkedList &&  Array.isArray(checkedList) ? checkedList.includes(v) : false;
   }
-  protected updateState(event: Event) {
+  updateState(event: Event) {
     let locale: Locale = enLocale;
     if (this.getLocale) {
       locale = this.getLocale();
     }
     this.updateStateFlat(event, locale);
   }
-  protected updateStateFlat(e: Event, locale?: Locale) {
+  updateStateFlat(e: Event, locale?: Locale) {
     if (!locale) {
       locale = enLocale;
     }
@@ -703,10 +703,8 @@ export class EditComponent<T, ID> extends BaseEditComponent<T, ID> {
   onInit() {
     const fi = (this.ui ? this.ui.registerEvents : undefined);
     this.form = initElement(this.viewContainerRef, fi);
-    const id: ID|null = buildId<ID>(this.route, this.keys);
-    if (id) {
+    const id: ID|null = buildId<ID>(this.route, this.keys); 
       this.load(id);
-    }
   }
 }
 export class BaseSearchComponent<T, S extends Filter> extends BaseComponent {
@@ -823,13 +821,14 @@ export class BaseSearchComponent<T, S extends Filter> extends BaseComponent {
   toggleFilter(event: any): void {
     this.hideFilter = !this.hideFilter;
   }
-  mergeFilter(obj: S, b?: S, arrs?: string[]|any): S {
-    return mergeFilter(obj, b, this.pageSizes, arrs);
+  mergeFilter(obj: S, arrs?: string[]|any, b?: S): S {    
+    const s =  mergeFilter(obj, b, this.pageSizes, arrs);    
+    return s;
   }
   load(s: S, autoSearch: boolean): void {
     this.loadTime = new Date();
     const obj2 = initFilter(s, this);
-    this.loadPage = this.pageIndex;
+    this.loadPage = this.pageIndex;    
     this.setFilter(obj2);
     const com = this;
     if (autoSearch) {

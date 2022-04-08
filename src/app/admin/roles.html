@@ -7,7 +7,7 @@
       <button type='button' class='btn-new' id='btnNew' (click)='addRole()'></button>
     </div>
   </header>
-  <!-- <div class='view-body'>
+  <div class='view-body'>
     <form id='usersForm' name='usersForm' novalidate result-view='view2'>
       <section class='row search-group inline'>
         <label class='col s12 m6'>
@@ -22,7 +22,7 @@
                 [id]='item.value'
                 type='checkbox'
                 name='status'
-                [checked]="includes(filter.ctrlStatus,item.value)"
+                [checked]="includes(filter.status,item.value)"
                 [value]="item.value"
                 (change)='updateState($event)'
               />
@@ -54,8 +54,8 @@
               <th data-field='status'><button type='button' id='sortStatus' (click)="sort($event)">{{resource.status}}</button></th>
             </tr>
           </thead>
-          <tr *ngFor="let item of list;let i = index" (click)="edit(item.roleId)">
-            <td className='text-right'>{{item.sequenceNo}}</td>
+          <tr *ngFor="let item of list as any;let i = index" (click)="edit(item.roleId)">
+            <td className='text-right'>{{item['sequenceNo']}}</td>
             <td>{{item.roleId}}</td>
             <td>{{item.roleName}}</td>
             <td>{{item.remark}}</td>
@@ -83,5 +83,5 @@
                   (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
                   [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
     </div>
-  </div> -->
+  </div>
 </div>

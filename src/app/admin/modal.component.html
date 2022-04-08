@@ -1,0 +1,16 @@
+<div role="dialog"
+     (click)='onContainerClicked($event)'
+     class="modal-portal"
+     tabindex="-1"
+     [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}"
+     *ngIf="visible">
+  <div class="modal-portal-backdrop">
+    <div class="modal-portal-content">
+      <div class="view-container">
+        <ng-container *ngTemplateOutlet="header"></ng-container>
+      </div>
+      <ng-container *ngTemplateOutlet="body"></ng-container>
+    </div>
+  </div>
+</div>

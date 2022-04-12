@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { buildId, EditComponent } from '@/app/common';
+import { buildId, EditComponent, error, hideLoading, message, showLoading } from '@/app/common';
 import { confirm } from 'ui-alert';
 import { handleError, inputEdit } from 'uione';
 import { Role, RoleClient } from './service/role';
 import { User, UserClient } from './service/user';
+import { clone } from 'reflectx';
 
 @Component({
   selector: 'app-role-assign',
@@ -29,7 +30,6 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
       this.initialize(id);
     }
   }
-
   initialize = (id: string) => {
     const userService = this.userClient;
     const roleService = this.roleClient;
@@ -41,10 +41,38 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
       if (role) {
         this.users = users;
         this.role = role;
+        this.orginalModel = clone(role);
       }
     }).catch(handleError);
   }
-
+  getUserIds():string[]{
+    const userIds = [];
+    this.users.forEach(item =>{
+      userIds.push(item.userId);
+    })
+    return userIds;
+  }
+  onSave(isBack?: boolean): void {    
+    // const isBackO = (isBack == null || isBack === undefined ? this.backOnSuccess : isBack);    
+    const com = this;
+    const msg = message(this.resourceService.value, 'msg_confirm_save', 'confirm', 'yes', 'no');
+    this.confirm(msg.message,msg.title, ()=>{
+      showLoading(this.loading);
+      com.running = true;
+      this.roleClient.assign(this.role.roleId,this.getUserIds()).then((result)=>{
+        // com.postSave(result, isBackO);
+        com.running = false;
+        hideLoading(com.loading);   
+             
+      }).catch(err => {        
+        error(err, com.resourceService.value, com.showError);
+        com.running = false;
+        
+        hideLoading(com.loading);
+      });
+    },msg.no,msg.yes)
+    
+  }
   onShowCheckBox = () => {
     if (this.isCheckboxShown === false) {
       this.isCheckboxShown = true;
@@ -52,7 +80,7 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
       this.isCheckboxShown = false;
     }
   }
-
+  
   onCheckAll() {
     this.selectedUsers = this.users;
   }

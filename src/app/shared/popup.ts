@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BsModalRef, BsModalService, ComponentLoaderFactory, PositioningService} from 'ngx-bootstrap';
-
+import { ComponentLoaderFactory } from 'ngx-bootstrap/component-loader';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { PositioningService } from 'ngx-bootstrap/positioning';
 @Injectable()
 export class PopupService {
   bsModalRef: BsModalRef;

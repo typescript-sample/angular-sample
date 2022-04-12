@@ -26,43 +26,29 @@ export interface UserService extends Service<User, string, UserFilter> {
 
 export const userModel: Attributes = {
   userId: {
-    length: 40,
-    required: true,
     key: true
   },
   username: {
-    length: 100,
-    required: true,
-    q: true
+    length: 255,
+    required: true
   },
-  displayName: {
-    length: 100,
-    required: true,
-    q: true
+  firstName: {
+    length: 255
   },
-  imageURL: {
+  lastName: {
     length: 255
   },
   gender: {
-    length: 10
+    length: 1
   },
-  title: {
-    length: 20,
-    q: true
-  },
-  position: {
-    length: 20
-  },
-  phone: {
-    format: 'phone',
-    length: 14
+  dateOfBirth: {
+    type: 'date'
   },
   email: {
-    length: 100,
-    q: true
+    length: 255
   },
-  status: {
-    length: 1
+  phone: {
+    length: 20
   },
   createdBy: {
     length: 40

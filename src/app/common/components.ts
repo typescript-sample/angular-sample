@@ -401,6 +401,7 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
   load(_id: ID, callback?: (m: T, showM: (m2: T) => void) => void) {
     const id: any = _id;
     if (id && id !== '') {
+      
       const com = this;
       this.service.load(id).then(obj => {
         if (!obj) {
@@ -408,6 +409,7 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
         } else {
           com.newMode = false;
           com.orginalModel = clone(obj);
+          
           com.formatModel(obj);
           if (callback) {
             callback(obj, com.showModel);
@@ -524,15 +526,18 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
   saveOnClick(event?: Event, isBack?: boolean): void {
     if (!this.form && event && event.currentTarget) {
       this.form = (event.currentTarget as HTMLInputElement).form as any;
+      
+      
     }
     if (isBack) {
       this.onSave(isBack);
-    } else {
+    } else {      
       this.onSave(this.backOnSuccess);
     }
   }
 
   onSave(isBack?: boolean) {
+    debugger
     const r = this.resourceService;
     if (this.newMode && this.addable !== true) {
       const msg = message(r.value, 'error_permission_add', 'error_permission');
@@ -548,7 +553,8 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
       }
       const com = this;
       const obj = com.getModel();
-      if (!this.newMode) {
+      
+      if (!this.newMode) {        
         const diffObj = makeDiff(this.orginalModel, obj, this.keys, this.version);
         const l = Object.keys(diffObj).length;
         if (l === 0) {
@@ -703,7 +709,7 @@ export class EditComponent<T, ID> extends BaseEditComponent<T, ID> {
   onInit() {
     const fi = (this.ui ? this.ui.registerEvents : undefined);
     this.form = initElement(this.viewContainerRef, fi);
-    const id: ID|null = buildId<ID>(this.route, this.keys); 
+    const id: ID|null = buildId<ID>(this.route, this.keys);
       this.load(id);
   }
 }

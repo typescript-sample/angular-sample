@@ -24,8 +24,9 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
   closeModalFn: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
-    this.form = initElement(this.viewContainerRef, registerEvents);
+    this.form = initElement(this.viewContainerRef, registerEvents);    
     this.load(this.createSearchModel(), storage.autoSearch);
+        
   }
 
   setList(list: User[]): void {

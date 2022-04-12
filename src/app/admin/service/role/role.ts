@@ -44,16 +44,16 @@ export const roleModel: Attributes = {
   status: {
     length: 1
   },
-  createdBy: {
-    length: 40
-  },
-  createdAt: {
-    type: 'datetime'
-  },
-  updatedBy: {
-    length: 40
-  },
-  updatedAt: {
-    type: 'datetime'
-  }
+  // createdBy: {
+  //   length: 40
+  // },
+  // createdAt: {
+  //   type: 'datetime',
+  // },
+  // updatedBy: {
+  //   length: 40
+  // },
+  // updatedAt: {
+  //   type: 'datetime'
+  // }
 };

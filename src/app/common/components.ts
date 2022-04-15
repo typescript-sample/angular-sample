@@ -531,7 +531,8 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
     }
     if (isBack) {
       this.onSave(isBack);
-    } else {      
+    } else {
+      
       this.onSave(this.backOnSuccess);
     }
   }

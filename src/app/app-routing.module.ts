@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { throwIfEmpty } from 'rxjs';
 import { AuthenticationService } from './shared/AuthenticationService';
 import { MainComponent } from './shared/main.component';
 // import { Error404Component } from './core/error404/error-404.component';
@@ -12,9 +13,12 @@ const routes: Routes = [
       title: 'Home'
     }, canActivate: [AuthenticationService], children: [
       {
-        path: '',
+        path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-      }
+      },
+      {path:'my-profile',
+      loadChildren:()=>import('./my-profile/my-profile.module').then(m=>m.ProfileModule)
+    }
     ]
   }
 

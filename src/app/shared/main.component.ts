@@ -77,7 +77,7 @@ export class MainComponent implements OnInit {
     navigate(this.router, 'signin');
   }
 
-  toggleMenuItem = (event) => {
+  toggleMenuItem = (event: any) => {
     let target = event.currentTarget;
     const currentTarget = event.currentTarget;
     const elI = currentTarget.querySelectorAll('.menu-item > i')[1];

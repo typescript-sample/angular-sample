@@ -73,7 +73,7 @@
               <option value="400">400</option>
               <option value="10000">10000</option>
             </select>
-            <input type='text' id='keyword' name='keyword' [(ngModel)]='se.keyword' class='form-control'
+            <input type='text' id='keyword' name='keyword' [(ngModel)]='se.keyword'
               placeholder='keyword' resource-key='keyword' />
             <button type='button' *ngIf='se.keyword' class='btn-remove-text' onclick='toggleSearch()'></button>
             <button type='submit' class='btn-search' (click)='searchOnClick()'></button>

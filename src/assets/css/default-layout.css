@@ -43,26 +43,6 @@
   border: none;
   background-color: transparent;
 }
-.page-header > form > div > section > button > .fa,
-.page-header .input-group > .btn > .fa {
-  font-size: 18px;
-}
-
-.dropdown-menu-profile > img,
-.dropdown-menu-profile > i {
-  width: 36px;
-  height: 36px;
-  margin-top: -2px;
-  margin-left: 8px;
-  margin-right: 2px;
-  border: 1px solid;
-  border-radius: 50%;
-}
-
-.dropdown-menu-profile > i {
-  font-size: 32px;
-  padding-left: 1px;
-}
 .page-header .toggle-menu,
 .page-container .toggle-search,
 .page-header .close-search {
@@ -72,50 +52,8 @@
   transform: rotate(180deg);
   height: 100%;
 }
-
-.sidebar .toggle-menu,
-.sidebar-off-menu {
-  padding-left: 16px;
-  margin-top: 6px;
-  margin-bottom: 0;
-}
-.sidebar .toggle-menu {
-  margin-top: 0;
-  padding-top: 6px;
-}
 .page-header button.toggle-menu {
   padding-top: 0;
-}
-.sidebar-off-menu > .toggle {
-  margin-right: 16px
-}
-.sidebar-off-menu > .expand {
-  margin-right: 11px;
-  transform: rotate(90deg);
-  display: inline-block;
-}
-.sidebar-off-menu > .collapse {
-  transform: rotate(90deg);
-  display: inline-block;
-}
-.sidebar-off-menu > .expand::before {
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 800;
-  content: "\00BB";
-}
-.sidebar-off-menu > .collapse::before {
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 800;
-  content: "\00AB";
-}
-.sidebar-off-menu > .toggle::before,
-.toggle-menu::before {
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 800;
-  content: "\2261";
 }
 
 .close-search {
@@ -171,7 +109,7 @@
   .search .page-header .search-input {
     display: flex !important;
     margin-left: 32px !important;
-    width: calc(100% - 32px) !important;
+    width: calc(100% - 34px) !important;
 
   }
   .search .view-header > .btn-back {display: none;}
@@ -187,55 +125,78 @@
 .dropdown-content-profile {
   display: none;
   list-style-type: none;
-  background-color: #f9f9f9;
-  min-width: 160px;
+  background-color: inherit;
+  min-width: 140px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 0px 0px;
-  margin-left: -116px;
+  padding: 0;
   z-index: 30000;
-  position: absolute
+  position: absolute;
+  right: 0;
+  margin-top: -1px;
+  padding-top: 4px;
 }
 
 .dropdown-content-profile li {
-  display: block;
+  display: inline-flex;
+  flex-direction: row;
   width: 100%;
-  padding: 0.25rem 1.5rem;
+  padding: 6px 8px;
   clear: both;
   font-weight: 400;
-  color: #212529;
   text-align: inherit;
   white-space: nowrap;
-  background-color: transparent;
   border: 0;
   cursor: pointer;
   z-index: 30000;
 }
+.dropdown-menu-profile > img,
+.dropdown-menu-profile > i {
+  width: 36px;
+  height: 36px;
+  margin-top: -2px;
+  margin-left: 8px;
+  margin-right: 2px;
+  border: 1px solid;
+  border-radius: 50%;
+}
 
+.dropdown-menu-profile > i {
+  font-size: 32px;
+  padding-left: 1px;
+}
+.dropdown-menu-profile:hover ul {
+  display: block;
+}
+/*
 .dropdown-content-profile li:hover,
 .dropdown-content-profile li:focus {
   color:white;
   text-decoration: none;
   background-color: #00574b;
 }
+*/
 .dropdown-item-profile {
   display: block;
   width: 100%;
-  padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
-  text-align: inherit;
   white-space: nowrap;
-  background-color: transparent;
   border: 0;
+  margin-left: 6px;
+  color: inherit;
+  text-align: inherit;
+  background-color: transparent;
 }
-
+a.dropdown-item-profile {
+  padding-top: 2px;
+}
+/*
 .dropdown-item-profile.active,
 .dropdown-item-profile:active {
   color: #fff;
   text-decoration: none;
 }
-
+*/
 .dropdown-item-profile.disabled,
 .dropdown-item-profile:disabled {
   color: #6c757d;
@@ -244,33 +205,6 @@
 
 .dropdown-menu-profile .show {
   display: block;
-}
-a.menu-item > i.entity-icon {
-    transform: rotate(90deg);
-    margin-right: 10px;
-    width: 28px;
-    font-size: 24px;
-    text-align: center;
-}
-a.menu-item > i.entity-icon.down,
-a.menu-item > i.entity-icon.up {
-    font-style: normal;
-    font-weight: 800;
-    right: -14px;
-    top: 0;
-    height: 100%;
-    position: absolute;
-}
-
-.top-menu a.menu-item > i.entity-icon.down,
-.top-menu a.menu-item > i.entity-icon.up {
-  right: -20px;
-}
-a.menu-item > i.entity-icon.down:before {
-  content: "\203A";
-}
-a.menu-item > i.entity-icon.up:before {
-    content: "\2039";
 }
 
 @media screen and (max-width: 600px) {

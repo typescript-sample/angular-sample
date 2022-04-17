@@ -460,7 +460,8 @@ section > a,
   font-weight: 500;
   background-color: inherit;
 }
-li.video > section > a {
+li.video > section > a,
+li.video > section > h4 {
   padding-left: 8px;
   padding-right: 8px;
 }
@@ -501,7 +502,9 @@ section > h4 > *,
 .section-header > * {
   margin-left: 10px;
 }
-
+section > h4.title > a {
+  margin-left: unset;
+}
 .subtitle {
   font-size: 13px;
   margin-bottom: 10px;

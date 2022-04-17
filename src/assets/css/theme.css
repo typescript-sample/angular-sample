@@ -241,7 +241,8 @@ body,
 .page-body,
 .view-container,
 .full-container,
-.page-header {
+.page-header,
+.dropdown-menu-profile {
   background-color: #fff;
 }
 
@@ -270,7 +271,9 @@ form.list-result > .table-responsive > table > tbody > tr > td,
 .view-subtitle,
 .subtitle,
 
-ul.list-view > li > section:first-child > div > h3.inactive {
+.profile.view-container > form > .row > .col > div.card > section > p,
+ul.list-view > li > section:first-child > div > h3.inactive,
+ul.list-view > li > section:first-child > div > h3.inactive > a {
   color: #999999;
 }
 
@@ -331,6 +334,7 @@ ul.list-view > li > section:first-child > div > h4,
 .card > section > p > a,
 .video > section > p,
 .video > section > p > a,
+li.video > h4 > a,
 ul.list-view > li > section:first-child > div > p,
 ul.list-view > li > div > h4,
 ul.list-view > li > div > p,
@@ -347,6 +351,7 @@ form.list-result > .table-responsive > table > thead > tr > th > a,
 .view-container > div > h4,
 .view-body > h4,
 section > h4,
+section > h4.title > a,
 section > a,
 .section-header,
 .section-subheader,
@@ -383,6 +388,7 @@ div.card {
 .view-container > form > div > h2,
 .card > section > h3,
 ul.list-view > li > section:first-child > div > h3,
+ul.list-view > li > section:first-child > div > h3 > a,
 ul.list-view > li > div > h3,
 ul.list-view > li > h3,
 div.card > div > h3,
@@ -391,6 +397,7 @@ div.card > h3,
 .btn-select,
 .btn-add,
 .btn-new,
+a.btn-new:hover,
 .btn-table,
 .btn-list-view,
 .btn-search,
@@ -399,6 +406,7 @@ div.card > h3,
 .page-header > form > div > section > button,
 .round-border.active {
   color: #4db6ac;
+  text-decoration: none;
 }
 
 .chips.focus {
@@ -571,6 +579,8 @@ section > p > label,
 .view-container > header > .btn-back,
 .view-header > .btn-back,
 .btn-close,
+.btn-filter,
+.btn-remove-text,
 .btn-edit, .btn-transfer, .btn-divide {
   color: #808080;
 }

@@ -14,8 +14,7 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
   constructor(protected viewContainerRef: ViewContainerRef, protected router: Router, roleService: RoleClient, private masterDataService: MasterDataClient) {
     super(roleService, inputSearch());
   }
-  
-  status = [];
+  status:any = [];
 
   ngOnInit() {
     this.form = initElement(this.viewContainerRef, registerEvents);
@@ -32,19 +31,19 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
       this.load(s, auto);
     }).catch(handleError);
   }
-  viewRole(roleId) {
-    navigate(this.router, 'roles', [roleId]);
+  viewRole(roleId:string) {
+    navigate(this.router, 'admin/roles', [roleId]);
   }
 
-  edit(roleId) {
-    navigate(this.router, 'roles', [roleId]);
+  edit(roleId:string) {
+    navigate(this.router, 'admin/roles', [roleId]);
   }
 
   addRole() {    
-    navigate(this.router, 'roles/add');
+    navigate(this.router, 'admin/roles/add');
   }
 
-  assign(roleId) {
-    navigate(this.router, `roles/assign`, [roleId]);
+  assign(roleId:string) {
+    navigate(this.router, `admin/roles/assign`, [roleId]);
   }
 }

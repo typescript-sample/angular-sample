@@ -7,7 +7,7 @@ import { MyProfileClient, UserSettings } from "./my-profile";
 @Component({
     selector: 'app-settings',
     templateUrl: './my-settings-form.html',
-    providers: [MyProfileClient],
+    // providers: [MyProfileClient],
 
 })
 export class MySettingsFormComponent implements OnInit{
@@ -15,7 +15,29 @@ export class MySettingsFormComponent implements OnInit{
     this.resource = getResource(inputEdit()).resource();
     }
     resource: StringMap;
-    settings: UserSettings;
+    settings: UserSettings
+    = {
+        userId: "",
+        language: "",
+        dateFormat: "",
+        dateTimeFormat: "",
+        timeFormat: "",
+        notification: false,
+        searchEnginesLinksToMyProfile: false,
+        emailFeedUpdates: false,
+        notifyFeedUpdates: false,
+        emailPostMentions: false,
+        notifyPostMentions: false,
+        emailCommentsOfYourPosts: false,
+        notifyCommentsOfYourPosts: false,
+        emailEventInvitations: false,
+        notifyEventInvitations: false,
+        emailWhenNewEventsAround: false,
+        notifyWhenNewEventsAround: false,
+        followingListPublicOnMyProfile: false,
+        showMyProfileInSpacesAroundMe: false,
+        showAroundMeResultsInMemberFeed: false
+    }
     load(id:any){
         this.service.getMySettings(id).then(settings => {
             if (settings) {
@@ -28,6 +50,7 @@ export class MySettingsFormComponent implements OnInit{
         this.load(userId);
     }
     save(e: any) {
+        
         e.preventDefault();
         const userId = 'XU3rkqafp';
         this.service.saveMySettings(userId, this.settings).then((res: number) => {

@@ -46,7 +46,7 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
     }).catch(handleError);
   }
   getUserIds():string[]{
-    const userIds = [];
+    const userIds = [] as any;
     this.users.forEach(item =>{
       userIds.push(item.userId);
     })
@@ -89,7 +89,7 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
     this.selectedUsers = [];
   }
 
-  isChecked(usersChecked, userId): boolean {
+  isChecked(usersChecked:Array<User>, userId:string): boolean {
     if (usersChecked === null || usersChecked === undefined) {
       return false;
     }
@@ -109,12 +109,12 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
     this.isOpenModel = false;
   }
 
-  onSearch(e) {
+  onSearch(e:any) {
     const users = this.users;
     if (users) {
       const v = e.target.value;
       const result = users.filter(u => u.username && u.username.includes(v) || u.displayName && u.displayName.includes(v) || u.email && u.email.includes(v));
-      this[e.target.name] = e.target.value;
+      (this as any)[e.target.name] = e.target.value;
       this.users = result;
     }
   }

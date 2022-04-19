@@ -27,7 +27,7 @@ export class MainComponent implements OnInit {
   isToggleSidebar: false;
   isToggleMenu: false;
   isToggleSearch: false;
-  pinnedModules = [];
+  pinnedModules:any = [];
 
   // signoutService: SignoutService;
   se: any = {};
@@ -103,7 +103,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  onMouseHover = (e) => {
+  onMouseHover = (e:any) => {
     e.preventDefault();
     const sysBody = (window as any).sysBody;
     if (sysBody.classList.contains('top-menu') && window.innerWidth > 768) {
@@ -119,7 +119,7 @@ export class MainComponent implements OnInit {
       }
     }
   }
-  onShowAllMenu = (e) => {
+  onShowAllMenu = (e:any) => {
     e.preventDefault();
     const sysBody = (window as any).sysBody;
     if (sysBody.classList.contains('top-menu2')) {
@@ -136,7 +136,7 @@ export class MainComponent implements OnInit {
       }
     }
   }
-  onHideAllMenu = (e) => {
+  onHideAllMenu = (e:any) => {
     e.preventDefault();
     const sysBody = (window as any).sysBody;
     if (sysBody.classList.contains('top-menu2')) {
@@ -154,16 +154,16 @@ export class MainComponent implements OnInit {
     }
   }
 
-  pinModulesHandler (event, index, moduleOrder) {
+  pinModulesHandler (event:any, index:any, moduleOrder:any) {
     event.stopPropagation();
-    if ( this.privileges.find( (module) => module.order === moduleOrder)) {
+    if ( this.privileges.find( (module:any) => module.order === moduleOrder)) {
       const removedModule = this.privileges.splice(index, 1);
       this.pinnedModules.push(removedModule[0]);
-      this.privileges.sort( (moduleA, moduleB) => moduleA.order - moduleB.order);
+      this.privileges.sort( (moduleA:any, moduleB:any) => moduleA.order - moduleB.order);
     } else {
       const removedModule = this.pinnedModules.splice(index, 1);
       this.privileges.push(removedModule[0]);
-      this.privileges.sort( (moduleA, moduleB) => moduleA.order - moduleB.order);
+      this.privileges.sort( (moduleA:any, moduleB:any) => moduleA.order - moduleB.order);
     }
   }
 
@@ -175,11 +175,11 @@ export class MainComponent implements OnInit {
     return false;
   }
 
-  gotoURL(url) {
+  gotoURL(url:string) {
     navigate(this.router, url);
   }
 
-  activeWithPath(path) {
+  activeWithPath(path:string) {
     return this.router.url === path ? 'active' : '';
   }
 
@@ -236,11 +236,11 @@ export class MainComponent implements OnInit {
   }
 
   viewMyProfile() {
-    navigate(this.router, 'myprofile');
+    navigate(this.router, 'my-profile');
   }
 
   viewMySettings() {
-    navigate(this.router, 'mysettings');
+    navigate(this.router, 'my-profile/settings');
   }
 
   gotoExternalSystemList() {

@@ -53,7 +53,7 @@ export class RoleComponent extends EditComponent<Role, any> implements OnInit {
     }
   }
 
-  onChangeKeyword(event) {
+  onChangeKeyword(event:any) {
     const keyword = event.target.value;
     const { allPrivileges } = this;
     this.shownPrivileges = this.buildShownModules(keyword, allPrivileges);
@@ -160,7 +160,7 @@ export class RoleComponent extends EditComponent<Role, any> implements OnInit {
     this.checkedAll = privileges && all && privileges.length === all.length;
   }
 
-  handleCheck(event) {
+  handleCheck(event:any) {
     const { role, all, allPrivileges } = this;
     const target = event.target;
     const id = target.getAttribute('id');

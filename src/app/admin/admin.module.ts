@@ -7,8 +7,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalModule } from '../shared/modal/modal.module';
 import { AdminComponent, AdminRoutes } from './admin.component';
-import { ModalComponent } from './modal.component';
 import { RoleAssignmentsComponent } from './role-assignments.component';
 import { RoleComponent } from './role.components';
 // import { ModalComponent } from './modal.component';
@@ -32,6 +32,7 @@ import { UsersComponent } from './users.component';
     FormsModule,
     AdminRoutes,
     ReactiveFormsModule,
+    ModalModule,
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
     BsDatepickerModule.forRoot(),
@@ -47,12 +48,9 @@ import { UsersComponent } from './users.component';
     UsersComponent,
     UserComponent,
     RoleAssignmentsComponent,
-    ModalComponent,
     UsersLookupComponent
   ],
   entryComponents: [],
-  exports: [
-  ],
   providers: [
     RoleClient,
     MasterDataClient,

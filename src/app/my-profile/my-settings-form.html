@@ -17,22 +17,22 @@
                     {{resource.user_settings_search_engines_links_to_my_profile}}
                 </label>
             </section>
-            <section className='col s12 m12 l6'>
+            <section class='col s12 m12 l6'>
                 <h4>{{resource.user_settings_around_me_references}}</h4>
-                <label className='switch-container'>
+                <label class='switch-container'>
                     <input type='checkbox' id='showMyProfileInSpacesAroundMe' name='showMyProfileInSpacesAroundMe'
                         [(ngModel)]='settings.showMyProfileInSpacesAroundMe' />
                     {{resource.user_settings_show_my_profile_in_spaces_around_me}}
                 </label>
-                <label className='switch-container'>
+                <label class='switch-container'>
                     <input type='checkbox' id='showAroundMeResultsInMemberFeed' name='showAroundMeResultsInMemberFeed'
                         [(ngModel)]='settings.showAroundMeResultsInMemberFeed' />
                     {{resource.user_settings_show_around_me_results_in_member_feed}}
                 </label>
             </section>
-            <section className='col s12 m12 l6'>
+            <section class='col s12 m12 l6'>
                 <h4>{{resource.user_settings_notification_preferences}}</h4>
-                <label className='switch-container'>
+                <label class='switch-container'>
                     <input type='checkbox' id='notification' name='notification' [(ngModel)]='settings.notification' />
                     {{resource.user_settings_notifications}}
                 </label>
@@ -113,5 +113,10 @@
                 </div>
             </section>
         </div>
+        <footer>
+            <button type='submit' id='btnSave' name='btnSave' (click)='save($event)'>
+                {{resource.save}}
+            </button>
+        </footer>
     </form>
 </div>

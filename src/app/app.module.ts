@@ -15,12 +15,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import { AuthorizationService } from './shared/AuthorizationService';
 import { CoreModule } from '@/core/core.module';
+import { CommonModule } from '@angular/common';
 
   
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,

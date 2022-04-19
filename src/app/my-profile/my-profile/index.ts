@@ -25,6 +25,7 @@ export class MyProfileClient implements MyProfileService {
   constructor(private http: HttpRequest) {
     this.getMyProfile = this.getMyProfile.bind(this);
     this.getMySettings = this.getMySettings.bind(this);
+    this.saveMySettings = this.saveMySettings.bind(this);
   }
   getMyProfile(id: string): Promise<User | null> {
     const url = config.myprofile_url + '/' + id;

@@ -58,7 +58,7 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
   }
 
   existInArray(list: Array<Object>, itemSelect: any, fieldName: string) {
-    return list.some((item) => {
+    return list.some((item:any) => {
       return item && itemSelect && item[fieldName] === itemSelect[fieldName];
     });
   }
@@ -68,7 +68,7 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
     this.load(this.createSearchModel(), storage.autoSearch);
   }
 
-  onSearch(event) {
+  onSearch(event:any) {
     event.preventDefault();
     if (this.getList() && this.userId.length > 0) {
       const result = this.getList().filter((value) => {

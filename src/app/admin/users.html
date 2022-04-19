@@ -44,14 +44,36 @@
         </label>
         <label class='col s12 m4 l4 checkbox-section'>
           {{resource.status}}
-          <section class='checkbox-group'>
+          <section className='checkbox-group'>
+            <label>
+              <input
+                type='checkbox'
+                id='active'
+                name='status'
+                value='A'
+                [checked]="includes(filter.status, 'A')"
+                (change)='updateState($event)' />
+              {{resource.active}}
+            </label>
+            <label>
+              <input
+                type='checkbox'
+                id='inactive'
+                name='status'
+                value='I'
+                [checked]="includes(filter.status, 'I')"
+                (change)='updateState($event)' />
+              {{resource.inactive}}
+            </label>
+          </section>
+          <!-- <section class='checkbox-group'>
             <label *ngFor='let item of statusList; let i = index'>
               <input type='checkbox' [id]='item.value' name='status' [value]='item.value'
-                     [checked]="includes(filter['ctrlStatus'],item.value)"
+                     [checked]="includes(filter['ctrlStatus'], item.value)"
                      (change)='updateState($event)'/>
               {{item.text}}
             </label>
-          </section>
+          </section> -->
         </label>
       </section>
     </form>
@@ -69,7 +91,6 @@
             </tr>
           </thead>
           <tr *ngFor="let item of list;let i = index" (click)="edit(item.userId)">
-            <td className='text-right'>{{item['sequenceNo']}}</td>
             <td>{{item.userId}}</td>
             <td>{{item.username}}</td>
             <td>{{item.email}}</td>

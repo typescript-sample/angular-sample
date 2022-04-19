@@ -1,0 +1,78 @@
+<div class='view-container profile-info'>
+    <form model-name='data'>
+        <!-- <header>
+            <h2>{{resource.user_profile_general_info}}</h2>
+            <button type='button' id='btnClose' name='btnClose' class='btn-close' (click)='closeModal()'></button>
+        </header> -->
+        <div>
+            <section class='row'>
+                <h4>{{resource.user_profile_basic_info}}</h4>
+                <label class='col s12 m6'>
+                    {{resource.first_name}}
+                    <input id='firstName' name='firstName' [(ngModel)]="user.firstName" maxLength='255'
+                        [placeholder]="resource.placeholder_user_profile_first_name" />
+                </label>
+                <label class='col s12 m6'>
+                    {{resource.last_name}}
+                    <input id='lastName' name='lastName' [(ngModel)]="user.lastName" maxLength='255'
+                        [placeholder]="resource.placeholder_user_profile_last_name" />
+                </label>
+                <label class='col s12 m6'>
+                    {{resource.user_profile_occupation}}
+                    <input id='occupation' name='occupation' [(ngModel)]="user.occupation" maxLength="500"
+                        [placeholder]="resource.placeholder_user_profile_occupation" />
+                </label>
+                <label class='col s12 m6'>
+                    {{resource.user_profile_company}}
+                    <input id='company' name='company' [(ngModel)]="user.company" maxLength="500"
+                        [placeholder]="resource.placeholder_user_profile_company" />
+                </label>
+                <label class='col s12'>
+                    {{resource.user_profile_website}}
+                    <input id='website' name='website' data-type='url' [(ngModel)]="user.website" maxLength="500"
+                        placeholder="resource.placeholder_user_profile_website" />
+                </label>
+            </section>
+            <section>
+                <h4>{{resource.user_profile_social}}</h4>
+                <label class='inline-input'>
+                    <i class='fa fa-facebook' ></i> 
+                    <input id='facebookLink' maxLength="100" name='facebookLink'
+                        [placeholder]="resource.user_profile_facebook" [(ngModel)]="user.facebookLink" />
+                </label>
+                <label class='inline-input'>
+                    <i class='fa fa-linkedin' ></i> 
+                    <input id='linkedInLink' maxLength='100' [placeholder]='resource.user_profile_linkedIn'
+                        name='linkedinLink' [(ngModel)]='user.linkedinLink' />
+                </label>
+                <label class='inline-input'>
+                    <i class='fa fa-instagram'  ></i> 
+                    <input id='instagramLink' maxLength='100' [(ngModel)]='user.instagramLink'
+                        [placeholder]='resource.user_profile_instagram' name='instagramLink' />
+                </label>
+                <label class='inline-input'>
+                    <i class='fa fa-twitter' ></i> 
+                    <input id='twitter' maxLength="100" [placeholder]='resource.user_profile_twitter' name='twitterLink'
+                        [(ngModel)]='user.twitterLink' />
+                </label>
+                <label class='inline-input'>
+                    <i class='fa fa-skype' ></i> 
+                    <input id='skype' name='skypeLink' maxLength="100"
+                        [placeholder]='resource.user_profile_skype' [(ngModel)]= 'user.skypeLink'/>
+                </label>
+                <label class='inline-input'>
+                    <i class='fa fa-dribbble' ></i> 
+                    <input id='dribble' name='dribbbleLink' maxLength="100" 
+                        [placeholder]="resource.user_profile_dribbble"
+                        [(ngModel)]= 'user.dribbbleLink'
+                         />
+                </label>
+            </section>
+        </div>
+        <footer>
+            <button type='button' id='btnSave' name='btnSave' (click)="save($event)">
+                {{resource.save}}
+            </button>
+        </footer>
+    </form>
+</div>

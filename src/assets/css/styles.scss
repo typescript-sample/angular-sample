@@ -1,4 +1,6 @@
-/* @import './bootstrap.css'; */
+@import './reset.css';
+@import "~bootstrap/scss/bootstrap";
+@import '../fonts/Roboto/font.css';
 @import './alert.css';
 @import './article.css';
 @import './button.css';
@@ -27,15 +29,13 @@
 @import './solid-container.css';
 @import './table.css';
 @import './theme.css';
-@import "~bootstrap/scss/bootstrap";
 
 @import "../fonts/material-icon/fonts/material-icons.css";
 @import '../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
-@import '../fonts/Roboto/font.css';
-@import 'mixins';
-* {
-    @include font-roboto();
+// @import 'mixins';
+// * {
+//     @include font-roboto();
    
-  }
+//   }
 
 

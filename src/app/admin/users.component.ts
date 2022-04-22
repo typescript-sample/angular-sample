@@ -28,7 +28,7 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
     navigate(this.router, 'users', [userId]);
   }
   add() {
-    navigate(this.router, 'users/add');
+    navigate(this.router, 'admin/users/add');
   }
 
   async load(s: UserFilter, autoSearch: boolean) {

@@ -1,33 +1,41 @@
 /* @import './bootstrap.css'; */
-@import './reset.css';
-@import './checkbox.css';
-@import './radio.css';
-@import './grid.css';
 @import './alert.css';
-@import './bs-datepicker.css';
+@import './article.css';
+@import './button.css';
+@import './carousel.css';
+@import './checkbox.css';
+@import './dark.css';
+@import './date-picker.css';
+@import './datepicker.css';
+@import './diff.css';
+@import './event-scheduler.css';
+@import './form.css';
+@import './grid.css';
+@import './group.css';
+@import './layout.css';
+@import './list-detail.css';
+@import './list-view.css';
 @import './loader.css';
 @import './main.css';
 @import './modal.css';
 @import './multi-select.css';
-@import './date-picker.css';
-@import './form.css';
-@import './diff.css';
-@import './article.css';
-@import './list-view.css';
-@import './table.css';
-@import './list-detail.css';
 @import './navigation.css';
 @import './pagination.css';
-@import './solid-container.css';
-@import './button.css';
-@import './search.css';
-@import './layout.css';
 @import './profile.css';
+@import './radio.css';
+@import './search.css';
+@import './solid-container.css';
+@import './table.css';
 @import './theme.css';
-@import '../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
-
-/* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-/* Importing Datepicker SCSS file. */
-@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+@import "../fonts/material-icon/fonts/material-icons.css";
+@import '../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+@import '../fonts/Roboto/font.css';
+@import 'mixins';
+* {
+    @include font-roboto();
+   
+  }
+
+

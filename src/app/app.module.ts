@@ -29,8 +29,8 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
-    PaginationModule.forRoot(),
+    // BsDropdownModule.forRoot(),
+    // PaginationModule.forRoot(),
     ModalModule.forRoot(),
     CoreModule
   ],

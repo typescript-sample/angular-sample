@@ -7,13 +7,13 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
   crossorigin="anonymous">
 
 </head>
 
-<body id="sysBody" class="full-header classic2 top-menu">
+<body id="sysBody" class="full-header top-menu2">
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TF7QP5M" height="0" width="0"
       style="display:none;visibility:hidden"></iframe>
@@ -48,45 +48,56 @@
       </footer>
     </div>
   </div>
-  <script>
-    var sysAlert, sysYes;
-
-    function initDoc() {
-      sysAlert = document.getElementById("sysAlert");
-      sysYes = document.getElementById("sysYes");
-    }
-
-    initDoc();
-    var yesOnClick = function () {
-      sysAlert.style.display = 'none';
-      if (window.fyesOnClick) {
-        window.fyesOnClick();
-      }
-      const input = sysYes['activeElement'];
-      if (input) {
-        try {
-          input.focus();
-        } catch (err) { }
-      }
-      sysYes['activeElement'] = null;
-    };
-    var noOnClick = function () {
-      sysAlert.style.display = 'none';
-      if (window.fnoOnClick) {
-        window.fnoOnClick();
-      }
-      const input = sysYes['activeElement'];
-      if (input) {
-        try {
-          input.focus();
-        } catch (err) { }
-      }
-      sysYes['activeElement'] = null;
-    };
-
-    var callCount = 0;
-  </script>
   <app-root>Loading...</app-root>
+  <script>
+    var sysTitle, sysBody, sysLoading, sysToast, sysAlert, sysMessageHeader, sysMessage, sysErrorDetail, sysErrorDetailText,
+        sysYes, sysNo, sysErrorDetailCaret;
+  
+      function initDoc() {
+        sysTitle = document.getElementById("sysTitle");
+        sysBody = document.getElementById("sysBody");
+        sysLoading = document.getElementById("sysLoading");
+        sysToast = document.getElementById("sysToast");
+        sysAlert = document.getElementById("sysAlert");
+        sysMessageHeader = document.getElementById("sysMessageHeader");
+        sysMessage = document.getElementById("sysMessage");
+        sysErrorDetail = document.getElementById("sysErrorDetail");
+        sysErrorDetailText = document.getElementById("sysErrorDetailText");
+        sysYes = document.getElementById("sysYes");
+        sysNo = document.getElementById("sysNo");
+        sysErrorDetailCaret = document.getElementById("sysErrorDetailCaret");
+      }
+  
+      initDoc();
+      var yesOnClick = function () {
+        sysAlert.style.display = 'none';
+        if (window.fyesOnClick) {
+          window.fyesOnClick();
+        }
+        const input = sysYes['activeElement'];
+        if (input) {
+          try {
+            input.focus();
+          } catch (err) {}
+        }
+        sysYes['activeElement'] = null;
+      };
+      var noOnClick = function () {
+        sysAlert.style.display = 'none';
+        if (window.fnoOnClick) {
+          window.fnoOnClick();
+        }
+        const input = sysYes['activeElement'];
+        if (input) {
+          try {
+            input.focus();
+          } catch (err) {}
+        }
+        sysYes['activeElement'] = null;
+      };
+      var callCount = 0;
+  </script>
+  
 </body>
 
 </html>

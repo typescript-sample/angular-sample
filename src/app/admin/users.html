@@ -82,7 +82,7 @@
         <table>
           <thead>
             <tr>
-              <th>{{resource.sequence}}</th>
+              <!-- <th>{{resource.sequence}}</th> -->
               <th data-field='userId'><button type='button' id='sortUserId' (click)="sort($event)">{{resource.user_id}}</button></th>
               <th data-field='username'><button type='button' id='sortUserName' (click)="sort($event)">{{resource.username}}</button></th>
               <th data-field='email'><button type='button' id='sortEmail' (click)="sort($event)">{{resource.email}}</button></th>
@@ -99,7 +99,7 @@
           </tr>
         </table>
       </div>
-      <ul class='row list-view'>
+      <ul *ngIf="view !== 'table' && list && list.length > 0" class='row list-view'>
         <li *ngFor="let item of list;let i = index" class='col s12 m6 l4 xl3' (click)="edit(item.userId)">
           <section>
             <img

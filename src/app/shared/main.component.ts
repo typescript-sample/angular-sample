@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {navigate} from '@/app/common';
-import {storage} from 'uione';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { navigate } from '@/app/common';
+import { user as getUser, storage, UserAccount } from 'uione';
 
 @Component({
   selector: 'app-main',
@@ -19,31 +19,64 @@ export class MainComponent implements OnInit {
   constructor(protected router: Router) {
     // this.signoutService = signoutService;
   }
+  sysBody: HTMLElement | null | undefined;
   resource = storage.getResource();
-  logInUser: any = {userId: 1};
+  logInUser: any = { userId: 1 };
   isShowSearchResult = false;
   forms: any;
   privileges: any;
-  isToggleSidebar: false;
-  isToggleMenu: false;
-  isToggleSearch: false;
-  pinnedModules:any = [];
-
+  isToggleSidebar: boolean;
+  isToggleMenu: boolean;
+  isToggleSearch: boolean;
+  pinnedModules: any = [];
+  isMenu: boolean;
+  DarkMode: boolean;
+  isPinned: boolean;
+  classicMenu: boolean;
   // signoutService: SignoutService;
   se: any = {};
   pageSize = 10;
   pageSizes = [10, 20, 40, 60, 100, 200, 400, 10000];
   public classProfile: any = '';
-
+  username: string = '';
+  user: UserAccount = getUser();
   ngOnInit() {
     this.privileges = storage.privileges();
+    this.isMenu = false;
+    this.DarkMode = false;
+    this.isToggleSidebar = false;
+    this.isToggleMenu = false;
+    this.isToggleSearch = false;
+    const usr = storage.user();
+    this.username = usr.displayName && usr.displayName.length > 0 ? usr.displayName : (usr.username && usr.username.length > 0 ? usr.username : this.resource.my_profile);
+
   }
 
   searchOnClick() {
-    alert('test');
+    // alert('test');
   }
+  toggleSidebar() {
+    this.isToggleSidebar = !this.isToggleSidebar;
 
+  }
+  changeClassicMenu() {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      if (this.sysBody.classList.contains('classic')) {
+        this.sysBody.classList.remove('classic');
+        this.classicMenu = true;
+      } else {
+        this.sysBody.classList.add('classic');
+        this.classicMenu = false;
+      }
+    }
+  };
   toggleMenuProfile() {
+    if (!this.logInUser) {
+      navigate(this.router, 'signin');
+    }
     this.classProfile = this.classProfile === 'show' ? '' : 'show';
   }
 
@@ -74,96 +107,253 @@ export class MainComponent implements OnInit {
     sessionStorage.setItem('authService', null);
     sessionStorage.clear();
     storage.setUser(null);
-    navigate(this.router, 'signin');
+    navigate(this.router, '');
   }
-
-  toggleMenuItem = (event: any) => {
-    let target = event.currentTarget;
-    const currentTarget = event.currentTarget;
-    const elI = currentTarget.querySelectorAll('.menu-item > i')[1];
-    if (elI) {
-      if (elI.classList.contains('down')) {
-        elI.classList.remove('down');
-        elI.classList.add('up');
+  isClassicMenu(): boolean {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      if (this.sysBody.classList.contains('classic')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  changeMenu() {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      if (this.sysBody.classList.contains('top-menu')) {
+        this.sysBody.classList.remove('top-menu');
+        this.isMenu = true;
       } else {
-        if (elI.classList.contains('up')) {
-          elI.classList.remove('up');
-          elI.classList.add('down');
+        this.sysBody.classList.add('top-menu');
+        this.isMenu = false;
+      }
+    }
+  }
+  changeMode() {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      const parent = this.sysBody.parentElement;
+      if (parent) {
+        if (parent.classList.contains('dark')) {
+          parent.classList.remove('dark');
+          this.DarkMode = false;
+        } else {
+          parent.classList.add('dark');
+          this.DarkMode = true;
         }
       }
     }
-    if (currentTarget.nextElementSibling) {
-      currentTarget.nextElementSibling.classList.toggle('expanded');
+  }
+  isTopMenu(): boolean {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      if (this.sysBody.classList.contains('top-menu')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isDarkMode(): boolean {
+    if (!this.sysBody) {
+      this.sysBody = document.getElementById('sysBody');
+    }
+    if (this.sysBody) {
+      const parent = this.sysBody.parentElement;
+      if (parent) {
+        if (parent.classList.contains('dark')) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  toggleMenuItem = (event: any) => {
+    event.preventDefault();
+    let target: HTMLElement | null = event.currentTarget;
+    const currentTarget = event.currentTarget;
+    const nul = currentTarget.nextElementSibling;
+    if (nul) {
+      const elI = currentTarget.querySelectorAll('.menu-item > i.entity-icon');
+      if (nul.classList.contains('expanded')) {
+        nul.classList.remove('expanded');
+        if (elI && elI.length > 0) {
+          elI[0].classList.add('up');
+          elI[0].classList.remove('down');
+        }
+      } else {
+        nul.classList.add('expanded');
+        if (elI && elI.length > 0) {
+          elI[0].classList.remove('up');
+          elI[0].classList.add('down');
+        }
+      }
     }
     if (target.nodeName === 'A') {
       target = target.parentElement;
     }
-    if (target.nodeName === 'LI') {
+    if (target && target.nodeName === 'LI') {
       target.classList.toggle('open');
     }
-  }
-
-  onMouseHover = (e:any) => {
-    e.preventDefault();
-    const sysBody = (window as any).sysBody;
-    if (sysBody.classList.contains('top-menu') && window.innerWidth > 768) {
-      const navbar = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
-      const icons = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>a>i.up'));
-      if (navbar.length > 0) {
-        for (let i = 0; i < navbar.length; i++) {
-          navbar[i].classList.toggle('expanded');
-          if (icons[i]) {
-            icons[i].className = 'entity-icon down';
-          }
+    const parent = this.findParent(currentTarget, 'NAV');
+    if (parent) {
+      setTimeout(() => {
+        if (this.isExpandedAll(parent)) {
+          parent.classList.remove('collapsed-all');
+          parent.classList.add('expanded-all');
+        } else if (this.isCollapsedAll(parent)) {
+          parent.classList.remove('expanded-all');
+          parent.classList.add('collapsed-all');
+        } else {
+          parent.classList.remove('expanded-all');
+          parent.classList.remove('collapsed-all');
         }
+      }, 0);
+    }
+  }
+  // onMouseHover = (e: any) => {
+  //   e.preventDefault();
+  //   const sysBody = (window as any).sysBody;
+  //   if (sysBody.classList.contains('top-menu') && window.innerWidth > 768) {
+  //     const navbar = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
+  //     const icons = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>a>i.up'));
+  //     if (navbar.length > 0) {
+  //       for (let i = 0; i < navbar.length; i++) {
+  //         navbar[i].classList.toggle('expanded');
+  //         if (icons[i]) {
+  //           icons[i].className = 'entity-icon down';
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  findParent(ele: HTMLElement, node: string): HTMLElement | null {
+    let current: HTMLElement | null = ele;
+    while (true) {
+      current = current.parentElement;
+      if (!current) {
+        return null;
+      }
+      if (current.nodeName === node) {
+        return current;
       }
     }
   }
-  onShowAllMenu = (e:any) => {
+  isCollapsedAll(parent: HTMLElement): boolean {
+    const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
+    if (navbar.length > 0) {
+      let i = 0;
+      for (i = 0; i < navbar.length; i++) {
+        if (navbar[i].classList.contains('expanded')) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  isExpandedAll(parent: HTMLElement): boolean {
+    const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
+    if (navbar.length > 0) {
+      let i = 0;
+      for (i = 0; i < navbar.length; i++) {
+        if (!navbar[i].classList.contains('expanded')) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  expandAll(e: any) {
     e.preventDefault();
-    const sysBody = (window as any).sysBody;
-    if (sysBody.classList.contains('top-menu2')) {
-      const navbar = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
-      const icons = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>a>i.down'));
+    const parent = this.findParent(e.currentTarget, 'nav');
+    if (parent) {
+      parent.classList.remove('collapsed-all');
+      parent.classList.add('expanded-all');
+      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
       if (navbar.length > 0) {
+        const icons = Array.from(parent.querySelectorAll('i.up'));
         let i = 0;
         for (i = 0; i < navbar.length; i++) {
           navbar[i].className = 'list-child expanded';
-          if (icons[i]) {
-            icons[i].className = 'entity-icon up';
-          }
+        }
+        for (i = 0; i < icons.length; i++) {
+          icons[i].className = 'entity-icon down';
         }
       }
     }
   }
-  onHideAllMenu = (e:any) => {
+  onShowAllMenu = (e: any) => {
     e.preventDefault();
-    const sysBody = (window as any).sysBody;
-    if (sysBody.classList.contains('top-menu2')) {
-      const navbar = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
-      const icons = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>a>i.up'));
+    const parent = this.findParent(e.currentTarget, 'NAV');
+    if (parent) {
+      parent.classList.add('expanded-all');
+      parent.classList.remove('collapsed-all');
+      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
       if (navbar.length > 0) {
+        const icons = Array.from(parent.querySelectorAll('i.up'));
         let i = 0;
         for (i = 0; i < navbar.length; i++) {
-          navbar[i].className = 'list-child';
-          if (icons[i]) {
-            icons[i].className = 'entity-icon down';
-          }
+          navbar[i].className = 'list-child expanded';
+        }
+        for (i = 0; i < icons.length; i++) {
+          icons[i].className = 'entity-icon down';
         }
       }
+
     }
   }
 
-  pinModulesHandler (event:any, index:any, moduleOrder:any) {
+  onHideAllMenu = (e: any) => {
+    e.preventDefault();
+    const parent = this.findParent(e.currentTarget, 'NAV');
+    if (parent) {
+      parent.classList.add('collapsed-all');
+      parent.classList.remove('expanded-all');
+      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
+      if (navbar.length > 0) {
+        const icons = Array.from(parent.querySelectorAll('i.down'));
+        let i = 0;
+        for (i = 0; i < navbar.length; i++) {
+          navbar[i].className = 'list-child';
+        }
+        for (i = 0; i < icons.length; i++) {
+          icons[i].className = 'entity-icon up';
+        }
+      }
+
+    }
+  }
+
+  pinModulesHandler(event: any, index: any, moduleOrder: any) {
     event.stopPropagation();
-    if ( this.privileges.find( (module:any) => module.order === moduleOrder)) {
+    if (
+      this.privileges.find(
+        (module: any) => module.sequence === moduleOrder)
+    ) {
       const removedModule = this.privileges.splice(index, 1);
       this.pinnedModules.push(removedModule[0]);
-      this.privileges.sort( (moduleA:any, moduleB:any) => moduleA.order - moduleB.order);
+      this.privileges.sort(
+        (moduleA: any, moduleB: any) => moduleA.sequence - moduleB.sequence
+      );
     } else {
-      const removedModule = this.pinnedModules.splice(index, 1);
-      this.privileges.push(removedModule[0]);
-      this.privileges.sort( (moduleA:any, moduleB:any) => moduleA.order - moduleB.order);
+      if (this.pinnedModules.length > 0) {
+        const removedModule = this.pinnedModules.splice(index, 1);
+        this.privileges.push(removedModule[0]);
+        this.privileges.sort((moduleA: any, moduleB: any) => moduleA.sequence - moduleB.sequence);
+      }
+
     }
   }
 
@@ -174,12 +364,15 @@ export class MainComponent implements OnInit {
     //  return  segment == routePath;
     return false;
   }
+  toggleMenu() {
 
-  gotoURL(url:string) {
+    this.isToggleMenu = !this.isToggleMenu;
+  }
+  gotoURL(url: string) {
     navigate(this.router, url);
   }
 
-  activeWithPath(path:string) {
+  activeWithPath(path: string) {
     return this.router.url === path ? 'active' : '';
   }
 

@@ -33,13 +33,13 @@ import { UsersComponent } from './users.component';
     AdminRoutes,
     ReactiveFormsModule,
     ModalModule,
-    BsDropdownModule.forRoot(),
+    // BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot(),
+    // BsDatepickerModule.forRoot(),
+    // TimepickerModule.forRoot(),
     // OwlDateTimeModule,
     // OwlNativeDateTimeModule,
-    NgxPaginationModule
+    // NgxPaginationModule
   ],
   declarations: [
     AdminComponent,

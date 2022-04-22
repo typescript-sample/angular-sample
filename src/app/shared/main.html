@@ -2,8 +2,8 @@
   [ngClass]="{'sidebar-off': isToggleSidebar, 'menu-on': isToggleMenu, 'search': isToggleSearch}">
   <div class='top-banner'>
     <div class='logo-banner-wrapper'>
-      <img src='assets/images/logo-title.png' alt='Logo of The Company' />
-      <img src='assets/images/logo-title.png' class='banner-logo-title' alt='Logo of The Company' />
+      <img src='https://jacobspradlin.files.wordpress.com/2014/10/banner-people-connected.png' alt='Logo of The Company' />
+      <img src='https://jacobspradlin.files.wordpress.com/2014/10/banner-people-connected.png' class='banner-logo-title' alt='Logo of The Company' />
     </div>
   </div>
   <!-- (mouseover)='onMouseHover($event)' -->
@@ -106,7 +106,7 @@
               <ul id='dropdown-basic' [class]="classProfile +' dropdown-content-profile'" aria-labelledby='btnProfile'
                 *ngIf="user">
                
-                <li (click)="changeMenu()">
+                <li (click)="changeMenu()" class="menu">
                   <ng-container *ngIf="isTopMenu()===true">
                     <i class='material-icons'>view_list</i><span
                       class='dropdown-item-profile'>{{resource.sidebar}}</span>
@@ -116,7 +116,7 @@
                       class='dropdown-item-profile'>{{resource.menu}}</span>
                   </ng-container>
                 </li>
-                <li (click)="changeClassicMenu()">
+                <li (click)="changeClassicMenu()" class="classic-menu">
                   <ng-container *ngIf="isClassicMenu()">
                     <i class='material-icons'>assessment</i><span class='dropdown-item-profile'>{{resource.modern_menu}}</span>
                   </ng-container>
@@ -147,7 +147,7 @@
               </ul>
               <ul id='dropdown-basic' [class]="classProfile +' dropdown-content-profile'" aria-labelledby='btnProfile'
                 *ngIf="!user">
-                <li (click)="changeMenu()">
+                <li (click)="changeMenu()" class="menu">
                   <ng-container *ngIf="isTopMenu()===true">
                     <i class='material-icons'>view_list</i><span
                       class='dropdown-item-profile'>{{resource.sidebar}}</span>
@@ -157,7 +157,7 @@
                       class='dropdown-item-profile'>{{resource.menu}}</span>
                   </ng-container>
                 </li>
-                <li (click)="changeClassicMenu()">
+                <li (click)="changeClassicMenu()" class="classic-menu">
                   <ng-container *ngIf="isClassicMenu()">
                     <i class='material-icons'>assessment</i><span class='dropdown-item-profile'>{{resource.modern_menu}}</span>
                   </ng-container>

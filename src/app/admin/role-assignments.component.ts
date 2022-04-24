@@ -16,11 +16,11 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
     super(viewContainerRef, route, roleClient, inputEdit());
   }
 
-  role: Role;
-  isCheckboxShown: boolean;
-  users: User[];
+  role: Role = {} as any;
+  isCheckboxShown?: boolean;
+  users: User[] = [];
   q = '';
-  isOpenModel: false;
+  isOpenModel?: false;
   selectedUsers: User[] = [];
 
   ngOnInit() {

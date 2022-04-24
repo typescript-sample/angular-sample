@@ -28,7 +28,7 @@
     "ngx-pagination": "^5.1.1",
     "onecore": "0.0.28",
     "phonecodes": "0.0.2",
-    "rxjs": "~7.5.0",
+    "rxjs": "^7.5.5",
     "tslib": "^2.3.0",
     "ui-alert": "0.0.7",
     "ui-loading": "0.0.5",

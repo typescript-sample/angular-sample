@@ -6,6 +6,7 @@ import { emailOnBlur, handleError, inputEdit, numberOnFocus, phoneOnBlur, requir
 import { Gender } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient } from './service/user';
+import { Item } from 'onecore';
 
 @Component({
   selector: 'app-user-detail',
@@ -16,9 +17,9 @@ export class UserComponent extends EditComponent<User, string> implements OnInit
   constructor(viewContainerRef: ViewContainerRef, route: ActivatedRoute, userService: UserClient, protected masterDataService: MasterDataClient) {
     super(viewContainerRef, route, userService, inputEdit());
   }
-  user: User;
-  titles: any = [];
-  positions: any = [];
+  user: User = {} as any;
+  titles: Item[] = [];
+  positions: Item[] = [];
   ngOnInit() {
     this.onInit();
   }
@@ -26,7 +27,7 @@ export class UserComponent extends EditComponent<User, string> implements OnInit
     requiredOnBlur(event);
   }
   numberOnFocus(event: any) {
-    numberOnFocus(event, this.getLocale());
+    numberOnFocus(event, this.getLocale ? this.getLocale() : undefined);
   }
   emailOnBlur(event: any) {
     emailOnBlur(event);

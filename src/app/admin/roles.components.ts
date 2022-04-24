@@ -6,7 +6,7 @@ import { MasterDataClient } from './service/master-data';
 import { Role, RoleClient, RoleFilter } from './service/role';
 
 @Component({
-  selector: 'app-access-role-list',
+  selector: 'app-role-list',
   templateUrl: './roles.html',
   providers: [RoleClient, MasterDataClient]
 })

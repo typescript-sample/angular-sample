@@ -136,7 +136,7 @@ export class resources {
   private static _preg = / |\-|\.|\(|\)/g;
   static format1 = / |,|\$|€|£|¥|'|٬|،| /g;
   static format2 = / |\.|\$|€|£|¥|'|٬|،| /g;
-  static currency?: (currencyCode: string) => Currency;
+  static currency?: (currencyCode: string) => Currency|undefined;
   static formatNumber?: (value: number, scale?: number, locale?: Locale) => string;
   static formatPhone?: (phone: string) => string;
   static formatFax?: (fax: string) => string;

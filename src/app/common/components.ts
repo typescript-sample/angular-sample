@@ -279,8 +279,8 @@ export class MessageComponent extends BaseComponent {
   constructor(
     resourceService: ResourceService,
     getLocale?: (profile?: string) => Locale,
-    ui?: UIService,
-    protected loading?: LoadingService) {
+    loading?: LoadingService,
+    ui?: UIService) {
     super(resourceService, getLocale, ui, loading);
     this.showMessage = this.showMessage.bind(this);
     this.showError = this.showError.bind(this);
@@ -781,7 +781,7 @@ export class BaseSearchComponent<T, S extends Filter> extends BaseComponent {
   initPageSize = 20;
   pageSize = 20;
   pageIndex = 1;
-  itemTotal?: number;
+  itemTotal: number = 0;
   pageTotal?: number;
   showPaging?: boolean;
   append?: boolean;

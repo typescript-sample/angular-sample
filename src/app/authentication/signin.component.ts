@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {initElement, MessageComponent, navigate} from '../common';
-import {AuthenClient, AuthInfo, AuthResult, getMessage, handleCookie, initFromCookie, Status, store, validate} from 'authen-client';
+import {AuthenClient, AuthInfo, AuthResult, dayDiff, getMessage, handleCookie, initFromCookie, Status, store, validate} from 'authen-client';
 import {CookieService} from 'ngx-cookie-service';
 import {getLocale, getResource, handleError, loading, message, registerEvents, storage} from 'uione';
 import {AuthenticationClient} from './AuthenticationClient';
@@ -32,7 +32,7 @@ const status: Status = {
 })
 export class SigninComponent extends MessageComponent implements OnInit {
   constructor(protected viewContainerRef: ViewContainerRef, protected router: Router, protected cookieService: CookieService, authenticationService: AuthenticationClient<AuthInfo>) {
-    super(getResource(), getLocale, null, loading());
+    super(getResource(), getLocale, loading());
     this.authenticationService = authenticationService;
     
   }
@@ -78,10 +78,12 @@ export class SigninComponent extends MessageComponent implements OnInit {
       const s = result.status;
       if (status.success_and_reactivated && (s === status.success || s === status.success_and_reactivated) || s === status.success) {
         handleCookie('data', this.user, this.remember, this.cookieService, 60 * 24 * 3, Base64);
-        const expiredDays = dayDiff(result.user.passwordExpiredTime, new Date()) ;
-        if (expiredDays > 0) {
-          const msg = r.format(r.value('msg_password_expired_soon'), expiredDays);
-          message(msg);
+        if (result.user) {
+          const expiredDays = dayDiff(result.user.passwordExpiredTime, new Date()) ;
+          if (expiredDays && expiredDays > 0) {
+            const msg = r.format(r.value('msg_password_expired_soon'), expiredDays);
+            message(msg);
+          }
         }
         
         if (s === status.success) {
@@ -106,11 +108,4 @@ export class SigninComponent extends MessageComponent implements OnInit {
       storage.loading().hideLoading();
     }
   }
-}
-
-export function dayDiff(start: Date, end: Date): number {
-  if (!start || !end) {
-    return null;
-  }
-  return Math.floor(Math.abs((start.getTime() - end.getTime()) / 86400000));
 }

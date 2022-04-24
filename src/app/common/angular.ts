@@ -2,6 +2,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {ViewContainerRef} from '@angular/core';
 import {Headers} from './core';
 import {focusFirstElement} from './formutil';
+import { interval, take, lastValueFrom } from 'rxjs';
 
 export interface ActivatedRoute {
   /** An observable of the matrix parameters scoped to this route. */
@@ -99,22 +100,22 @@ export class HttpRequest {
   }
   get<T>(url: string, opts?: { headers?: Headers; }): Promise<T> {
     const x = (this.getOptions ? this.getOptions() : undefined);
-    return this.http.get<T>(url, opts ? opts : x).toPromise();
+    return lastValueFrom(this.http.get<T>(url, opts ? opts : x));
   }
   delete<T>(url: string, opts?: { headers?: Headers; }): Promise<T> {
     const x = (this.getOptions ? this.getOptions() : undefined);
-    return this.http.delete<T>(url, opts ? opts : x).toPromise();
+    return lastValueFrom(this.http.delete<T>(url, opts ? opts : x));
   }
   post<T>(url: string, obj: any, opts?: { headers?: Headers; }): Promise<T> {
     const x = (this.getOptions ? this.getOptions() : undefined);
-    return this.http.post<T>(url, obj, opts ? opts : x).toPromise();
+    return lastValueFrom(this.http.post<T>(url, obj, opts ? opts : x));
   }
   put<T>(url: string, obj: any, opts?: { headers?: Headers; }): Promise<T> {
     const x = (this.getOptions ? this.getOptions() : undefined);
-    return this.http.put<T>(url, obj, opts ? opts : x).toPromise();
+    return lastValueFrom(this.http.put<T>(url, obj, opts ? opts : x));
   }
   patch<T>(url: string, obj: any, opts?: { headers?: Headers; }): Promise<T> {
     const x = (this.getOptions ? this.getOptions() : undefined);
-    return this.http.patch<T>(url, obj, opts ? opts : x).toPromise();
+    return lastValueFrom(this.http.patch<T>(url, obj, opts ? opts : x));
   }
 }

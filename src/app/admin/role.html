@@ -107,7 +107,7 @@
                   [name]='node.id'
                   [attr.data-type]='level ==1 ? "parent" : "child"'
                   [disabled]='disabled'
-                  [checked]="checkedRole(role.privileges, node,  allPrivileges)"
+                  [checked]="checkedRole(node, role.privileges)"
                   (change)='handleCheck($event)'
                 />
               </label>

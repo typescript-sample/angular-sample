@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { navigate } from '@/app/common';
 import { user as getUser, storage, UserAccount } from 'uione';
-import { expandAll, toggleMenuItem } from './nav';
+import { collapseAll, expandAll, toggleMenuItem } from './nav';
 
 @Component({
   selector: 'app-main',
@@ -81,7 +81,14 @@ export class MainComponent implements OnInit {
     }
     this.classProfile = this.classProfile === 'show' ? '' : 'show';
   }
-
+  onShowAllMenu = (e: any) => {
+    e.preventDefault();
+    expandAll(e.currentTarget);
+  }
+  onHideAllMenu = (e: any) => {
+    e.preventDefault();
+    collapseAll(e.currentTarget);
+  }
   signout() {
     /*
     this.signoutService.signout(GlobalApps.getUserName()).subscribe(success => {

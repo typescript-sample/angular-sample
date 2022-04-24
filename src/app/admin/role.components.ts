@@ -85,7 +85,7 @@ function buildShownModules(keyword: string, allPrivileges: Privilege[]): Privile
   return shownPrivileges;
 }
 @Component({
-  selector: 'app-access-role-detail',
+  selector: 'app-role',
   templateUrl: './role.html',
   providers: [RoleClient, MasterDataClient]
 })
@@ -132,7 +132,7 @@ export class RoleComponent extends EditComponent<Role, any> implements OnInit {
   }
 
 
-  checkedRole(privilegesOfRoleId: string[], module: Privilege, allPrivileges: Privilege[]) {
+  checkedRole(module: Privilege, privilegesOfRoleId?: string[]) {
     const parent = module.children && module.children.length > 0;
     if (!privilegesOfRoleId) {
       return false;

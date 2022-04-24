@@ -1,21 +1,21 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {ViewContainerRef} from '@angular/core';
-import {Headers} from './core';
-import {focusFirstElement} from './formutil';
-import { interval, take, lastValueFrom } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ViewContainerRef } from '@angular/core';
+import { Headers } from './core';
+import { focusFirstElement } from './formutil';
+import { lastValueFrom } from 'rxjs';
 
 export interface ActivatedRoute {
   /** An observable of the matrix parameters scoped to this route. */
   params: any;
 }
-export function getId<ID>(route: ActivatedRoute, keys?: string[], id?: ID): ID|null {
+export function getId<ID>(route: ActivatedRoute, keys?: string[], id?: ID): ID | null {
   if (id) {
     return id;
   } else {
     return buildId(route, keys);
   }
 }
-export function buildId<ID>(route: ActivatedRoute, keys?: string[]): ID|null {
+export function buildId<ID>(route: ActivatedRoute, keys?: string[]): ID | null {
   if (!route) {
     return null;
   }
@@ -44,7 +44,7 @@ export function buildId<ID>(route: ActivatedRoute, keys?: string[]): ID|null {
   }
   return id;
 }
-export function initElement(viewContainerRef?: ViewContainerRef|any, initMat?: (f: HTMLFormElement) => void): HTMLFormElement|undefined {
+export function initElement(viewContainerRef?: ViewContainerRef | any, initMat?: (f: HTMLFormElement) => void): HTMLFormElement | undefined {
   if (!viewContainerRef) {
     return undefined;
   }
@@ -83,7 +83,7 @@ export function buildParameters<T>(url: string): T {
     urlSearch = url.substr(i + 1);
   }
   const obj: any = {};
-  const httpParams = new HttpParams({fromString: urlSearch});
+  const httpParams = new HttpParams({ fromString: urlSearch });
   for (const key of httpParams.keys()) {
     obj[key] = httpParams.get(key);
   }

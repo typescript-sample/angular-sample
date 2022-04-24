@@ -190,22 +190,6 @@ export class MainComponent implements OnInit {
     event.preventDefault();
     toggleMenuItem(event.currentTarget);
   }
-  // onMouseHover = (e: any) => {
-  //   e.preventDefault();
-  //   const sysBody = (window as any).sysBody;
-  //   if (sysBody.classList.contains('top-menu') && window.innerWidth > 768) {
-  //     const navbar = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
-  //     const icons = Array.from(document.querySelectorAll('.sidebar>nav>ul>li>a>i.up'));
-  //     if (navbar.length > 0) {
-  //       for (let i = 0; i < navbar.length; i++) {
-  //         navbar[i].classList.toggle('expanded');
-  //         if (icons[i]) {
-  //           icons[i].className = 'entity-icon down';
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
   expandAll(e: any) {
     e.preventDefault();
     expandAll(e.currentTarget);
@@ -249,72 +233,11 @@ export class MainComponent implements OnInit {
   activeWithPath(path: string) {
     return this.router.url === path ? 'active' : '';
   }
-
-  gotoUserList() {
-    navigate(this.router, 'users');
-  }
-
-  gotoAccessGroupList() {
-    navigate(this.router, 'access/accessGroup/search');
-  }
-
-  gotoPayerList() {
-    navigate(this.router, 'setup/payer/search');
-  }
-
-  gotoPayeeList() {
-    navigate(this.router, 'setup/payee/search');
-  }
-
-  gotoBankList() {
-    navigate(this.router, 'setup/bank/search');
-  }
-
-  gotoPaymentAccountList() {
-    navigate(this.router, 'setup/paymentAccount/search');
-  }
-
-  gotoReceivingAccountList() {
-    navigate(this.router, 'setup/receivingAccount/search');
-  }
-
-  gotoUserActivityList() {
-    navigate(this.router, 'reporting-engine/user-activity-log');
-  }
-
-  gotoTransactionlogList() {
-    navigate(this.router, 'reporting-engine/transaction-log');
-  }
-
-  gotoWebTransLogList() {
-    navigate(this.router, 'reporting-engine/web-trans-log');
-  }
-
-  gotoAccessRoleAssignmentList() {
-    navigate(this.router, 'access/accessRole/search');
-  }
-
-  gotoCurrentUser() {
-    navigate(this.router, 'user', this.logInUser.userId);
-  }
-
-  changeMyPassword() {
-    navigate(this.router, 'mypassword');
-  }
-
   viewMyProfile() {
     navigate(this.router, 'my-profile');
   }
 
   viewMySettings() {
     navigate(this.router, 'my-profile/settings');
-  }
-
-  gotoExternalSystemList() {
-    navigate(this.router, 'setup/external-system/search');
-  }
-
-  gotoEntityRelationshipList() {
-    navigate(this.router, 'setup/entity-relationship/search');
   }
 }

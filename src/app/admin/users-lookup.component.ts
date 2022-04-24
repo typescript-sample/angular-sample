@@ -14,10 +14,10 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
     super(viewContainerRef, userService, inputSearch());
   }
 
-  @Input() selectedUsers: any[] = [];
+  @Input() selectedUsers: User[] = [];
   protected checked: any[] = [];
-  public userId: string;
-  list: User[];
+  public userId: string = '';
+  list: User[] = [];
   // tslint:disable-next-line:no-output-on-prefix
   @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
   @Output()
@@ -40,7 +40,7 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
 
   onCheckUser(event: any): void {
     if (event.target.checked) {
-      const result = this.getList().find((value) => value.userId === event.target.value);
+      const result = this.list.find((value) => value.userId === event.target.value);
       this.checked.push(result);
     } else {
       for (let i = 0; i < this.list.length; i++) {
@@ -70,8 +70,8 @@ export class UsersLookupComponent extends SearchComponent<User, UserFilter> impl
 
   onSearch(event:any) {
     event.preventDefault();
-    if (this.getList() && this.userId.length > 0) {
-      const result = this.getList().filter((value) => {
+    if (this.list && this.userId.length > 0) {
+      const result = this.list.filter((value) => {
         return value['userId'].includes(this.userId);
       });
       this.setList(result);

@@ -11,7 +11,7 @@ import { MyProfileClient, User } from './my-profile';
 })
 export class GeneralInfoComponent implements OnInit {
   @Input() resource: any;
-  @Input() user: User;
+  @Input() user: User = {} as any;
   // @Input() close: any;
   // @Input() saveEmit: any;
   @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
@@ -19,7 +19,7 @@ export class GeneralInfoComponent implements OnInit {
   constructor(private service: MyProfileClient) {
 
   }
-  userModal:User;
+  userModal: User = {} as any;
   ngOnInit(): void {
     this.resource = getResource().resource();
     this.userModal=this.user;

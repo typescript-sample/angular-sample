@@ -15,7 +15,6 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
   constructor(protected viewContainerRef: ViewContainerRef, route: ActivatedRoute, private roleClient: RoleClient, private userClient: UserClient) {
     super(viewContainerRef, route, roleClient, inputEdit());
   }
-
   role: Role = {} as any;
   isCheckboxShown?: boolean;
   users: User[] = [];
@@ -100,7 +99,6 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
     return false;
   }
 
-
   onModelSave(arr: User[]) {
     arr.map((user) => {
       this.users.push(user);
@@ -145,5 +143,4 @@ export class RoleAssignmentsComponent extends EditComponent<Role, string> implem
       }
     }
   }
-
 }

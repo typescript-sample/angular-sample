@@ -25,7 +25,7 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
     navigate(this.router, 'users', [userId]);
   }
   edit(userId: string) {
-    navigate(this.router, 'users', [userId]);
+    navigate(this.router, 'admin/users', [userId]);
   }
   add() {
     navigate(this.router, 'admin/users/add');

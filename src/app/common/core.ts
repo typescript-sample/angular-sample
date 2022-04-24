@@ -129,6 +129,7 @@ export interface Headers {
 }
 // tslint:disable-next-line:class-name
 export class resources {
+  static limit = 24;
   static _cache: any = {};
   static cache = true;
   static ignoreDate?: boolean;

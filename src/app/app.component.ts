@@ -10,7 +10,7 @@ import { loading } from 'ui-loading';
 import { UIService, formatFax, formatNumber, formatPhone, resources as uiresources } from 'ui-plus';
 import { toast } from 'ui-toast';
 import { storage } from 'uione';
-import { resources as vresources } from 'validation-util';
+import { resources as vresources } from 'validation-core';
 import { DefaultCsvService, resources as clientresources } from 'web-clients';
 // import {Error404Component} from './core/error404/error-404.component';
 // import {AuthenticationService} from './shared/AuthenticationService';

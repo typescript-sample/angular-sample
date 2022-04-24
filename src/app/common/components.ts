@@ -1,6 +1,4 @@
-import {clone, equalAll, makeDiff, setAll, setValue} from 'reflectx';
-import {addParametersIntoUrl, append, buildMessage, changePage, changePageSize, formatResults, getFields, handleAppend, handleSortEvent, initFilter, mergeFilter, more, optimizeFilter, reset, showPaging} from 'search-utilities';
-import {ActivatedRoute, buildFromUrl, buildId, initElement} from './angular';
+import {buildFromUrl, ActivatedRoute, buildId, initElement} from './angular';
 import {Attributes, createEditStatus, EditStatusConfig, error, Filter, getModelName, hideLoading, LoadingService, Locale, message, MetaModel, ResourceService, SearchParameter, SearchResult, SearchService, showLoading, StringMap, UIService, ViewContainerRef, ViewParameter, ViewService} from './core';
 import {createDiffStatus, DiffApprService, DiffParameter, DiffStatusConfig} from './core';
 import {formatDiffModel, showDiff} from './diff';
@@ -8,6 +6,8 @@ import {build, createModel, EditParameter, GenericService, handleStatus, handleV
 import {format, json} from './formatter';
 import {focusFirstError, readOnly} from './formutil';
 import {getAutoSearch, getConfirmFunc, getDiffStatusFunc, getEditStatusFunc, getErrorFunc, getLoadingFunc, getLocaleFunc, getMsgFunc, getResource, getUIService} from './input';
+import {clone, equalAll, makeDiff, setAll, setValue} from './reflect';
+import {addParametersIntoUrl, append, buildMessage, changePage, changePageSize, formatResults, getFields, handleAppend, handleSortEvent, initFilter, mergeFilter, more, optimizeFilter, reset, showPaging} from './search';
 
 export const enLocale = {
   'id': 'en-US',

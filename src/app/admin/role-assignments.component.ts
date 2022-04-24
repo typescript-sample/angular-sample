@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { buildId, EditComponent, error, hideLoading, message, showLoading } from '@/app/common';
+import { clone, buildId, EditComponent, error, hideLoading, message, showLoading } from '@/app/common';
 import { confirm } from 'ui-alert';
 import { handleError, inputEdit } from 'uione';
 import { Role, RoleClient } from './service/role';
 import { User, UserClient } from './service/user';
-import { clone } from 'reflectx';
 
 @Component({
   selector: 'app-role-assign',

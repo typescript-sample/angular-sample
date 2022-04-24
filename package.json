@@ -28,9 +28,7 @@
     "ngx-pagination": "^5.1.1",
     "onecore": "0.0.28",
     "phonecodes": "0.0.2",
-    "reflectx": "0.0.10",
     "rxjs": "~7.5.0",
-    "search-utilities": "0.0.14",
     "tslib": "^2.3.0",
     "ui-alert": "0.0.7",
     "ui-loading": "0.0.5",
@@ -38,7 +36,6 @@
     "ui-toast": "0.0.5",
     "uione": "0.0.17",
     "validation-core": "0.0.3",
-    "validation-util": "0.0.5",
     "web-clients": "^0.1.20",
     "zone.js": "~0.11.4"
   },

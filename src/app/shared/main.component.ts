@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { navigate } from '@/app/common';
 import { user as getUser, storage, UserAccount } from 'uione';
+import { expandAll, toggleMenuItem } from './nav';
 
 @Component({
   selector: 'app-main',
@@ -25,21 +26,21 @@ export class MainComponent implements OnInit {
   isShowSearchResult = false;
   forms: any;
   privileges: any;
-  isToggleSidebar: boolean;
-  isToggleMenu: boolean;
-  isToggleSearch: boolean;
+  isToggleSidebar?: boolean;
+  isToggleMenu?: boolean;
+  isToggleSearch?: boolean;
   pinnedModules: any = [];
-  isMenu: boolean;
-  DarkMode: boolean;
-  isPinned: boolean;
-  classicMenu: boolean;
+  isMenu?: boolean;
+  DarkMode?: boolean;
+  isPinned?: boolean;
+  classicMenu?: boolean;
   // signoutService: SignoutService;
   se: any = {};
   pageSize = 10;
   pageSizes = [10, 20, 40, 60, 100, 200, 400, 10000];
   public classProfile: any = '';
   username: string = '';
-  user: UserAccount = getUser();
+  user?: UserAccount|null = getUser();
   ngOnInit() {
     this.privileges = storage.privileges();
     this.isMenu = false;
@@ -48,8 +49,9 @@ export class MainComponent implements OnInit {
     this.isToggleMenu = false;
     this.isToggleSearch = false;
     const usr = storage.user();
-    this.username = usr.displayName && usr.displayName.length > 0 ? usr.displayName : (usr.username && usr.username.length > 0 ? usr.username : this.resource.my_profile);
-
+    if (usr) {
+      this.username = usr.displayName && usr.displayName.length > 0 ? usr.displayName : (usr.username && usr.username.length > 0 ? usr.username : this.resource.my_profile);
+    }
   }
 
   searchOnClick() {
@@ -104,7 +106,7 @@ export class MainComponent implements OnInit {
        err => this.handleError(err)
      );
      */
-    sessionStorage.setItem('authService', null);
+    sessionStorage.removeItem('authService');
     sessionStorage.clear();
     storage.setUser(null);
     navigate(this.router, '');
@@ -179,46 +181,7 @@ export class MainComponent implements OnInit {
   }
   toggleMenuItem = (event: any) => {
     event.preventDefault();
-    let target: HTMLElement | null = event.currentTarget;
-    const currentTarget = event.currentTarget;
-    const nul = currentTarget.nextElementSibling;
-    if (nul) {
-      const elI = currentTarget.querySelectorAll('.menu-item > i.entity-icon');
-      if (nul.classList.contains('expanded')) {
-        nul.classList.remove('expanded');
-        if (elI && elI.length > 0) {
-          elI[0].classList.add('up');
-          elI[0].classList.remove('down');
-        }
-      } else {
-        nul.classList.add('expanded');
-        if (elI && elI.length > 0) {
-          elI[0].classList.remove('up');
-          elI[0].classList.add('down');
-        }
-      }
-    }
-    if (target.nodeName === 'A') {
-      target = target.parentElement;
-    }
-    if (target && target.nodeName === 'LI') {
-      target.classList.toggle('open');
-    }
-    const parent = this.findParent(currentTarget, 'NAV');
-    if (parent) {
-      setTimeout(() => {
-        if (this.isExpandedAll(parent)) {
-          parent.classList.remove('collapsed-all');
-          parent.classList.add('expanded-all');
-        } else if (this.isCollapsedAll(parent)) {
-          parent.classList.remove('expanded-all');
-          parent.classList.add('collapsed-all');
-        } else {
-          parent.classList.remove('expanded-all');
-          parent.classList.remove('collapsed-all');
-        }
-      }, 0);
-    }
+    toggleMenuItem(event.currentTarget);
   }
   // onMouseHover = (e: any) => {
   //   e.preventDefault();
@@ -236,106 +199,10 @@ export class MainComponent implements OnInit {
   //     }
   //   }
   // }
-
-  findParent(ele: HTMLElement, node: string): HTMLElement | null {
-    let current: HTMLElement | null = ele;
-    while (true) {
-      current = current.parentElement;
-      if (!current) {
-        return null;
-      }
-      if (current.nodeName === node) {
-        return current;
-      }
-    }
-  }
-  isCollapsedAll(parent: HTMLElement): boolean {
-    const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
-    if (navbar.length > 0) {
-      let i = 0;
-      for (i = 0; i < navbar.length; i++) {
-        if (navbar[i].classList.contains('expanded')) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return false;
-  }
-  isExpandedAll(parent: HTMLElement): boolean {
-    const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
-    if (navbar.length > 0) {
-      let i = 0;
-      for (i = 0; i < navbar.length; i++) {
-        if (!navbar[i].classList.contains('expanded')) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return false;
-  }
   expandAll(e: any) {
     e.preventDefault();
-    const parent = this.findParent(e.currentTarget, 'nav');
-    if (parent) {
-      parent.classList.remove('collapsed-all');
-      parent.classList.add('expanded-all');
-      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
-      if (navbar.length > 0) {
-        const icons = Array.from(parent.querySelectorAll('i.up'));
-        let i = 0;
-        for (i = 0; i < navbar.length; i++) {
-          navbar[i].className = 'list-child expanded';
-        }
-        for (i = 0; i < icons.length; i++) {
-          icons[i].className = 'entity-icon down';
-        }
-      }
-    }
+    expandAll(e.currentTarget);
   }
-  onShowAllMenu = (e: any) => {
-    e.preventDefault();
-    const parent = this.findParent(e.currentTarget, 'NAV');
-    if (parent) {
-      parent.classList.add('expanded-all');
-      parent.classList.remove('collapsed-all');
-      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.list-child'));
-      if (navbar.length > 0) {
-        const icons = Array.from(parent.querySelectorAll('i.up'));
-        let i = 0;
-        for (i = 0; i < navbar.length; i++) {
-          navbar[i].className = 'list-child expanded';
-        }
-        for (i = 0; i < icons.length; i++) {
-          icons[i].className = 'entity-icon down';
-        }
-      }
-
-    }
-  }
-
-  onHideAllMenu = (e: any) => {
-    e.preventDefault();
-    const parent = this.findParent(e.currentTarget, 'NAV');
-    if (parent) {
-      parent.classList.add('collapsed-all');
-      parent.classList.remove('expanded-all');
-      const navbar = Array.from(parent.querySelectorAll('.sidebar>nav>ul>li>ul.expanded'));
-      if (navbar.length > 0) {
-        const icons = Array.from(parent.querySelectorAll('i.down'));
-        let i = 0;
-        for (i = 0; i < navbar.length; i++) {
-          navbar[i].className = 'list-child';
-        }
-        for (i = 0; i < icons.length; i++) {
-          icons[i].className = 'entity-icon up';
-        }
-      }
-
-    }
-  }
-
   pinModulesHandler(event: any, index: any, moduleOrder: any) {
     event.stopPropagation();
     if (

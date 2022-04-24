@@ -174,7 +174,7 @@ export class ViewComponent<T, ID> extends BaseViewComponent<T, ID> {
   }
 }
 interface BaseUIService {
-  getValue(el: HTMLInputElement, locale?: Locale, currencyCode?: string): string|number|boolean;
+  getValue(el: HTMLInputElement, locale?: Locale, currencyCode?: string): string|number|boolean|null|undefined;
   removeError(el: HTMLInputElement): void;
 }
 export class BaseComponent extends RootComponent {
@@ -398,7 +398,7 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
 
   insertSuccessMsg: string;
   updateSuccessMsg: string;
-  load(_id: ID, callback?: (m: T, showM: (m2: T) => void) => void) {
+  load(_id: ID|null|undefined, callback?: (m: T, showM: (m2: T) => void) => void) {
     const id: any = _id;
     if (id && id !== '') {
       

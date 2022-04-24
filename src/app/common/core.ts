@@ -51,9 +51,9 @@ export interface ViewParameter {
   loading?: LoadingService;
 }
 export interface ViewService<T, ID> {
-  metadata?(): Attributes;
+  metadata?(): Attributes | undefined;
   keys?(): string[];
-  load(id: ID, ctx?: any): Promise<T|null|undefined>;
+  load(id: ID, ctx?: any): Promise<T | null>;
 }
 
 export interface EditStatusConfig {
@@ -233,7 +233,7 @@ export interface ErrorMessage {
   message?: string;
 }
 export interface UIService {
-  getValue(el: HTMLInputElement, locale?: Locale, currencyCode?: string): string|number|boolean;
+  getValue(el: HTMLInputElement, locale?: Locale, currencyCode?: string): string|number|boolean|null|undefined;
   decodeFromForm(form: HTMLFormElement, locale?: Locale, currencyCode?: string|null): any;
 
   validateForm(form?: HTMLFormElement, locale?: Locale, focusFirst?: boolean, scroll?: boolean): boolean;

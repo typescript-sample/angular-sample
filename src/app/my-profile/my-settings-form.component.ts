@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { handleError, inputEdit, message,  } from "uione";
-import { EditComponent, StringMap } from "../common";
+import { StringMap } from "../common";
 import { getResource } from "../common/input";
 import { MyProfileClient, UserSettings } from "./my-profile";
 

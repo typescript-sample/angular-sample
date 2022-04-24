@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { buildFromUrl, initElement, navigate, BaseSearchComponent } from '@/app/common';
 import { handleError, inputSearch, registerEvents, storage } from 'uione';
@@ -36,7 +36,7 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
   }
 
   edit(roleId:string) {
-    navigate(this.router, 'admin/roles', [roleId]);
+    navigate(this.router, 'admin/roles/edit', [roleId]);
   }
 
   addRole() {    

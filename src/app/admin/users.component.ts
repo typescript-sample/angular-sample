@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { navigate } from '@/app/common';
-import { SearchComponent } from '@/app/common';
+import { navigate, SearchComponent } from 'angularx';
 import { handleError, inputSearch } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient, UserFilter } from './service/user';

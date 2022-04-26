@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EditComponent } from '@/app/common';
+import { EditComponent } from 'angularx';
 import { handleError, inputEdit } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { Privilege, Role, RoleClient } from './service/role';

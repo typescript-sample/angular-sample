@@ -15,8 +15,8 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
     super(viewContainerRef, userService, inputSearch());
   }
   statusList: any = [];
-  femaleIcon = "@/app/assets/images/female.png";
-  maleIcon = "@/app/assets/images/female.png";
+  femaleIcon = "assets/images/female.png";
+  maleIcon = "app/assets/images/female.png";
   ngOnInit() {
     this.onInit();
   }

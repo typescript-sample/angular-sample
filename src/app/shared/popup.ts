@@ -4,7 +4,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import { PositioningService } from 'ngx-bootstrap/positioning';
 @Injectable()
 export class PopupService {
-  bsModalRef: BsModalRef;
+  bsModalRef: BsModalRef | undefined;
 
   constructor (
     private bsModalService: BsModalService,

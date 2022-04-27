@@ -5,9 +5,12 @@ import { Component, ContentChild, OnDestroy, TemplateRef } from '@angular/core';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements OnDestroy {
-  @ContentChild('header', { static: false }) header?: TemplateRef<any>;
-  @ContentChild('body', { static: false }) body?: TemplateRef<any>;
-  @ContentChild('footer', { static: false }) footer?: TemplateRef<any>;
+  @ContentChild('header', { static: false }) 
+  header?: TemplateRef<any>;
+  @ContentChild('body', { static: false }) 
+  body?: TemplateRef<any>;
+  @ContentChild('footer', { static: false }) 
+  footer?: TemplateRef<any>;
 
   public visible = false;
   public visibleAnimate = false;

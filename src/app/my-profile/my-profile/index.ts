@@ -1,5 +1,5 @@
 import { HttpRequest } from '@/app/shared/HttpRequest';
-import config from '@/config';
+import {config} from '@/config';
 import { Injectable } from '@angular/core';
 import { options, storage } from 'uione';
 import { Client } from 'web-clients';

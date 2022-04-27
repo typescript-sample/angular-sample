@@ -4,14 +4,14 @@ import { MyProfileFormComponent } from "./my-profile-form.component";
 import { MySettingsFormComponent } from "./my-settings-form.component";
 
 @Component({
-    selector: 'app-profile-module',
+    selector: 'app-my-profile-module',
     template: '<router-outlet></router-outlet>'
 })
 export class MyProfileComponent {
     constructor() { }
 }
 
-const profileRoutes: Routes = [
+const myProfileRoutes: Routes = [
     {
         path: '',
         component: MyProfileComponent,
@@ -24,7 +24,7 @@ const profileRoutes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(profileRoutes)
+        RouterModule.forChild(myProfileRoutes)
     ],
     declarations: [
 
@@ -33,6 +33,6 @@ const profileRoutes: Routes = [
         RouterModule,
     ]
 })
-export class ProfileRoutes {
+export class MyProfileRoutes {
 
 }

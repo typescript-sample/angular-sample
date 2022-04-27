@@ -16,9 +16,14 @@ const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
       },
-      {path:'my-profile',
-      loadChildren:()=>import('./my-profile/my-profile.module').then(m=>m.ProfileModule)
-    }
+      {
+        path: 'my-profile',
+        loadChildren: () => import('./my-profile/my-profile.module').then(m => m.MyProfileModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+      }
     ]
   },
 

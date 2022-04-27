@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationClient as BaseAuthenticationClient, AuthInfo, AuthResult} from 'authen-client';
-import config from '../../config';
+import {config} from '../../config';
 import {HttpRequest} from '../shared/HttpRequest';
 
 @Injectable()

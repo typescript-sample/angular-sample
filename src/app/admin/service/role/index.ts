@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@/app/shared/HttpRequest';
 import {  Client, GenericSearchClient } from 'web-clients';
 import { Privilege, Role, RoleFilter, roleModel, RoleService } from './role';
-import config from '@/config';
+import {config} from '@/config';
 import { ResultInfo } from 'onecore';
 
 export * from './role';

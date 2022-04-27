@@ -1,12 +1,20 @@
 export const config = {
   authentication_url: 'http://localhost:8083',
-  password_url: 'http://localhost:8083',
-  signup_url: 'http://localhost:8083',
+  signup_url: 'http://localhost:8082/signup',
+  password_url: 'http://localhost:8082/password',
+  oauth2_url: 'http://localhost:8082/oauth2',
 
   user_url: 'http://localhost:8083/users',
   role_url: 'http://localhost:8083/roles',
-  privilege_url: 'http://localhost:8082/privileges',
-  myprofile_url: 'http://localhost:8082/my-profile'
+  privilege_url: 'http://localhost:8080/privileges',
+  audit_log_url: 'http://localhost:8080/audit-logs',
+  cinema_url: 'http://localhost:8080/cinema',
+  category_url: 'http://localhost:8080/categories',
+  film_url: 'http://localhost:8080/films',
+  location_url: 'http://localhost:8085/locations',
+  location_rate_url: 'http://localhost:8085/locationsrate',
+  myprofile_url: 'http://localhost:8082/my-profile',
+  profile_url:'http://localhost:8082/users'
 };
 
 export const env = {
@@ -17,4 +25,3 @@ export const env = {
     authentication_url: '/server'
   }
 };
-export default config;

@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { navigate, SearchComponent } from 'angularx';
+import { navigate, SearchComponent } from '@/app/common';
 import { handleError, inputSearch } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient, UserFilter } from './service/user';
@@ -15,13 +15,13 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
     super(viewContainerRef, userService, inputSearch());
   }
   statusList: any = [];
-  femaleIcon = "assets/images/female.png";
+  femaleIcon = "app/assets/images/female.png";
   maleIcon = "app/assets/images/female.png";
+  viewable: boolean = true;
+  editable: boolean = true;
   ngOnInit() {
+    this.hideFilter=true;
     this.onInit();
-  }
-  viewUser(userId: string) {
-    navigate(this.router, 'users', [userId]);
   }
   edit(userId: string) {
     navigate(this.router, 'admin/users/edit', [userId]);
@@ -29,14 +29,13 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
   add() {
     navigate(this.router, 'admin/users/add');
   }
-
-  async load(s: UserFilter, autoSearch: boolean) {
-    Promise.all([
-      this.masterDataService.getStatus()
-    ]).then(values => {
-      const [statusList] = values;
-      this.statusList = statusList;
-      super.load(s, autoSearch);
-    }).catch(handleError);
-  }
+  // async load(s: UserFilter, autoSearch: boolean) {
+  //   Promise.all([
+  //     this.masterDataService.getStatus()
+  //   ]).then(values => {
+  //     const [statusList] = values;
+  //     this.statusList = statusList;
+  //     super.load(s, autoSearch);
+  //   }).catch(handleError);
+  // }
 }

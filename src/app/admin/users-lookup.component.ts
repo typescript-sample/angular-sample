@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { initElement, SearchComponent } from 'angularx';
+import { initElement, SearchComponent } from '@/app/common';
 import { inputSearch, registerEvents, storage } from 'uione';
 import { User, UserClient, UserFilter } from './service/user';
 

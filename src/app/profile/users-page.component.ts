@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { Router } from "@angular/router";
-import { navigate, SearchComponent } from "angularx";
+import { navigate, SearchComponent } from "@/app/common";
 import { alert, getResource, handleError, inputSearch, registerEvents } from "uione";
 
 import { UserClient } from "./user";

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { buildFromUrl, initElement, navigate, BaseSearchComponent } from 'angularx';
+import { buildFromUrl, initElement, navigate, BaseSearchComponent } from '@/app/common';
 import { handleError, inputSearch, registerEvents, storage } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { Role, RoleClient, RoleFilter } from './service/role';
@@ -20,7 +20,7 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
     this.form = initElement(this.viewContainerRef, registerEvents);
     const s = this.mergeFilter(buildFromUrl(), ['ctrlStatus', 'userType']);
     this.init(s, storage.autoSearch);
-    
+    this.hideFilter = true;
   }
   init(s: RoleFilter, auto: boolean) {
     Promise.all([
@@ -41,9 +41,5 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
 
   addRole() {    
     navigate(this.router, 'admin/roles/add');
-  }
-
-  assign(roleId:string) {
-    navigate(this.router, `admin/roles/assign`, [roleId]);
   }
 }

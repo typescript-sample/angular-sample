@@ -1,7 +1,7 @@
 <div class='view-container'>
   <form id='roleAssignmentForm' name='roleAssignmentForm' model-name='role'>
     <header>
-      <button type='button' id='btnBack' name='btnBack' class='btn-back' (click)="back()"></button>
+      <button type='button' id='btnBack' name='btnBack' class='btn-back'></button>
       <h2>{{resource.role_assignment_subject}}</h2>
     </header>
     <div>
@@ -33,7 +33,7 @@
             <button  type='button' (click)='onShowCheckBox()'>{{isCheckboxShown ? resource.deselect : resource.select}}</button>
             <button *ngIf='isCheckboxShown' type='button' (click)='onCheckAll()'>{{resource.check_all}}</button>
             <button *ngIf='isCheckboxShown' type='button' (click)='onUnCheckAll()'>{{resource.uncheck_all}}</button>
-            <button *ngIf='isCheckboxShown' type='button' (click)='onDeleteCheckBox()'>{{resource.delete}}</button>
+            <button *ngIf='isCheckboxShown' type='button' (click)='onDelete()'>{{resource.delete}}</button>
           </div>
         </h4>
         <label class='col s12 search-input'>
@@ -55,13 +55,14 @@
                 <h3>{{user.displayName}}</h3>
                 <p>{{user.email}}</p>
               </div>
+              <button class="btn-detail"></button>
             </section>
           </li>
         </ul>
       </section>
     </div>
     <footer>
-      <button type='submit' id='btnSave' name='btnSave' (click)="saveOnClick()">{{resource.save}}</button>
+      <button type='submit' id='btnSave' name='btnSave' (click)="save($event)">{{resource.save}}</button>
     </footer>
   </form>
   <app-modal #reuseModal role="dialog">

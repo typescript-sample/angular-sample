@@ -1,6 +1,6 @@
 ﻿<div class='view-container'>
   <header>
-    <h2>{{resource.user_list}}</h2>
+    <h2>{{resource.users}}</h2>
     <div class='btn-group'>
       <button *ngIf="view !== 'table'" type='button' id='btnTable' name='btnTable' class='btn-table' (click)="changeView('table')"></button>
       <button *ngIf="view === 'table'" type='button' id='btnListView' name='btnListView' class='btn-list-view' (click)="changeView('listview')"></button>
@@ -10,20 +10,19 @@
   <div>
     <form id='usersForm' name='usersForm' novalidate>
       <section class='row search-group'>
-        <label class='col s12 m6 search-input'>
+        <label class='col s12 m4 search-input'>
           <select (change)='onPageSizeChanged($event)'>
             <option *ngFor='let p of pageSizes' [value]='p' [selected]='p === pageSize'>{{p}}</option>
           </select>
           <input type='text' id='q' name='q' [(ngModel)]='filter.q' maxlength='1000' placeholder='{{resource.keyword}}'/>
-          <!-- <button type='button' class='btn clear-text' (click)='clearKeyworkOnClick()'><i class='fa fa-times'></i>
-           </button>-->
-          <button type='submit' class='btn-search' (click)='searchOnClick($event)'></button>
+           <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
+          <button type='submit' class='btn-search' (click)='search($event)'></button>
         </label>
-        <pagination class='col s12 m6' id='pageIndex' name='pageIndex' *ngIf='showPaging' [(ngModel)]='pageIndex'
+        <pagination class='col s12 m8' id='pageIndex' name='pageIndex' *ngIf='showPaging' [(ngModel)]='pageIndex'
                     (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
                     [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
       </section>
-      <section class='row search-group inline'>
+      <section class='row search-group inline' [hidden]="hideFilter">
         <label class='col s12 m4 l4'>
           {{resource.username}}
           <input type='text'
@@ -44,7 +43,7 @@
         </label>
         <label class='col s12 m4 l4 checkbox-section'>
           {{resource.status}}
-          <section className='checkbox-group'>
+          <section class='checkbox-group'>
             <label>
               <input
                 type='checkbox'
@@ -66,14 +65,6 @@
               {{resource.inactive}}
             </label>
           </section>
-          <!-- <section class='checkbox-group'>
-            <label *ngFor='let item of statusList; let i = index'>
-              <input type='checkbox' [id]='item.value' name='status' [value]='item.value'
-                     [checked]="includes(filter['ctrlStatus'], item.value)"
-                     (change)='updateState($event)'/>
-              {{item.text}}
-            </label>
-          </section> -->
         </label>
       </section>
     </form>

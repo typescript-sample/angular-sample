@@ -1,8 +1,9 @@
 <div class='view-container'>
-  <form id='accessRoleForm' model-name='role' name='accessRoleForm' class='form' novalidate>
+  <form id='roleForm' model-name='role' name='roleForm' novalidate>
     <header>
-      <button type='button' class='btn-back' (click)='back()'></button>
+      <button type='button' id='btnBack' name='btnBack' class='btn-back' (click)='back()'></button>
       <h2>{{newMode ? resource.create : resource.edit}} {{resource.role}} </h2>
+      <button class="btn-group btn-right"><i (click)="assign($event, role.roleId)" class="material-icons">group</i></button>
     </header>
     <div>
       <section class='row'>
@@ -12,6 +13,7 @@
                  [(ngModel)]='role.roleId'
                  [value]="role.roleId"
                  maxlength='255' required
+                 [readOnly]="!newMode"
                  placeholder='{{resource.role_id}}'>
         </label>
         <label class='col s12 m6'>
@@ -143,7 +145,7 @@
       </section>
     </div>
     <footer>
-      <button type='submit' id='btnSave' name='btnSave' (click)='saveOnClick()'>{{resource.save}}</button>
+      <button type='submit' id='btnSave' name='btnSave' (click)='save()'>{{resource.save}}</button>
     </footer>
   </form>
 </div>

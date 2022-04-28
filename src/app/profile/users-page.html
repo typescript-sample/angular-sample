@@ -16,9 +16,9 @@
             <option *ngFor='let p of pageSizes' [value]='p' [selected]='p === pageSize'>{{p}}</option>
           </select>
           <input type='text' id='q' name='q' [(ngModel)]='filter.q' maxlength='1000' [placeholder]='resource.keyword' />
-          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearKeyworkOnClick()"></button>
+          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()"></button>
           <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
-          <button type='submit' class='btn-search' (click)='searchOnClick($event)'></button>
+          <button type='submit' class='btn-search' (click)='search($event)'></button>
         </label>
         <pagination class='col s12 m6' id='pageIndex' name='pageIndex' *ngIf='showPaging' [(ngModel)]='pageIndex'
           (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'

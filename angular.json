@@ -58,9 +58,8 @@
                 "output": "/"
               }
             ],
-            "styles": [
-              "src/assets/css/styles.scss",
-              "src/styles.scss"
+            "styles": [  
+              "src/styles.css"
             ],"stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles"
@@ -138,7 +137,7 @@
             "styles": [
               "src/assets/css/reset.css",
               "src/assets/css/loading.css",
-              "src/styles.scss"
+              "src/styles.css"
             ],
             
             "scripts": []

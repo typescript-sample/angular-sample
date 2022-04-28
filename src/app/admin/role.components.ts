@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EditComponent } from 'angularx';
+import { EditComponent, navigate } from '@/app/common';
 import { handleError, inputEdit } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { Privilege, Role, RoleClient } from './service/role';
@@ -188,4 +188,8 @@ export class RoleComponent extends EditComponent<Role, any> implements OnInit {
     }
     return array;
   }
+  assign(event: Event, id: string){
+    event.preventDefault();
+    navigate(this.router,`/admin/roles/assign`,[id]);
+  };
 }

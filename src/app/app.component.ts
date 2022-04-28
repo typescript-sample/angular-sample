@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     clientresources.csv = new DefaultCsvService(csv);
-    storage.authentication = '/signin';
+    storage.authentication = '';
     storage.home = 'admin/users';
     storage.setResources(locales);
     storage.setLoadingService(loading);

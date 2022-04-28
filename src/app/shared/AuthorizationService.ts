@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {isAuthorized} from 'angularx';
+import {isAuthorized} from '@/app/common';
 import {storage} from 'uione';
 
 @Injectable()

@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EditComponent } from 'angularx';
+import { EditComponent } from '@/app/common';
 import { formatter } from 'ui-plus';
 import { emailOnBlur, handleError, inputEdit, numberOnFocus, phoneOnBlur, requiredOnBlur } from 'uione';
 import { Gender } from 'uione';

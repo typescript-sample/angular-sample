@@ -1,9 +1,8 @@
 import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 import { Component, OnInit } from "@angular/core";
-import { getResource, useResource } from "uione";
+import { getResource } from "uione";
 import { MyProfileClient } from "./my-profile";
-import { MyProfileComponent } from "./my-profile.component";
-import { Achievement, Skill, User } from "./my-profile/user";
+import { Achievement, User } from "./my-profile/user";
 
 interface Edit {
   hireable: boolean;

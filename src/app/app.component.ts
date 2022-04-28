@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { resources } from './common';
+import { resources } from 'angularx';
 import * as csv from 'csvtojson';
 import { currency, locale } from 'locale-service';
-// import * as moment from 'moment';
 import { phonecodes } from 'phonecodes';
 import { alert, confirm } from 'ui-alert';
 import { loading } from 'ui-loading';
@@ -12,9 +11,6 @@ import { toast } from 'ui-toast';
 import { storage } from 'uione';
 import { resources as vresources } from 'validation-core';
 import { DefaultCsvService, resources as clientresources } from 'web-clients';
-// import {Error404Component} from './core/error404/error-404.component';
-// import {AuthenticationService} from './shared/AuthenticationService';
-// import {MainComponent} from './shared/main.component';
 import { resources as locales } from './shared/resources';
 
 function parseDate(value: string, format: string): Date | null | undefined {

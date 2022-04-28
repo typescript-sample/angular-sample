@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {Router} from '@angular/router';
-import {initElement, MessageComponent, navigate} from '../common';
+import {initElement, MessageComponent, navigate} from 'angularx';
 import {AuthenClient, AuthInfo, AuthResult, dayDiff, getMessage, handleCookie, initFromCookie, Status, store, validate} from 'authen-client';
 import {CookieService} from 'ngx-cookie-service';
 import {getLocale, getResource, handleError, loading, message, registerEvents, storage} from 'uione';

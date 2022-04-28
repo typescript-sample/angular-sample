@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { buildFromUrl, initElement, navigate, BaseSearchComponent } from '@/app/common';
+import { buildFromUrl, initElement, navigate, BaseSearchComponent } from 'angularx';
 import { handleError, inputSearch, registerEvents, storage } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { Role, RoleClient, RoleFilter } from './service/role';

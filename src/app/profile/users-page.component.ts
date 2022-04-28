@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { Router } from "@angular/router";
-import { navigate, SearchComponent } from "@/app/common";
-import { alert, getResource, handleError, inputSearch, registerEvents } from "uione";
+import { navigate, SearchComponent } from "angularx";
+import { alert, inputSearch } from "uione";
 
 import { UserClient } from "./user";
-import { Skill, User, UserFilter } from "./user/user";
+import { User, UserFilter } from "./user/user";
 @Component({
   selector: 'app-users-page',
   templateUrl: './users-page.html'

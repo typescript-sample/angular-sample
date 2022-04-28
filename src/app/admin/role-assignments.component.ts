@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { clone, buildId, EditComponent, error, hideLoading, message, showLoading } from '@/app/common';
+import { clone, buildId, EditComponent, error, hideLoading, message, showLoading } from 'angularx'
 import { confirm } from 'ui-alert';
 import { getResource, handleError, inputEdit, showMessage } from 'uione';
 import { Role, RoleClient } from './service/role';

@@ -1,19 +1,19 @@
-import {HttpClient} from '@angular/common/http';
 import {storage} from 'uione';
-import config from '../../config';
+import {config} from '../../config';
+import { HttpRequest } from './HttpRequest';
 
 export interface SignoutService {
   signout(username: string): Promise<boolean>;
 }
 export class SignoutClient implements SignoutService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpRequest) {
   }
 
   async signout(username: string): Promise<boolean> {
     const url = config.authentication_url + '/authentication/signout/' + username;
-    const success = await this.http.get<boolean>(url).toPromise();
+    const success = await this.http.get<boolean>(url);
     if (success) {
-      sessionStorage.setItem('authService', null);
+      sessionStorage.removeItem('authService');
       sessionStorage.clear();
       storage.setUser(null);
     }

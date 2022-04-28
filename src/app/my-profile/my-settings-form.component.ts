@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { handleError, inputEdit, message,  } from "uione";
-import { StringMap } from "../common";
-import { getResource } from "../common/input";
+import { getResource, handleError, message,  } from "uione";
+import { StringMap } from "angularx";
 import { MyProfileClient, UserSettings } from "./my-profile";
 
 @Component({
@@ -12,7 +11,7 @@ import { MyProfileClient, UserSettings } from "./my-profile";
 })
 export class MySettingsFormComponent implements OnInit{
     constructor(private service: MyProfileClient) {
-    this.resource = getResource(inputEdit()).resource();
+    this.resource = getResource().resource();
     }
     resource: StringMap;
     settings: UserSettings

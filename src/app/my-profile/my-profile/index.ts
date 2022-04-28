@@ -1,7 +1,6 @@
 import { HttpRequest } from '@/app/shared/HttpRequest';
 import {config} from '@/config';
 import { Injectable } from '@angular/core';
-import { options, storage } from 'uione';
 import { Client } from 'web-clients';
 import { MyProfileService, User, UserFilter, userModel, UserService, UserSettings } from './user';
 

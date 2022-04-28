@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { navigate } from '@/app/common';
+import { navigate } from 'angularx';
 import { user as getUser, storage, UserAccount } from 'uione';
 import { collapseAll, expandAll, toggleMenuItem } from './nav';
 

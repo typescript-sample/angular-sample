@@ -1,4 +1,3 @@
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { getResource } from 'uione';
 import './general-info.css';

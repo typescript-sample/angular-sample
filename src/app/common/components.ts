@@ -370,7 +370,6 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
     this.doSave = this.doSave.bind(this);
     this.succeed = this.succeed.bind(this);
     this.successMessage = this.successMessage.bind(this);
-    this.doSave = this.doSave.bind(this);
     this.postSave = this.postSave.bind(this);
     this.handleDuplicateKey = this.handleDuplicateKey.bind(this);
     this.addable = true;
@@ -551,10 +550,9 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
       }
       const com = this;
       const obj = com.getModel();
-
       if (!this.newMode) {
         const diffObj = makeDiff(this.orginalModel, obj, this.keys, this.version);
-        const l = Object.keys(diffObj).length;
+        const l = Object.keys(diffObj as any).length;
         if (l === 0) {
           this.showMessage(r.value('msg_no_change'));
         } else {
@@ -589,12 +587,12 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
       callback(obj);
     }
   }
-  doSave(obj: T, body?: T, isBack?: boolean) {
+  doSave(obj: T, body?: Partial<T>, isBack?: boolean) {
     this.running = true;
     showLoading(this.loading);
     const isBackO = (isBack == null || isBack === undefined ? this.backOnSuccess : isBack);
     const com = this;
-    let m = obj;
+    let m: T | Partial<T> = obj;
     let fn = this.newMode ? this.service.insert : this.service.update;
     if (!this.newMode) {
       if (this.patchable === true && this.service.patch && body && Object.keys(body).length > 0) {
@@ -602,7 +600,7 @@ export class BaseEditComponent<T, ID> extends BaseComponent {
         fn = this.service.patch;
       }
     }
-    fn(m).then(result => {
+    fn(m as any).then(result => {
       com.postSave(result, isBackO);
       com.running = false;
       hideLoading(com.loading);

@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationService } from './shared/AuthenticationService';
 import { AuthorizationService } from './shared/AuthorizationService';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
   
 @NgModule({
@@ -24,7 +25,7 @@ import { AuthorizationService } from './shared/AuthorizationService';
     FormsModule,
     BrowserAnimationsModule,
     // BsDropdownModule.forRoot(),
-    // PaginationModule.forRoot(),
+    PaginationModule.forRoot()
     // ModalModule.forRoot()
     ],
   providers: [

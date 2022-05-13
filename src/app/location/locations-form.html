@@ -1,0 +1,67 @@
+<div class="view-container">
+  <header>
+    <h2>{{resource.users}}</h2>
+    <div class="btn-group">
+      <button *ngIf="!viewList" type="button" id="btnListView" name="btnListView" class="btn-grid"
+        (click)="onSetViewList($event)"></button>
+      <button *ngIf="viewList" type="button" id="btnListView" name="btnListView" class="btn-map" data-view="listview"
+        (click)="onSetViewList($event)">
+        <span class="material-icons-outlined"></span>
+      </button>
+      <button *ngIf="addable==true" type="button" id="btnNew" name="btnNew" class="btn-new" (click)="add($event)"></button>
+
+    </div>
+  </header>
+  <div>
+    <form id="usersForm" name="usersForm" noValidate="true">
+      <section class="row search-group">
+        <label class="col s12 m4 search-input">
+          <select (change)='onPageSizeChanged($event)'>
+            <option *ngFor='let p of pageSizes' [value]='p' [selected]='p === pageSize'>{{p}}</option>
+          </select>
+
+          <input type="text" id="q" name="q" [value]="filter.q || ''" (change)="updateState($event)" maxLength="255"
+            [placeholder]="resource.keyword" />
+          <button type="button" class="btn-filter" (click)="toggleFilter($event)"></button>
+          <button type="submit" class="btn-search" (click)="search($event)"></button>
+        </label>
+        <pagination class="col s12 m8" id='limit1' name='limit' *ngIf='showPaging' [(ngModel)]='pageIndex'
+          (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
+          [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
+      </section>
+      <section class="row search-group inline" [hidden]="hideFilter">
+        <label class="col s12 m4 l4">
+          {{resource.username}}
+          <input type="text" id="name" name="name" [value]="filter.name || ''" (change)="updateState" maxLength="255"
+            [placeholder]="resource.username" />
+        </label>
+      </section>
+
+    </form>
+    <form class="list-result">
+      <ul class="row list-view 2" *ngIf="viewList">
+        <ng-container *ngIf="list && list.length > 0">
+          <ng-container *ngFor="let location of list; let i = index">
+            <!-- <location-carousel [location]="location" [edit]="edit"></location-carousel> -->
+            <li class="col s12 m6 l4 xl3 card">
+              <section>
+                <div class="cover" [ngStyle]="{ 'background-image': 'url(' + location.imageURL + ')'}">
+                </div>
+                <h3 (click)="edit($event,location.id)">{{location.name}}</h3>
+                <p [class]='location.status === "I" ? "inactive" : ""'>{{location.description}}</p>
+
+              </section>
+              
+            </li>
+          </ng-container>
+        </ng-container>
+      </ul>
+      <div style="height: 600px; width: 100%" [hidden]="viewList">
+        <div class="map-container" style="height:100%">
+            <div id="mapid" style="height:100%"></div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { clone, buildId, EditComponent, error, hideLoading, message, showLoading } from 'angularx'
+import { buildId, message } from 'angularx'
 import { confirm } from 'ui-alert';
-import { getResource, handleError, inputEdit, showMessage } from 'uione';
+import { getResource, handleError, showMessage } from 'uione';
 import { Role, RoleClient } from './service/role';
 import { User, UserClient } from './service/user';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
-import { navigate } from 'angularx';
 
 @Component({
   selector: 'app-role-assign',

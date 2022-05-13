@@ -1,0 +1,81 @@
+<ng-container *ngIf="location && hasReview">
+    <div class='row top-content'>
+        <div class='col s4 m5 l6 summary'>
+            <div class='score'><span>{{(location.info) && Math.ceil(location.info.rate * 100) / 100}}</span></div>
+            <div class='average'>
+                <div class='empty-stars'></div>
+                <div class='full-stars'
+                    [style]="'width:'+( (location.info) && (calculatorPercentStar(location.info.rate) || 0))"></div>
+            </div>
+        </div>
+        <div class='col s8 m7 l6'>
+            <div class="detail" *ngFor="let item of getPercentAndNumberStar()">
+                <div class='rv-star'><i *ngFor="let i of item.numberStar"></i></div>
+                <div class='progress'>
+                    <span [style]="'width:'+ item.percent +'%' "></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='row mid-content'>
+        <div class='col s12 m12 l12 rating'>
+            <p>{{resource.rating_text}}</p>
+            <div id='rate' [class]="rateClassName">
+                <ng-container *ngFor="let item of fakeArray(5)">
+                    <i (click)="handleOnClick(item);" (onmouseenter)="handleOnClick(item)"
+                        (onmouseleave)="handleOnMouseLeave()">
+                    </i>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class='title'>
+        <span><b>{{resource.reviews}}</b></span>
+    </div>
+    <ul class='row list-view'>
+
+        <ng-container *ngIf=" rates && rates.length > 0 ">
+            <ng-container *ngFor="let value of rates">
+                <li class='col s12 m12 l12 review-custom'>
+                    <section class='card'>
+                        <h4>{{value.userId}}</h4>
+                        <p>{{moment(value.rateTime).format('DD/MM/YYYY')}}</p>
+                        <div [class]="'rv-star2 '+ reviewStar(value.rate)">
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                        </div>
+                        <span *ngIf="value.review && (value.review.length > maxLengthReviewText)">{{resource.review}}
+                            {{value.review.substring(0,maxLengthReviewText)}} <span
+                                class='more-reviews'>More</span></span>
+                        <span
+                            *ngIf="value.review && (value.review.length <= maxLengthReviewText)">{{value.review}}</span>
+                        <span *ngIf="!value.review"></span>
+                    </section>
+                </li>
+            </ng-container>
+        </ng-container>
+
+    </ul>
+    <div class='col s12 m12 l12 more-reviews-div'>
+        <span class='more-reviews' (click)="moreReview($event)">
+            <b>MORE REVIEWS</b>
+        </span>
+    </div>
+
+    <app-modal #rateModal role="dialog" [style]="customStyle" class='small-width'>
+        <ng-template #header>
+            <header>
+                <button type="button" id="btnClose" name="btnClose" class="btn-close"
+                    (click)="rateModal.close()"></button>
+                <h2>{{location&&location.name?location.name:''}}</h2>
+            </header>
+        </ng-template>
+        <ng-template #body>
+            <app-post-rate [value]="voteStar" [location]="location" (closeModal)="rateModal.close()" (loadData)="load">
+            </app-post-rate>
+        </ng-template>
+    </app-modal>
+</ng-container>

@@ -1,0 +1,49 @@
+<div class="view-container">
+    <form
+      id="addNewRate"
+      name="addNewRate"
+      model-name="addNewRate"
+    >
+      
+      <div>
+        <section class="user-title">
+          <span>
+            <b>{{resource.user_name}}</b>
+          </span>
+        </section>
+        <section class="user-star">
+          <div [class]="getRateStarClass(value)">
+              <i *ngFor="let i of fakeArray(5)" ></i>
+            </div>
+        </section>
+        <section class="user-input">
+          <textarea
+            class="rateReview"
+            id="review"
+            name="review"
+            (change)="handleChange($event)"
+            [value]="review"
+            [placeholder]="resource.placeholder_text"
+          ></textarea>
+        </section>
+        <section class="user-input">
+          <div class="takePhoto">
+            <button class="addPhoto">
+              <i class="camera" ></i>
+              <i class="text-camera">{{resource.add_photo_btn}}</i>
+            </button>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <button
+          type="submit"
+          id="btnSave"
+          name="btnSave"
+          (click)="postReview($event)"
+        >
+          Post
+        </button>
+      </footer>
+    </form>
+  </div>

@@ -1,6 +1,6 @@
 import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 import { Component, OnInit } from "@angular/core";
-import { getResource } from "uione";
+import { getResource, UserAccount } from "uione";
 import { MyProfileClient } from "./my-profile";
 import { Achievement, User } from "./my-profile/user";
 
@@ -49,10 +49,12 @@ export class MyProfileFormComponent implements OnInit {
     description: '',
     subject: ''
   }
+  userAccount: UserAccount = JSON.parse(
+    sessionStorage.getItem("authService") || "{}"
+  ) as UserAccount;;
   modalConfirmIsOpen = false;
   ngOnInit(): void {
-    const id = 'XU3rkqafp';
-    this.service.getMyProfile(id).then(user => {
+    this.service.getMyProfile(this.userAccount.id || "").then(user => {
       if (user) {
 
         this.user = user;

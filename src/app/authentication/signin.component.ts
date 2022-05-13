@@ -59,7 +59,6 @@ export class SigninComponent extends MessageComponent implements OnInit {
 
   succeed(result: AuthResult) {
     store(result.user, storage.setUser, storage.setPrivileges);
-    
     navigate(this.router, storage.home);
   }
   async signin(event?: any) {
@@ -86,7 +85,7 @@ export class SigninComponent extends MessageComponent implements OnInit {
           }
         }
         
-        if (s === status.success) {
+        if (s === status.success) {          
           this.succeed(result);
         } else {
           this.succeed(result);

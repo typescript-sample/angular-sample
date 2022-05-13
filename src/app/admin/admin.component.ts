@@ -12,8 +12,7 @@ import { UsersComponent } from './users.component';
   template: '<router-outlet></router-outlet>'
 })
 export class AdminComponent {
-  constructor() {
-  }
+  constructor() {}
 }
 
 const adminRoutes: Routes = [
@@ -45,5 +44,4 @@ const adminRoutes: Routes = [
     RouterModule,
   ]
 })
-export class AdminRoutes {
-}
+export class AdminRoutes {}

@@ -1,0 +1,140 @@
+<div class='view-container'>
+  <form id='cinemaForm' name='cinemaForm' model-name='location'>
+    <header>
+      <button type='button' id='btnBack' name='btnBack' class='btn-back' (click)="back()"></button>
+      <h2>{{newMode ? resource.create : resource.edit}} location</h2>
+    </header>
+    <div class='row'>
+      <div class='col s12 m6'>
+        <button (click)="mapModal.open()">Map</button>
+      </div>
+    </div>
+    <div class='row'>
+      <label class='col s12 m6'>
+        Name
+        <input type='text' id='name' name='name' [readOnly]="newMode" [(ngModel)]="location.name" maxLength="20"
+          required="true" placeholder="Name" />
+      </label>
+      <label class='col s12 m6'>
+        Type
+        <input type='text' id='type' name='type' [(ngModel)]="location.type" [readOnly]="!newMode" maxLength="20"
+          required="true" placeholder="Type" />
+      </label>
+      <label class='col s12 m6'>
+        Longitude
+        <input type='text' id='longitude' name='longitude' [(ngModel)]="location.longitude" readOnly maxLength="20"
+          required="true" placeholder="Longitude" />
+      </label>
+      <label class='col s12 m6'>
+        Latitude
+        <input type='text' id='latitude' name='latitude' [(ngModel)]="location.latitude" readOnly maxLength="40"
+          required="true" placeholder="Latitude" />
+      </label>
+      <label class='col s12 m6'>
+        Description
+        <input type='text' id='description' name='description' [(ngModel)]="location.description" maxLength="40"
+          required="true" placeholder='Description' />
+      </label>
+      <!-- {/* <label class='col s12 m6'>
+          Thumbnail
+          <input
+            type='text'
+            id='thumbnail'
+            name='thumbnail'
+            value={location.thumbnail}
+            onChange={updateState}
+            maxLength={40} 
+            placeholder='Thumbnail' />
+        </label> */} -->
+      <label class='col s12 m6'>
+        ImageURL
+        <input type='text' id='imageURL' name='imageURL' [(ngModel)]="location.imageURL" required="true"
+          placeholder='ImageURL' />
+      </label>
+      <div class='col s12 m6 radio-section'>
+        {{resource.status}}
+        <div class='radio-group'>
+          <label>
+            <input type='radio' id='active' name='status' [(ngModel)]="location.status" [value]="Status.Active" />
+            {{resource.yes}}
+          </label>
+          <label>
+            <input type='radio' id='inactive' name='status' [(ngModel)]="location.status" [value]="Status.Inactive" />
+            {{resource.no}}
+          </label>
+        </div>
+      </div>
+    </div>
+    <footer>
+
+      <button type='submit' id='btnSave' name='btnSave' (click)="save($event)" *ngIf="!readOnly">
+        {{resource.save}}
+      </button>
+    </footer>
+  </form>
+  <app-modal #mapModal>
+    <template #header>
+      <header>
+        <h2>Map</h2>
+        <button type='button' id='btnClose' name='btnClose' class='btn-close' (click)="closeModal()"></button>
+      </header>
+    </template>
+    <template #body>
+      <div class="map-container">
+        <div id="map" ></div>
+    </div>
+    </template>
+    <template #footer>
+      <footer>
+        <button type='button' id='btnSave' name='btnSave' (click)="closeModal()">
+          OK
+        </button>
+      </footer>
+    </template>
+  </app-modal>
+
+  <!-- <ReactModal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      contentLabel='Modal'
+      // portalclass='modal-portal'
+      class='modal-portal-content small-width-height'
+      bodyOpenclass='modal-portal-open'
+      overlayclass='modal-portal-backdrop'
+    >
+      <div class='view-container profile-info'>
+        <form model-name='data'>
+          <header>
+            <h2>Map</h2>
+            <button type='button' id='btnClose' name='btnClose' class='btn-close' (click)={closeModal} />
+          </header>
+          <div >
+            <MapContainer
+              center={{ lat: 10.854886268472459, lng: 106.63051128387453 }}
+              zoom={13}
+              // maxZoom={100}
+              attributionControl={true}
+              zoomControl={true}
+              scrollWheelZoom={true}
+              dragging={true}
+              easeLinearity={0.35}
+              style={{ height: "550px", width: "100%" }}
+       
+            >
+              <TileLayer
+                attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <LocationMarker state={state} setState={setState} />
+            </MapContainer>
+          </div>
+
+          <footer>
+            <button type='button' id='btnSave' name='btnSave' (click)={closeModal}>
+              OK
+            </button>
+          </footer>
+        </form>
+      </div>
+    </ReactModal> -->
+</div>

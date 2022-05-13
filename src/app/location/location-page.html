@@ -1,0 +1,44 @@
+<div class='profile view-container' *ngIf="location">
+    <form id='locationForm' name='locationForm'>
+        <header class='border-bottom-highlight'>
+            <div class='cover-image'>
+                <img *ngIf="location.thumbnail" alt='' [src]="'data:image/jpeg;base64,'+ location.thumbnail" />
+                <img alt=''
+                    src='https://pre00.deviantart.net/6ecb/th/pre/f/2013/086/3/d/facebook_cover_1_by_alphacid-d5zfrww.jpg' />
+                <div class='contact-group'>
+                    <button id='btnPhone' name='btnPhone' class='btn-phone'></button>
+                    <button id='btnEmail' name='btnEmail' class='btn-email'></button>
+                </div>
+                <button id='btnFollow' name='btnFollow' class='btn-follow'>Follow</button>
+            </div>
+            <button id='btnCamera' name='btnCamera' class='btn-camera'></button>
+            <div class='avatar-wrapper'>
+                <img alt='' class='avatar'
+                    [src]="location.imageURL || 'https://www.bluebridgewindowcleaning.co.uk/wp-content/uploads/2016/04/default-avatar.png'" />
+                <img class='profile-status' alt='status' [src]="imageOnline" />
+            </div>
+            <div class='profile-title'>
+                <h3>{{location.name}}</h3>
+                <p>{{location.description}}</p>
+                <p>500 followers</p>
+            </div>
+            <!-- <div class='card'>
+        <h3>{location.locationName}</h3>
+        <p>{location.description}</p>
+      </div> -->
+            <nav class='menu'>
+                <ul>
+                    <li><a [routerLink]='"/location/"+id'> Overview </a></li>
+                    <li><a [routerLink]="'/location/'+id+'/bookable'"> Bookable </a></li>
+                    <li><a [routerLink]="'/location/'+id+'/review'"> Review </a></li>
+                    <li><a [routerLink]="'/location/'+id+'/photo'"> Photo </a></li>
+                    <li><a [routerLink]="'/location/'+id+'/about'"> About </a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class='row'>
+            <app-overview></app-overview>
+            <app-review></app-review>
+        </div>
+    </form>
+</div>

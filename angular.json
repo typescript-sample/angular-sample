@@ -58,8 +58,9 @@
                 "output": "/"
               }
             ],
-            "styles": [  
-              "src/styles.css"
+            "styles": [
+              "src/styles.css",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],"stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles"

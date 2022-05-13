@@ -21,7 +21,7 @@ export class ModalComponent implements OnDestroy {
     this.close();
   }
 
-  open(): void {
+  open(): void {    
     document.body.style.overflow = 'hidden';
 
     this.visible = true;

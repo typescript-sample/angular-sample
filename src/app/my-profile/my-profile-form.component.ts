@@ -1,8 +1,9 @@
 import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 import { Component, OnInit } from "@angular/core";
-import { getResource, UserAccount } from "uione";
-import { MyProfileClient } from "./my-profile";
+import { getResource, UserAccount, handleError } from "uione";
+import { MyProfileClient, useLookingForService, useSkillService, useInterestService } from "./my-profile";
 import { Achievement, User } from "./my-profile/user";
+import { SuggestionService } from "suggestion-service";
 
 interface Edit {
   hireable: boolean;
@@ -11,6 +12,12 @@ interface Edit {
   highlight: boolean;
   description: string;
   subject: string;
+  skill: string;
+}
+
+interface Previous{
+  keyword: string;
+  list: string[];
 }
 
 @Component({
@@ -47,8 +54,50 @@ export class MyProfileFormComponent implements OnInit {
     interest: '',
     highlight: false,
     description: '',
-    subject: ''
+    subject: '',
+    skill:'',
   }
+  listLookingFor: string[] = [];
+  listInterest: string[] = [];
+  listSkill: string[] = [];
+  
+  previousInterest: Previous = {
+    keyword: "",
+    list: [] as string[]
+  };
+
+  previousLookingFor: Previous = {
+    keyword: "",
+    list: [] as string[]
+  };
+
+  previousSkill: Previous = {
+    keyword: "",
+    list: [] as string[]
+  };
+
+  lookingForService = useLookingForService();
+  skillService = useSkillService();
+  interestService = useInterestService();
+
+  skillSuggestion = new SuggestionService<string>(
+    this.skillService.query,
+    20
+  );
+  skillSuggestionService:SuggestionService<string> = (this.skillSuggestion);
+
+  interestSuggestion = new SuggestionService<string>(
+    this.interestService.query,
+    20
+  );
+  interestSuggestionService:SuggestionService<string> = (this.interestSuggestion);
+
+  lookingForSuggestion = new SuggestionService<string>(
+    this.lookingForService.query,
+    20
+  );
+  lookingForSuggestionService:SuggestionService<string> = (this.lookingForSuggestion);
+
   userAccount: UserAccount = JSON.parse(
     sessionStorage.getItem("authService") || "{}"
   ) as UserAccount;;
@@ -65,6 +114,65 @@ export class MyProfileFormComponent implements OnInit {
       }
     });
   }
+
+  onChangeLookingFor(){
+    const newLookingFor = this.edit.lookingFor;
+
+    if (newLookingFor) {
+      if(this.lookingForSuggestionService) 
+      {
+        this.lookingForSuggestionService
+        .load(newLookingFor, this.previousLookingFor)
+          .then((res) => {
+            if (res !== null) {
+              this.previousLookingFor = res.last;
+              this.listLookingFor = res.list;
+            }
+          })
+          .catch(handleError);
+      }
+    }
+  }
+
+  onChangeInterest(){
+    const newInterest = this.edit.interest;
+
+    if (newInterest) {
+      if(this.interestSuggestionService) 
+      {
+        this.interestSuggestionService
+        .load(newInterest, this.previousInterest)
+          .then((res) => {
+            if (res !== null) {
+              this.previousInterest = res.last;
+              this.listInterest = res.list;
+            }
+          })
+          .catch(handleError);
+      }
+    }
+  }
+
+  onChangeSkill(){
+    const newSkill = this.edit.skill;
+
+    if (newSkill) {
+      if(this.skillSuggestionService) 
+      {
+        this.skillSuggestionService
+        .load(newSkill, this.previousSkill)
+          .then((res) => {
+            if (res !== null) {
+              this.previousSkill = res.last;
+              this.listSkill = res.list;
+            }
+          })
+          .catch(handleError);
+      }
+    }
+  }
+
+
   toggleSkill(event: any): void {
     event.preventDefault();
     this.isEditingSkill = !this.isEditingSkill;

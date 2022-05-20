@@ -75,9 +75,30 @@
                                     (click)="removeSkill($event, item.skill)"></button>
                             </div>
                         </ng-container>
-                        <label class='checkbox-container'>
+                        <!-- <label class='checkbox-container'>
                             <input type='checkbox' id='hireable' name='hireable' [(ngModel)]="edit.hireable" />
                             {{resource.user_profile_hireable_skill}}
+                        </label> -->
+                        <label class='form-group inline-input'>
+                            <input 
+                            list='listSkill'
+                            type="text"
+                            name='skill' 
+                            class='form-control' 
+                            [(ngModel)]="edit.skill"
+                            [placeholder]="resource.placeholder_user_profile_skill" 
+                            maxLength="100" 
+                            (input)="onChangeSkill()"
+                            autoComplete="on"
+                            />
+                            <datalist id='listSkill' *ngIf="listSkill">
+            
+                                <option *ngFor="let skill of listSkill;let i = index" [value]="skill"></option>;
+                              
+                            </datalist>
+                            
+                            <button type='button' id='btnAddLookingFor' name='btnAddLookingFor' class='btn-add'
+                                (click)="addLookingFor($event)"></button>
                         </label>
                         <hr />
                         <p class='description'>
@@ -124,8 +145,22 @@
                         </ng-container>
 
                         <label class='form-group inline-input'>
-                            <input name='lookingFor' class='form-control' [(ngModel)]="edit.lookingFor"
-                                [placeholder]="resource.placeholder_user_profile_looking_for" maxLength="100" />
+                            <input 
+                            list='listLookingFor'
+                            type="text"
+                            name='lookingFor' 
+                            class='form-control' 
+                            [(ngModel)]="edit.lookingFor"
+                            [placeholder]="resource.placeholder_user_profile_looking_for" 
+                            maxLength="100" 
+                            (input)="onChangeLookingFor()"
+                            autoComplete="on"
+                            />
+                            <datalist id='listLookingFor' *ngIf="listLookingFor">
+            
+                                <option *ngFor="let lookingFor of listLookingFor;let i = index" [value]="lookingFor"></option>;
+                              
+                            </datalist>
                             <button type='button' id='btnAddLookingFor' name='btnAddLookingFor' class='btn-add'
                                 (click)="addLookingFor($event)"></button>
                         </label>
@@ -285,9 +320,22 @@
 
                         <label class='col s12 inline-input'>
 
-                            <input type='text' name='interest'
-                                [placeholder]="resource.placeholder_user_profile_interest" [(ngModel)]="edit.interest"
-                                maxLength="100" />
+                            <input 
+                                list='listInterest'
+                                type='text' 
+                                name='interest'
+                                [placeholder]="resource.placeholder_user_profile_interest" 
+                                [(ngModel)]="edit.interest"
+                                maxLength="100"
+                                (input)="onChangeInterest()"
+                                autoComplete="on"
+                                />
+                            <datalist id='listInterest' *ngIf="listInterest">
+        
+                                <option *ngFor="let interest of listInterest;let i = index" [value]="interest"></option>;
+                                
+                            </datalist>
+
                             <button type='button' id='btnAddInterest' name='btnAddInterest' class='btn-add'
                                 (click)="addInterest($event)"></button>
                         </label>

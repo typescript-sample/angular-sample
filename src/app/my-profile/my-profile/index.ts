@@ -1,10 +1,16 @@
 import { HttpRequest } from '@/app/shared/HttpRequest';
 import {config} from '@/config';
 import { Injectable } from '@angular/core';
-import { Client } from 'web-clients';
+import { Client, QueryClient } from 'web-clients';
+import { QueryService } from 'onecore';
 import { MyProfileService, User, UserFilter, userModel, UserService, UserSettings } from './user';
+import axios from 'axios';
+import { HttpRequest as HttpRequestAxios } from 'axios-core';
+
 
 export * from './user';
+
+const httpRequest = new HttpRequestAxios(axios);
 
 @Injectable()
 export class UserClient extends Client<User, string, UserFilter> implements UserService {
@@ -70,24 +76,52 @@ export class MyProfileClient implements MyProfileService {
 // export interface Config {
 //   myprofile_url: string;
 // }
-// class ApplicationContext {
-//   userService?: MyProfileService;
-//   getConfig(): Config {
-//     return storage.config();
-//   }
-//   getMyProfileService(): MyProfileService {
-//     console.log('service')
-//     if (!this.userService) {
-//       const c = this.getConfig();
-//       this.userService = new MyProfileClient(httpRequest, c.myprofile_url);
-//     }
-//     return this.userService;
-//   }
+class ApplicationContext {
+  // userService?: MyProfileService;
+  lookingForService?: QueryService<string>;
+  interestService?: QueryService<string>;
+  skillService?: QueryService<string>;
 
-// }
+  getLookingForService(): QueryService<string> {
+    
+    if (!this.lookingForService) {
+      this.lookingForService = new QueryClient<string>(httpRequest, config.looking_for_url);
+    }
+    return this.lookingForService;
+  }
 
-// export const context = new ApplicationContext();
+  getInterestService(): QueryService<string> {
+    
+    if (!this.interestService) {
+      this.interestService = new QueryClient<string>(httpRequest, config.interest_url);
+    }
+    return this.interestService;
+  }
+
+  getSkillService(): QueryService<string> {
+    
+    if (!this.skillService) {
+      this.skillService = new QueryClient<string>(httpRequest, config.skill_url);
+    }
+    return this.skillService;
+  }
+
+}
+
+export const context = new ApplicationContext();
 // export function useGetMyProfileService(): MyProfileService {
 //   const [service] = useState(() => { return context.getMyProfileService() })
 //   return service;
 // }
+
+export function useLookingForService(): QueryService<string> {
+  return context.getLookingForService();
+}
+
+export function useInterestService(): QueryService<string> {
+  return context.getInterestService();
+}
+
+export function useSkillService(): QueryService<string> {
+  return context.getSkillService();
+}

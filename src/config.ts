@@ -4,7 +4,7 @@ export const config = {
   password_url: 'http://localhost:8082/password',
   oauth2_url: 'http://localhost:8082/oauth2',
 
-  user_url: 'http://localhost:8083/users',
+  user_url: 'http://localhost:8082/users',
   role_url: 'http://localhost:8083/roles',
   privilege_url: 'http://localhost:8083/privileges',
   audit_log_url: 'http://localhost:8080/audit-logs',
@@ -17,7 +17,9 @@ export const config = {
   profile_url:'http://localhost:8082/users',
   skill_url:'http://localhost:8082/skills',
   interest_url:'http://localhost:8082/interests',
-  looking_for_url:'http://localhost:8082/looking-for'
+  looking_for_url:'http://localhost:8082/looking-for',
+  item_url: 'http://localhost:9000/items',
+  article_url: 'http://localhost:9000/articles'
 };
 
 export const env = {

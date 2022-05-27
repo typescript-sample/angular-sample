@@ -1,0 +1,45 @@
+<div class='view-container'>
+    <form id='itemForm' name='itemForm' novalidate>
+      <header>
+        <button type='button' class='btn-back' (click)='back()'></button>
+        <!-- <h2>{{resource.item}}</h2> -->
+        <h2>Item</h2>
+      </header>
+      <div class='row'>
+        <label class='col s12 m6'>
+          <!-- {{resource.id}} -->
+          Id
+          <input type='text' id='id' name='id' [(ngModel)]='item.id'
+                 (blur)='requiredOnBlur($event)' maxlength='255' required placeholder='Id'/>
+        </label>
+        <label class='col s12 m6'>
+          {{resource.person_title}}
+          <input
+            type='text'
+            id='title'
+            name='title'
+            [(ngModel)]='item.title'
+            maxLength='40'
+            required='true'
+            [placeholder]='resource.person_title'/>
+        </label>
+        <label class='col s12 m6'>
+          {{resource.description}}
+          <input
+            type='text'
+            id='description'
+            name='description'
+            [(ngModel)]='item.description'
+            maxlength="255"
+            [placeholder]='resource.description'/>
+        </label>
+        
+      </div>
+      <footer>
+        <button type='submit' id='btnSave' name='btnSave' (click)='save()'>{{resource.save}}</button>
+      </footer>
+    </form>
+  </div>
+  
+  
+  

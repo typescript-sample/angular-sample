@@ -1,0 +1,69 @@
+<div class="profile view-container">
+    <form id="userForm" name="userForm" ref="form" >
+      <header class="border-bottom-highlight">
+        <div class="cover-image">
+          <img
+            src="https://pre00.deviantart.net/6ecb/th/pre/f/2013/086/3/d/facebook_cover_1_by_alphacid-d5zfrww.jpg"
+            alt="cover"
+          />
+          <div class="contact-group">
+            <button id="btnPhone" name="btnPhone" class="btn-phone"></button>
+            <button id="btnEmail" name="btnEmail" class="btn-email" ></button>
+          </div>
+          <button id="btnFollow" name="btnFollow" class="btn-follow">
+            Follow
+          </button>
+        </div>
+        <button id="btnCamera" name="btnCamera" class="btn-camera" ></button>
+        <div class="avatar-wrapper">
+          <img
+            class="avatar"
+            [src]="
+              user.imageURL ||
+              'https://www.bluebridgewindowcleaning.co.uk/wp-content/uploads/2016/04/default-avatar.png'
+            "
+            alt="avatar"
+          />
+          <img class="profile-status" [src]="imageOnline" alt="status" />
+        </div>
+        <div class="profile-title">
+          <h3>{{ user.username }}</h3>
+          <p>{{ user.website }}</p>
+        </div>
+        <div class="profile-followers">
+          <p><i class="material-icons highlight">group</i> {{ followers }}</p>
+          <p>
+            <i class="material-icons highlight">group_add</i> {{ following }}
+          </p>
+        </div>
+      </header>
+
+      <div class='row top-content sort-content'>
+          <section class='section-appreciate'>
+            <button (click)="openModal($event)">Send</button>
+          </section>
+          <select class='comments-sort btn button' (change)="handleSort($event)" defaultValue='relevance'>
+            <option value='relevance'>Top Reply</option>
+            <option value='time'>Newest First</option>
+          </select>
+        </div>
+        
+       
+        <app-appreciations [appreciations]="appreciations" (moreAppreciate)="moreAppreciate()" (reLoadData)="reLoadData()"></app-appreciations>
+
+        <app-modal #appreciationModal role="dialog" [style]="customStyle" class='small-width backup-appreciation'>
+          <ng-template #header>
+              <header>
+                  <button type="button" id="btnClose" name="btnClose" class="btn-close btn-close-app"
+                      (click)="appreciationModal?.close()"></button>
+              </header>
+          </ng-template>
+          <ng-template #body>
+              <app-post-appreciation  (setData)="setData($event)" (onModelClose)="onModelClose()">
+              </app-post-appreciation>
+          </ng-template>
+      </app-modal>
+
+        
+    </form>
+  </div>

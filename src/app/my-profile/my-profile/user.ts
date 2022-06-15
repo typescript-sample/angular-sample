@@ -1,6 +1,12 @@
 import { Attributes, DateRange, Filter, Repository, Service } from 'onecore';
 
 export interface User {
+
+  userId: string;
+  imageURL: string;
+  status: string;
+  gender?: string;
+  
   id: string;
   username: string;
   displayName: string;

@@ -1,0 +1,12 @@
+<ul class='row list-view' v-if="appreciations">
+
+     <app-appreciation *ngFor="let appreciation of appreciations" [appreciation]="appreciation" (reLoadData)="reLoadDataEmit()">
+
+     </app-appreciation>
+    
+  </ul>
+  <div class='col s12 m12 l12 more-reviews-div'>
+      <span class='more-reviews' (click)="moreAppreciateEmit($event)">
+          <b>MORE REVIEWS</b>
+      </span>
+  </div>

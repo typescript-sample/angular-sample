@@ -19,7 +19,9 @@ export const config = {
   interest_url:'http://localhost:8082/interests',
   looking_for_url:'http://localhost:8082/looking-for',
   item_url: 'http://localhost:9000/items',
-  article_url: 'http://localhost:9000/articles'
+  article_url: 'http://localhost:9000/articles',
+  appreciation_url: 'http://localhost:8082/appreciation',
+  appreciation_reply_url:'http://localhost:8082/appreciation-reply'
 };
 
 export const env = {

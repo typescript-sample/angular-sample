@@ -1,5 +1,14 @@
-       <div class='row top-content' *ngIf="location.path().split('/').length === 3">
-                <div class='col s4 m5 l12 summary' >Overview</div>
+       <div class='row top-content' *ngIf="locationPath.path().split('/').length === 3">
+        
+         <div>
+            <form class="list-result col s4 m5 l12 summary">
+              <div style="height: 600px; width: 2000px; max-width: 100%;">
+                <div class="map-container" style="height:100%">
+                    <div id="mapid" style="height:100%"></div>
+                </div>
+              </div>
+            </form>
+         </div>
         </div>
 
  

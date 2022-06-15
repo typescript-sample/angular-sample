@@ -17,7 +17,11 @@ export const config = {
   profile_url:'http://localhost:8082/users',
   skill_url:'http://localhost:8082/skills',
   interest_url:'http://localhost:8082/interests',
-  looking_for_url:'http://localhost:8082/looking-for'
+  looking_for_url:'http://localhost:8082/looking-for',
+  item_url: 'http://localhost:9000/items',
+  article_url: 'http://localhost:9000/articles',
+  appreciation_url: 'http://localhost:8082/appreciation',
+  appreciation_reply_url:'http://localhost:8082/appreciation-reply'
 };
 
 export const env = {

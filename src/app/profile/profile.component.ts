@@ -1,6 +1,7 @@
 import { Component, NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { UsersPage } from "./users-page.component";
+import { AppreciationsPage } from "./appreciations-page.component";
 
 @Component({
     selector:'app-profile-module',
@@ -15,7 +16,8 @@ const profileRoutes:Routes = [
         path:'',
         component:ProfileComponet,
         children:[
-            {path:'',component:UsersPage}
+            {path:'',component:UsersPage},
+            {path:':id/appreciate',component:AppreciationsPage}
         ]
     }
 ]

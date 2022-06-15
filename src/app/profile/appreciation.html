@@ -1,0 +1,49 @@
+<ng-container>
+<li class='col s12 m12 l12 review-custom'>
+    <section class='card appreciation-section'>
+      <h4>
+        {{appreciation.title}}
+      </h4>
+        {{appreciation.description}}
+      <p>{{ fomatDate(appreciation.createdAt) }}</p>
+      <p>
+       
+        <img *ngIf="appreciation.isUseful; else other" class='useful-button' width="20" [src]="likeFilled" (click)="postUseful(appreciation)" />
+
+        <ng-template #other>
+            <img  class='useful-button' width="20" [src]="like" (click)="postUseful(appreciation)" />
+        </ng-template>
+        
+        
+
+        {{appreciation.usefulCount}} <button (click)="openModal($event)">Reply </button></p>
+
+      <button *ngIf="!replyAppreciation && appreciation.replyCount > 0" (click)="getMoreAppreciations($event, appreciation.id)">View {{appreciation.replyCount}} replies</button>
+
+    </section>
+    <div class='more-appreciations' *ngIf="showReply && appreciationsReplies">
+  
+      <section class='card appreciation-section reply' *ngFor="let appreciationsReply of appreciationsReplies">
+      <h4 >
+        {{appreciationsReply.title}}
+      </h4>
+        {{appreciationsReply.description}}
+      <p>{{fomatDate(appreciationsReply.createdAt)}}</p>
+    </section>
+    </div>
+</li>
+
+<app-modal #appreciationModal role="dialog" [style]="customStyle" class='small-width backup-appreciation'>
+    <ng-template #header>
+        <header>
+            <button type="button" id="btnClose" name="btnClose" class="btn-close btn-close-app"
+                (click)="appreciationModal?.close()"></button>
+        </header>
+    </ng-template>
+    <ng-template #body>
+        <app-post-appreciation [appreciation]="appreciation" (setData)="setData($event)" (onModelClose)="onModelClose()" >
+        </app-post-appreciation>
+        
+    </ng-template>
+</app-modal>
+ 

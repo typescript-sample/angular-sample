@@ -13,12 +13,6 @@ import { UserClient } from './service/user';
 import { UserComponent } from './user.component';
 import { UsersLookupComponent } from './users-lookup.component';
 import { UsersComponent } from './users.component';
-import { ArticleClient } from './service/article';
-import { ArticlesComponent } from './articles.component';
-import { ArticleComponent } from './article.component';
-import { ItemClient } from './service/item';
-import { ItemsComponent } from './items.component';
-import { ItemComponent } from './item.component';
 
 @NgModule({
   imports: [
@@ -43,18 +37,12 @@ import { ItemComponent } from './item.component';
     UserComponent,
     RoleAssignmentsComponent,
     UsersLookupComponent,
-    ArticlesComponent,
-    ArticleComponent,
-    ItemsComponent,
-    ItemComponent
   ],
   entryComponents: [],
   providers: [
     RoleClient,
     MasterDataClient,
     UserClient,
-    ArticleClient,
-    ItemClient
   ]
 })
 export class AdminModule {

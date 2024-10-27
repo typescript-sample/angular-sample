@@ -16,6 +16,7 @@ export class ArticlesComponent extends SearchComponent<Article, ArticleFilter> i
   }
   statusList: any = [];
   viewable: boolean = true;
+  addable: boolean = true;
   editable: boolean = true;
   ngOnInit() {
     this.hideFilter=true;

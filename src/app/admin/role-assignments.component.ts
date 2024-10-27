@@ -49,11 +49,11 @@ export class RoleAssignmentsComponent implements OnInit {
     event.preventDefault();
     const userIDs = this.getIds(this.users);
     const msg = message(this.resource, 'msg_confirm_save', 'confirm', 'yes', 'no');
-    confirm(msg.message, msg.title, () => {
+    confirm(msg.message, () => {
       this.roleService.assign(this.role.roleId, userIDs).then(result => {
         showMessage(this.resource.msg_save_success);
       }).catch(handleError);
-    }, msg.no, msg.yes);
+    });
   };
 
   onShowCheckBox = () => {
@@ -106,7 +106,7 @@ export class RoleAssignmentsComponent implements OnInit {
   }
 
   onDelete() {
-    confirm(this.resource.msg_confirm_delete, this.resource.confirm, () => {
+    confirm(this.resource.msg_confirm_delete, () => {
       const arr: User[] = [];
       this.users.map(value => {
         const user = this.selectedUsers.find(v => v.userId === value.userId);

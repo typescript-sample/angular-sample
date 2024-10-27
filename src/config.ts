@@ -1,8 +1,8 @@
 export const config = {
-  authentication_url: 'http://localhost:8082',
-  signup_url: 'http://localhost:8082/signup',
-  password_url: 'http://localhost:8082/password',
-  oauth2_url: 'http://localhost:8082/oauth2',
+  authentication_url: 'http://localhost:8083',
+  signup_url: 'http://localhost:8083/signup',
+  password_url: 'http://localhost:8083/password',
+  oauth2_url: 'http://localhost:8083/oauth2',
 
   user_url: 'http://localhost:8083/users',
   role_url: 'http://localhost:8083/roles',

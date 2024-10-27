@@ -57,7 +57,7 @@
             replyCount: 0,
             createdAt: this.createDate(),
         }
-        const data = await this.appreciationService.insert(appreciation);
+        const data = await this.appreciationService.create(appreciation);
         const newAppreciation: Appreciation = (data as any)['value']
         this.setDataEmit(newAppreciation);
         this.loadData();

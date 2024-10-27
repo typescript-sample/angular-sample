@@ -14,6 +14,7 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
   constructor(viewContainerRef: ViewContainerRef, protected router: Router, userService: UserClient, protected masterDataService: MasterDataClient) {
     super(viewContainerRef, userService, inputSearch());
   }
+  addable: boolean = true;
   statusList: any = [];
   femaleIcon = "app/assets/images/female.png";
   maleIcon = "app/assets/images/female.png";

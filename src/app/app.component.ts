@@ -4,7 +4,7 @@ import { resources } from 'angularx';
 import * as csv from 'csvtojson';
 import { currency, locale } from 'locale-service';
 import { phonecodes } from 'phonecodes';
-import { alert, confirm } from 'ui-alert';
+import { alert, alertError, confirm } from 'ui-alert';
 import { loading } from 'ui-loading';
 import { UIService, formatFax, formatNumber, formatPhone, resources as uiresources } from 'ui-plus';
 import { toast } from 'ui-toast';
@@ -51,14 +51,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     clientresources.csv = new DefaultCsvService(csv);
     storage.authentication = '';
-    storage.home = 'profile';
+    storage.home = 'admin/users';
     storage.setResources(locales);
     storage.setLoadingService(loading);
     storage.setUIService(new UIService());
 
     storage.currency = currency;
     storage.locale = locale;
-    storage.alert = alert;
+    storage.alert = alertError;
     storage.confirm = confirm;
     storage.message = toast;
 
@@ -68,12 +68,13 @@ export class AppComponent implements OnInit {
     uiresources.resource = storage.resource();
     resources.formatPhone = formatPhone;
     resources.formatFax = formatFax;
-    resources.currency = currency;
+    resources.currency = currency as any;
     resources.formatNumber = formatNumber;
+    /*
     if (location.href.startsWith(storage.getRedirectUrl())) {
       window.location.href = location.origin + '/connect/oauth2' + location.search;
     }
-
+*/
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;

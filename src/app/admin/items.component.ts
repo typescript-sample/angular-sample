@@ -16,6 +16,7 @@ export class ItemsComponent extends SearchComponent<Item, ItemFilter> implements
   }
   statusList: any = [];
   viewable: boolean = true;
+  addable: boolean = true;
   editable: boolean = true;
   ngOnInit() {
     this.hideFilter=true;

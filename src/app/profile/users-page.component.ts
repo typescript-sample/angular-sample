@@ -48,7 +48,7 @@ export class UsersPage extends SearchComponent<User, UserFilter> implements OnIn
         this.interest = '';
 
       } else {
-        alert(this.resource.error_duplicated_interest, this.resource.error);
+        alert(this.resource.error_duplicated_interest);
       }
     }
   }

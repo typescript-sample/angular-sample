@@ -15,6 +15,7 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
     super(roleService, inputSearch());
   }
   status:any = [];
+  addable: boolean = true;
 
   ngOnInit() {
     this.form = initElement(this.viewContainerRef, registerEvents);

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from '../shared/modal/modal.module';
-import { GRoleComponent, AdminRoutes } from './admin.component';
+import { GRoleComponent, RoleRoutes } from './component';
 import { RoleAssignmentsComponent } from './role-assignments.component';
 import { RoleComponent } from './role.components';
 import { RolesComponent } from './roles.components';
@@ -16,7 +16,7 @@ import { UsersLookupComponent } from './users-lookup.component';
   imports: [
     CommonModule,
     FormsModule,
-    AdminRoutes,
+    RoleRoutes,
     ReactiveFormsModule,
     ModalModule,
     // BsDropdownModule.forRoot(),

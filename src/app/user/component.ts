@@ -5,7 +5,7 @@ import { UserComponent } from './user.component';
 import { UsersComponent } from './users.component';
 
 @Component({
-  selector: 'app-admin-module',
+  selector: 'app-user-module',
   template: '<router-outlet></router-outlet>'
 })
 export class GUserComponent {

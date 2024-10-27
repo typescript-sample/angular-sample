@@ -13,7 +13,7 @@ const routes: Routes = [
     }, canActivate: [AuthenticationService], children: [
       {
         path: 'roles',
-        loadChildren: () => import('./admin/role.module').then(m => m.RoleModule)
+        loadChildren: () => import('./role/role.module').then(m => m.RoleModule)
       },
       {
         path: 'users',

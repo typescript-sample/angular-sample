@@ -6,7 +6,7 @@ import { RoleComponent } from './role.components';
 import { RolesComponent } from './roles.components';
 
 @Component({
-  selector: 'app-admin-module',
+  selector: 'app-role-module',
   template: '<router-outlet></router-outlet>'
 })
 export class GRoleComponent {

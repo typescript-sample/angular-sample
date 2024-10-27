@@ -190,6 +190,6 @@ export class RoleComponent extends EditComponent<Role, any> implements OnInit {
   }
   assign(event: Event, id: string){
     event.preventDefault();
-    navigate(this.router,`/admin/roles/assign`,[id]);
+    navigate(this.router,`/roles/assign`,[id]);
   };
 }

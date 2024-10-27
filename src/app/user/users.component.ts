@@ -25,10 +25,10 @@ export class UsersComponent extends SearchComponent<User, UserFilter> implements
     this.onInit();
   }
   edit(userId: string) {
-    navigate(this.router, 'admin/users/edit', [userId]);
+    navigate(this.router, 'users/edit', [userId]);
   }
   add() {
-    navigate(this.router, 'admin/users/add');
+    navigate(this.router, 'users/add');
   }
   // async load(s: UserFilter, autoSearch: boolean) {
   //   Promise.all([

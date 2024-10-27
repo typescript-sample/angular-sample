@@ -4,31 +4,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoleAssignmentsComponent } from './role-assignments.component';
 import { RoleComponent } from './role.components';
 import { RolesComponent } from './roles.components';
-import { UserComponent } from './user.component';
-import { UsersComponent } from './users.component';
 
 @Component({
   selector: 'app-admin-module',
   template: '<router-outlet></router-outlet>'
 })
-export class AdminComponent {
+export class GRoleComponent {
   constructor() {}
 }
 
 const adminRoutes: Routes = [
   {
     path: '',
-    component: AdminComponent,
+    component: GRoleComponent,
     children: [
-      { path: 'roles', component: RolesComponent },
+      { path: '', component: RolesComponent },
       { path: 'admin/roles', redirectTo: 'roles' },
-      { path: 'roles/add', component: RoleComponent },
-      { path: 'roles/edit/:id', component: RoleComponent },
-      { path: 'roles/assign/:id', component: RoleAssignmentsComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'admin/users', redirectTo: 'users' },
-      { path: 'users/add', component: UserComponent },
-      { path: 'users/edit/:id', component: UserComponent },
+      { path: 'add', component: RoleComponent },
+      { path: 'edit/:id', component: RoleComponent },
+      { path: 'assign/:id', component: RoleAssignmentsComponent },
     ]
   }
 ];

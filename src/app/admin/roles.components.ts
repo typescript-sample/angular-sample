@@ -33,14 +33,14 @@ export class RolesComponent extends BaseSearchComponent<Role, RoleFilter> implem
     }).catch(handleError);
   }
   viewRole(roleId:string) {
-    navigate(this.router, 'admin/roles', [roleId]);
+    navigate(this.router, 'roles', [roleId]);
   }
 
   edit(roleId:string) {
-    navigate(this.router, 'admin/roles/edit', [roleId]);
+    navigate(this.router, 'roles/edit', [roleId]);
   }
 
   addRole() {    
-    navigate(this.router, 'admin/roles/add');
+    navigate(this.router, 'roles/add');
   }
 }

@@ -12,8 +12,12 @@ const routes: Routes = [
       title: 'Home'
     }, canActivate: [AuthenticationService], children: [
       {
-        path: 'admin',
-        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+        path: 'roles',
+        loadChildren: () => import('./admin/role.module').then(m => m.RoleModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./user/user.module').then(m => m.UserModule)
       }
     ]
   },

@@ -2,8 +2,10 @@
   <header>
     <h2>{{resource.users}}</h2>
     <div class='btn-group'>
-      <button *ngIf="view !== 'table'" type='button' id='btnTable' name='btnTable' class='btn-table' (click)="changeView('table')"></button>
-      <button *ngIf="view === 'table'" type='button' id='btnListView' name='btnListView' class='btn-list-view' (click)="changeView('listview')"></button>
+      <button *ngIf="view !== 'table'" type='button' id='btnTable' name='btnTable' class='btn-table'
+        (click)="changeView('table')"></button>
+      <button *ngIf="view === 'table'" type='button' id='btnListView' name='btnListView' class='btn-list-view'
+        (click)="changeView('listview')"></button>
       <button *ngIf="addable" type='button' id='btnNew' name='btnNew' class='btn-new' (click)="add()"></button>
     </div>
   </header>
@@ -14,54 +16,37 @@
           <select (change)='onPageSizeChanged($event)'>
             <option *ngFor='let p of pageSizes' [value]='p' [selected]='p === pageSize'>{{p}}</option>
           </select>
-          <input type='text' id='q' name='q' [(ngModel)]='filter.q' maxlength='1000' placeholder='{{resource.keyword}}'/>
-          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()" ></button>
-           <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
+          <input type='text' id='q' name='q' [(ngModel)]='filter.q' maxlength='1000'
+            placeholder='{{resource.keyword}}' />
+          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()"></button>
+          <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
           <button type='submit' class='btn-search' (click)='search($event)'></button>
         </label>
         <pagination class='col s12 m8' id='pageIndex' name='pageIndex' *ngIf='showPaging' [(ngModel)]='pageIndex'
-                    (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
-                    [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
+          (pageChanged)='onPageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
+          [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
       </section>
       <section class='row search-group inline' [hidden]="hideFilter">
         <label class='col s12 m4 l4'>
           {{resource.username}}
-          <input type='text'
-                 id='username' name='username'
-                 [value]='filter.username'
-                 [(ngModel)]='filter.username'
-                 maxLength='255'
-                 placeholder='{{resource.username}}'/>
+          <input type='text' id='username' name='username' [value]='filter.username' [(ngModel)]='filter.username'
+            maxLength='255' placeholder='{{resource.username}}' />
         </label>
         <label class='col s12 m4 l4'>
           {{resource.display_name}}
-          <input type='text'
-                 id='displayName' name='displayName'
-                 [value]='filter.displayName'
-                 [(ngModel)]='filter.displayName'
-                 maxLength='255'
-                 placeholder='{{resource.display_name}}'/>
+          <input type='text' id='displayName' name='displayName' [value]='filter.displayName'
+            [(ngModel)]='filter.displayName' maxLength='255' placeholder='{{resource.display_name}}' />
         </label>
         <label class='col s12 m4 l4 checkbox-section'>
           {{resource.status}}
           <section class='checkbox-group'>
             <label>
-              <input
-                type='checkbox'
-                id='active'
-                name='status'
-                value='A'
-                [checked]="includes(filter.status, 'A')"
+              <input type='checkbox' id='active' name='status' value='A' [checked]="includes(filter.status, 'A')"
                 (change)='updateState($event)' />
               {{resource.active}}
             </label>
             <label>
-              <input
-                type='checkbox'
-                id='inactive'
-                name='status'
-                value='I'
-                [checked]="includes(filter.status, 'I')"
+              <input type='checkbox' id='inactive' name='status' value='I' [checked]="includes(filter.status, 'I')"
                 (change)='updateState($event)' />
               {{resource.inactive}}
             </label>
@@ -75,11 +60,16 @@
           <thead>
             <tr>
               <!-- <th>{{resource.sequence}}</th> -->
-              <th data-field='userId'><button type='button' id='sortUserId' (click)="sort($event)">{{resource.user_id}}</button></th>
-              <th data-field='username'><button type='button' id='sortUserName' (click)="sort($event)">{{resource.username}}</button></th>
-              <th data-field='email'><button type='button' id='sortEmail' (click)="sort($event)">{{resource.email}}</button></th>
-              <th data-field='displayname'><button type='button' id='sortDisplayName' (click)="sort($event)">{{resource.display_name}}</button></th>
-              <th data-field='status'><button type='button' id='sortStatus' (click)="sort($event)">{{resource.status}}</button></th>
+              <th data-field='userId'><button type='button' id='sortUserId'
+                  (click)="sort($event)">{{resource.user_id}}</button></th>
+              <th data-field='username'><button type='button' id='sortUserName'
+                  (click)="sort($event)">{{resource.username}}</button></th>
+              <th data-field='email'><button type='button' id='sortEmail'
+                  (click)="sort($event)">{{resource.email}}</button></th>
+              <th data-field='displayname'><button type='button' id='sortDisplayName'
+                  (click)="sort($event)">{{resource.display_name}}</button></th>
+              <th data-field='status'><button type='button' id='sortStatus'
+                  (click)="sort($event)">{{resource.status}}</button></th>
             </tr>
           </thead>
           <tr *ngFor="let item of list;let i = index" (click)="edit(item.userId)">
@@ -96,7 +86,7 @@
           <section>
             <img
               [src]='item.imageURL && item.imageURL.length > 0 ? item.imageURL : (item.gender === "F" ? femaleIcon : maleIcon)'
-              class='round-border'/>
+              class='round-border' />
             <div>
               <h3 (click)="edit(item.userId)">{{item.displayName}}</h3>
               <p>{{item.email}}</p>

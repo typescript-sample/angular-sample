@@ -9,7 +9,7 @@ import { UsersComponent } from './users.component';
   template: '<router-outlet></router-outlet>'
 })
 export class GUserComponent {
-  constructor() {}
+  constructor() { }
 }
 
 const userRoutes: Routes = [
@@ -18,8 +18,8 @@ const userRoutes: Routes = [
     component: GUserComponent,
     children: [
       { path: '', component: UsersComponent },
-      { path: 'add', component: UserComponent },
-      { path: 'edit/:id', component: UserComponent },
+      { path: 'new', component: UserComponent },
+      { path: ':id', component: UserComponent },
     ]
   }
 ];
@@ -35,4 +35,4 @@ const userRoutes: Routes = [
     RouterModule,
   ]
 })
-export class UserRoutes {}
+export class UserRoutes { }

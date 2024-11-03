@@ -29,7 +29,6 @@ import { UsersComponent } from './users.component';
     UsersComponent,
     UserComponent,
   ],
-  entryComponents: [],
   providers: [
     MasterDataClient,
     UserClient,

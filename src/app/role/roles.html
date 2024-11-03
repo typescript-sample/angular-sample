@@ -26,46 +26,31 @@
             <option *ngFor='let p of pageSizes' [value]='p' [selected]='p === pageSize'>{{p}}</option>
           </select>
           <input type='text' id='q' name='q' maxlength='255' [(ngModel)]='filter.q' [placeholder]="resource.keyword" />
-          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()" ></button>
+          <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()"></button>
           <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
           <button type='submit' class='btn-search' (click)="search($event)"></button>
         </label>
         <pagination id='limit1' name='limit' *ngIf='showPaging' [(ngModel)]='pageIndex'
-          (pageChanged)='pageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
+          (pageChanged)='onPageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
           [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
       </section>
-      <section class="row search-group inline" [hidden]="hideFilter"> 
+      <section class="row search-group inline" [hidden]="hideFilter">
         <label class='col s12 m6'>
           {{resource.role_name}}
-          <input
-            type='text'
-            id='roleName'
-            name='roleName'
-            [(ngModel)]="filter.roleName"
-            maxLength="240"
+          <input type='text' id='roleName' name='roleName' [(ngModel)]="filter.roleName" maxLength="240"
             [placeholder]="resource.role_name" />
         </label>
         <label class='col s12 m6'>
           {{resource.status}}
           <section class='checkbox-group'>
             <label>
-              <input
-                  type='checkbox'
-                  id='active'
-                  name='status'
-                  value='A'
-                  [checked]="includes(filter.status, 'A')"
-                  (change)='updateState($event)' />{{resource.active}}
+              <input type='checkbox' id='active' name='status' value='A' [checked]="includes(filter.status, 'A')"
+                (change)='updateState($event)' />{{resource.active}}
             </label>
             <label>
-              <input
-                type='checkbox'
-                id='inactive'
-                name='status'
-                value='I'
-                [checked]="includes(filter.status, 'I')"
+              <input type='checkbox' id='inactive' name='status' value='I' [checked]="includes(filter.status, 'I')"
                 (change)='updateState($event)' />
-                {{resource.inactive}}
+              {{resource.inactive}}
             </label>
             <!-- <label *ngFor='let item of status; let i = index'>
               <input [id]='item.value' type='checkbox' name='status' [checked]="includes(filter.status,item.value)"

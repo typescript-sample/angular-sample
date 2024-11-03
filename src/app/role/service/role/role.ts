@@ -3,7 +3,7 @@ import { Attributes, Filter, Service, Tracking } from 'onecore';
 export interface RoleFilter extends Filter {
   roleId: string;
   roleName: string;
-  status: string[] |string;
+  status: string[] | string;
   remark: string;
   description?: string;
 }
@@ -18,12 +18,13 @@ export interface Role extends Tracking {
 export interface Privilege {
   id: string;
   name: string;
+  actions: number;
   children?: Privilege[];
 }
 export interface RoleService extends Service<Role, string, RoleFilter> {
   getPrivileges(): Promise<Privilege[]>;
   assign(roleId: string, users: string[]): Promise<number>;
-  getRoles():Promise<Role[]>;
+  getRoles(): Promise<Role[]>;
 }
 
 export const roleModel: Attributes = {

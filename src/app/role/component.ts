@@ -10,7 +10,7 @@ import { RolesComponent } from './roles.components';
   template: '<router-outlet></router-outlet>'
 })
 export class GRoleComponent {
-  constructor() {}
+  constructor() { }
 }
 
 const adminRoutes: Routes = [
@@ -20,8 +20,8 @@ const adminRoutes: Routes = [
     children: [
       { path: '', component: RolesComponent },
       { path: 'admin/roles', redirectTo: 'roles' },
-      { path: 'add', component: RoleComponent },
-      { path: 'edit/:id', component: RoleComponent },
+      { path: 'new', component: RoleComponent },
+      { path: ':id', component: RoleComponent },
       { path: 'assign/:id', component: RoleAssignmentsComponent },
     ]
   }
@@ -38,4 +38,4 @@ const adminRoutes: Routes = [
     RouterModule,
   ]
 })
-export class RoleRoutes {}
+export class RoleRoutes { }

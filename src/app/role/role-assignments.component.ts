@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { buildId, message } from 'angularx'
 import { confirm } from 'ui-alert';
-import { getResource, handleError, showMessage } from 'uione';
+import { StringMap, getResource, handleError, showMessage, useResource } from 'uione';
 import { Role, RoleClient } from './service/role';
 import { User, UserClient } from './service/user';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-role-assign',
@@ -14,6 +13,7 @@ import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 })
 export class RoleAssignmentsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private roleService: RoleClient, private userService: UserClient) {
+    this.resource = useResource();
   }
   resource!: StringMap;
   role: Role = {} as any;
@@ -121,7 +121,7 @@ export class RoleAssignmentsComponent implements OnInit {
     })
   }
   onCheck(userId: string) {
-      if(this.users) {
+    if (this.users) {
       const user = this.users.find(v => v.userId === userId);
       if (user) {
         const index = this.selectedUsers.indexOf(user);

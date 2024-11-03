@@ -1,11 +1,28 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Locale, SearchResult, addParametersIntoUrl, append, buildFromUrl, buildMessage, changePage, changePageSize, clone, formatResults, getModelName, handleAppend, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, navigate, reset, setValue, showPaging, valueOfCheckbox } from 'angularx';
-import { SearchParameter, StringMap, handleError, inputSearch, registerEvents, showMessage, storage, useLocale, useResource } from 'uione';
+import { Locale, SearchComponent, SearchResult, addParametersIntoUrl, append, buildFromUrl, buildMessage, changePage, changePageSize, clone, formatResults, getModelName, handleAppend, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, navigate, reset, setValue, showPaging, valueOfCheckbox } from 'angularx';
+import { SearchParameter, StringMap, getStatusName, handleError, inputSearch, registerEvents, showMessage, storage, useLocale, useResource } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient, UserFilter } from './service/user';
 import { hideLoading, showLoading } from 'ui-loading';
+import { getNextPageToken } from '../core';
+import { ValueText } from 'onecore';
 
+interface StatusList {
+  value: string,
+  title?: string,
+}
+
+function initStatusList(values: ValueText[]): StatusList[] {
+  const sl: StatusList[] = [];
+  values.forEach((v) => {
+    sl.push({
+      value: v.value,
+      title: v.text ? v.text : getStatusName(v.value, useResource()),
+    })
+  })
+  return sl
+}
 @Component({
   selector: 'app-user-list',
   templateUrl: './users.html',
@@ -19,9 +36,8 @@ export class UsersComponent implements OnInit {
   searchParam: SearchParameter;
   resource: StringMap;
   form?: HTMLFormElement;
-  running?: boolean;
   addable: boolean = true;
-  statusList: any = [];
+  statusList: any[] = [];
   femaleIcon = "app/assets/images/female.png";
   maleIcon = "app/assets/images/female.png";
   viewable: boolean = true;
@@ -64,121 +80,50 @@ export class UsersComponent implements OnInit {
     this.hideFilter = true;
     this.form = initElement(this.viewContainerRef, registerEvents);
     const s = mergeFilter(buildFromUrl<UserFilter>(), this.filter, this.pageSizes, ['ctrlStatus', 'userType']);
-    this.init(s, storage.autoSearch);
-  }
-  init(s: UserFilter, auto: boolean) {
     Promise.all([
       this.masterDataService.getStatus()
     ]).then(values => {
       const [status] = values;
-      this.statusList = status;
-      this.load(s, auto);
+      this.statusList = initStatusList(status);
+      this.loadTime = new Date();
+      this.loadPage = this.pageIndex;
+      const obj2 = initFilter(s, this);
+      this.filter = obj2;
+      if (storage.autoSearch) {
+        setTimeout(() => {
+          this.doSearch(true);
+        }, 0);
+      }
     }).catch(handleError);
   }
-  load(s: UserFilter, autoSearch: boolean): void {
-    this.loadTime = new Date();
-    this.loadPage = this.pageIndex;
-    const obj2 = initFilter(s, this);
-    this.filter = obj2;
-    if (autoSearch) {
-      setTimeout(() => {
-        this.doSearch(true);
-      }, 0);
-    }
-  }
   doSearch(isFirstLoad?: boolean) {
-    const listForm = this.form;
-    if (listForm && this.searchParam.ui) {
-      this.searchParam.ui.removeFormError(listForm);
+    showLoading();
+    if (!this.ignoreUrlParam) {
+      addParametersIntoUrl(this.filter, isFirstLoad);
     }
-    const s: UserFilter = this.filter;
-    const com = this;
-    this.validateSearch(s, () => {
-      if (com.running) {
-        return;
-      }
-      com.running = true;
-      showLoading()
-      if (!this.ignoreUrlParam) {
-        addParametersIntoUrl(s, isFirstLoad);
-      }
-      com.callSearch(s);
-    });
-  }
-  callSearch(ft: UserFilter) {
-    const s = clone(ft);
-    let page = this.pageIndex;
-    if (!page || page < 1) {
-      page = 1;
-    }
-    let offset: number | undefined;
-    if (ft.limit) {
-      if (ft.firstLimit && ft.firstLimit > 0) {
-        offset = ft.limit * (page - 2) + ft.firstLimit;
-      } else {
-        offset = ft.limit * (page - 1);
-      }
-    }
-    const limit = (page <= 1 && ft.firstLimit && ft.firstLimit > 0 ? ft.firstLimit : ft.limit);
-    const next = (this.nextPageToken && this.nextPageToken.length > 0 ? this.nextPageToken : offset);
-    const fields = ft.fields;
-    delete ft['page'];
-    delete ft['fields'];
-    delete ft['limit'];
-    delete ft['firstLimit'];
+    const s = clone(this.filter);
+    const next = getNextPageToken(this.filter);
     this.userService
-      .search(ft, limit, next, fields)
+      .search(this.filter, this.filter.limit, next, this.filter.fields)
       .then((res) => {
         this.showResults(s, res);
-        this.running = false;
       })
       .catch(handleError)
       .finally(hideLoading)
   }
-  validateSearch(ft: UserFilter, callback: () => void): void {
-    let valid = true;
-    const listForm = this.form;
-    if (listForm) {
-      if (this.searchParam.ui && this.searchParam.ui.validateForm) {
-        valid = this.searchParam.ui.validateForm(listForm, this.locale);
-      }
-    }
-    if (valid === true) {
-      callback();
-    }
-  }
+
   showResults(s: UserFilter, sr: SearchResult<User>): void {
-    const com = this;
     const results = sr.list;
-    if (results != null && results.length > 0) {
-      formatResults(results, this.pageIndex, this.pageSize, this.initPageSize, this.sequenceNo, this.format, this.locale);
-    }
-    const appendMode = com.appendMode;
-    com.pageIndex = (s.page && s.page >= 1 ? s.page : 1);
+    this.pageIndex = (s.page && s.page >= 1 ? s.page : 1);
     if (sr.total) {
-      com.itemTotal = sr.total;
+      this.itemTotal = sr.total;
     }
-    if (appendMode) {
-      let limit = s.limit;
-      if ((!s.page || s.page <= 1) && s.firstLimit && s.firstLimit > 0) {
-        limit = s.firstLimit;
-      }
-      com.nextPageToken = sr.nextPageToken;
-      handleAppend(com, sr.list, limit, sr.nextPageToken);
-      if (this.append && (s.page && s.page > 1)) {
-        append(this.list, results);
-      } else {
-        this.list = results;
-      }
-    } else {
-      showPaging(com, sr.list, s.limit, sr.total);
-      this.list = results;
-      com.tmpPageIndex = s.page;
-      if (s.limit) {
-        showMessage(buildMessage(this.searchParam.resource, s.page, s.limit, sr.list, sr.total));
-      }
+    showPaging(this, sr.list, s.limit, sr.total);
+    this.list = results;
+    this.tmpPageIndex = s.page;
+    if (s.limit) {
+      showMessage(buildMessage(this.searchParam.resource, s.page, s.limit, sr.list, sr.total));
     }
-    this.running = false;
     hideLoading();
     if (this.triggerSearch) {
       this.triggerSearch = false;
@@ -186,19 +131,15 @@ export class UsersComponent implements OnInit {
     }
   }
   resetAndSearch() {
-    if (this.running) {
-      this.triggerSearch = true;
-      return;
-    }
     reset(this);
     this.tmpPageIndex = 1;
     this.doSearch();
   }
   edit(userId: string) {
-    navigate(this.router, 'users/edit', [userId]);
+    navigate(this.router, 'users', [userId]);
   }
   add() {
-    navigate(this.router, 'users/add');
+    navigate(this.router, 'users/new');
   }
   changeView(v: string, event?: any): void {
     this.view = v;
@@ -214,37 +155,15 @@ export class UsersComponent implements OnInit {
   includes(checkedList: Array<string> | string, v: string): boolean {
     return v && checkedList && Array.isArray(checkedList) ? checkedList.includes(v) : false;
   }
-  updateState(event: Event) {
-    const locale: Locale = useLocale();
-    const ctrl = event.currentTarget as HTMLInputElement;
-    let modelName: string | null = getModelName();
-    if (!modelName && ctrl.form) {
-      modelName = ctrl.form.getAttribute('model-name');
-    }
-    const type = ctrl.getAttribute('type');
-    const isPreventDefault = type && (['checkbox', 'radio'].indexOf(type.toLowerCase()) >= 0 ? false : true);
-    if (isPreventDefault) {
-      event.preventDefault();
-    }
-    if (this.searchParam.ui && ctrl.nodeName === 'SELECT' && ctrl.value && ctrl.classList.contains('invalid')) {
-      this.searchParam.ui.removeError(ctrl);
-    }
-    if (modelName) {
-      const ex = (this as any)[modelName];
-      const dataField = ctrl.getAttribute('data-field');
-      const field = (dataField ? dataField : ctrl.name);
-      if (type && type.toLowerCase() === 'checkbox') {
-        const v = valueOfCheckbox(ctrl);
-        setValue(ex, field, v);
+  onStatusChanged(event: any, value: string): void {
+    let checkedList = this.filter.status ? clone(this.filter.status) : [];
+    if (checkedList && Array.isArray(checkedList)) {
+      if (event.target.checked) {
+        checkedList.push(value)
+        this.filter.status = checkedList;
       } else {
-        let v = ctrl.value;
-        if (this.searchParam.ui) {
-          v = this.searchParam.ui.getValue(ctrl, locale) as string;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (ctrl.value != v) {
-          setValue(ex, field, v);
-        }
+        checkedList = checkedList.filter(i => i != value);
+        this.filter.status = checkedList;
       }
     }
   }

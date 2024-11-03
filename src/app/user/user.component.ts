@@ -131,7 +131,7 @@ export class UserComponent implements OnInit {
   }
   afterSaved(res: Result<User>): void {
     if (Array.isArray(res)) {
-      showFormError(this.refForm?.current, res)
+      showFormError(this.refForm, res)
     } else if (isSuccessful(res)) {
       alertSuccess(this.resource.msg_save_success, () => window.history.back())
     } else if (res === 0) {

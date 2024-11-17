@@ -6,7 +6,7 @@
         (click)="changeView('table')"></button>
       <button *ngIf="view === 'table'" type='button' id='btnListView' name='btnListView' class='btn-list-view'
         (click)="changeView('listview')"></button>
-      <button *ngIf="addable" type='button' id='btnNew' name='btnNew' class='btn-new' (click)="add()"></button>
+      <button *ngIf="canWrite" type='button' id='btnNew' name='btnNew' class='btn-new' (click)="add()"></button>
     </div>
   </header>
   <div>
@@ -20,11 +20,11 @@
             placeholder='{{resource.keyword}}' />
           <button type='button' [hidden]="!filter.q" class='btn-remove-text' (click)="clearQ()"></button>
           <button type='button' class='btn-filter' (click)="toggleFilter($event)"></button>
-          <button type='submit' class='btn-search' (click)='search($event)'></button>
+          <button type='submit' class='btn-search' (click)='searchOnClick($event)'></button>
         </label>
         <pagination class='col s12 m8' id='pageIndex' name='pageIndex' *ngIf='showPaging' [(ngModel)]='pageIndex'
-          (pageChanged)='onPageChanged($event)' (numPages)='pageIndex = $event' [directionLinks]='false'
-          [totalItems]='itemTotal' [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
+          (pageChanged)='onPageChanged($event)' [directionLinks]='false' [totalItems]='itemTotal'
+          [maxSize]='pageMaxSize' [itemsPerPage]='pageSize'></pagination>
       </section>
       <section class='row search-group inline' [hidden]="hideFilter">
         <label class='col s12 m4 l4'>
@@ -41,9 +41,9 @@
           {{resource.status}}
           <section class='checkbox-group'>
             <label *ngFor="let item of statusList">
-              <input type='checkbox' (id)='item.title' (name)='item.title' (value)='item.value'
+              <input type='checkbox' (id)="'status_'+item.value" name='status' (value)='item.value'
                 (change)='onStatusChanged($event, item.value)' [checked]="includes(filter.status, item.value)" />
-              {{item.title}}
+              {{getStatusName(item)}}
             </label>
           </section>
         </label>

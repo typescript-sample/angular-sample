@@ -1,155 +1,106 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Locale, SearchComponent, SearchResult, addParametersIntoUrl, append, buildFromUrl, buildMessage, changePage, changePageSize, clone, formatResults, getModelName, handleAppend, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, navigate, reset, setValue, showPaging, valueOfCheckbox } from 'angularx';
-import { SearchParameter, StringMap, getStatusName, handleError, inputSearch, registerEvents, showMessage, storage, useLocale, useResource } from 'uione';
+import { addParametersIntoUrl, buildFromUrl, buildMessage, buildSort, changePage, changePageSize, clone, getFields, getNumber, getOffset, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, Pagination, reset, resources, showPaging, Sortable } from 'angularx';
+import { Permission, StringMap, getStatusName, handleError, hasPermission, showMessage, useResource } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient, UserFilter } from './service/user';
 import { hideLoading, showLoading } from 'ui-loading';
-import { getNextPageToken } from '../core';
 import { ValueText } from 'onecore';
+import { registerEvents } from 'ui-plus';
 
-interface StatusList {
-  value: string,
-  title?: string,
-}
-
-function initStatusList(values: ValueText[]): StatusList[] {
-  const sl: StatusList[] = [];
-  values.forEach((v) => {
-    sl.push({
-      value: v.value,
-      title: v.text ? v.text : getStatusName(v.value, useResource()),
-    })
-  })
-  return sl
-}
 @Component({
   selector: 'app-user-list',
   templateUrl: './users.html',
   providers: [UserClient]
 })
-export class UsersComponent implements OnInit {
-  constructor(private viewContainerRef: ViewContainerRef, protected router: Router, private userService: UserClient, protected masterDataService: MasterDataClient) {
-    this.searchParam = inputSearch();
+export class UsersComponent implements OnInit, Sortable, Pagination {
+  constructor(private viewContainerRef: ViewContainerRef, private router: Router, private service: UserClient, private masterDataService: MasterDataClient) {
     this.resource = useResource();
+    this.canWrite = hasPermission(Permission.write)
   }
-  searchParam: SearchParameter;
   resource: StringMap;
   form?: HTMLFormElement;
-  addable: boolean = true;
-  statusList: any[] = [];
-  femaleIcon = "app/assets/images/female.png";
-  maleIcon = "app/assets/images/female.png";
-  viewable: boolean = true;
-  editable: boolean = true;
+  statusList: ValueText[] = [];
+  canWrite: boolean;
+  hideFilter = true;
 
-  hideFilter?: boolean;
-  ignoreUrlParam?: boolean;
   filter: UserFilter = {} as any;
-  list?: User[];
-  locale?: Locale;
-  loadTime?: Date;
-  loadPage = 1;
+  list: User[] = [];
+  fields?: string[];
+  view?: string;
 
   pageMaxSize = 7;
-  pageSizes: number[] = [10, 20, 40, 60, 100, 200, 400, 1000];
-
-  view?: string;
-  nextPageToken?: string;
-  initPageSize = 20;
-  pageSize = 20;
+  pageSizes: number[] = resources.pages;
+  pageSize = resources.limit;
   pageIndex = 1;
-  itemTotal: number = 0;
+  itemTotal = 0;
   pageTotal?: number;
   showPaging?: boolean;
-  append?: boolean;
-  appendMode?: boolean;
-  appendable?: boolean;
 
   // Sortable
   sortField?: string;
   sortType?: string;
   sortTarget?: HTMLElement;
 
-  format?: (obj: User, locale?: Locale) => User;
-  sequenceNo = 'sequenceNo';
-  triggerSearch?: boolean;
-  tmpPageIndex?: number;
+  femaleIcon = "app/assets/images/female.png";
+  maleIcon = "app/assets/images/female.png";
 
   ngOnInit() {
-    this.hideFilter = true;
     this.form = initElement(this.viewContainerRef, registerEvents);
-    const s = mergeFilter(buildFromUrl<UserFilter>(), this.filter, this.pageSizes, ['ctrlStatus', 'userType']);
-    Promise.all([
-      this.masterDataService.getStatus()
-    ]).then(values => {
-      const [status] = values;
-      this.statusList = initStatusList(status);
-      this.loadTime = new Date();
-      this.loadPage = this.pageIndex;
-      const obj2 = initFilter(s, this);
-      this.filter = obj2;
-      if (storage.autoSearch) {
-        setTimeout(() => {
-          this.doSearch(true);
-        }, 0);
-      }
+    const filter = mergeFilter(buildFromUrl<UserFilter>(), this.filter, this.pageSizes, ['status', 'userType']);
+    this.masterDataService.getStatus().then(status => {
+      this.statusList = status;
+      initFilter(filter, this);
+      this.filter = filter;
+      this.search(true);
     }).catch(handleError);
   }
-  doSearch(isFirstLoad?: boolean) {
+  sort(event: Event): void {
+    handleSortEvent(event, this);
+    this.search();
+  }
+  onPageSizeChanged(event: Event): void {
+    changePageSize(this, getNumber(event));
+    this.search();
+  }
+  onPageChanged(event?: any): void {
+    changePage(this, event.page, event.itemsPerPage);
+    this.search();
+  }
+  searchOnClick(event?: Event): void {
+    reset(this);
+    this.search();
+  }
+  search(isFirstLoad?: boolean) {
     showLoading();
-    if (!this.ignoreUrlParam) {
-      addParametersIntoUrl(this.filter, isFirstLoad);
-    }
-    const s = clone(this.filter);
-    const next = getNextPageToken(this.filter);
-    this.userService
-      .search(this.filter, this.filter.limit, next, this.filter.fields)
+    addParametersIntoUrl(this.filter, isFirstLoad, this.pageIndex);
+    this.fields = getFields(this.form, this.fields);
+    const offset = getOffset(this.pageSize, this.pageIndex);
+    buildSort(this.filter, this)
+    this.service
+      .search(this.filter, this.pageSize, offset, this.fields)
       .then((res) => {
-        this.showResults(s, res);
+        this.list = res.list;
+        showPaging(this, res.list, this.pageSize, res.total);
+        showMessage(buildMessage(this.resource, this.pageIndex, this.pageSize, res.list, res.total));
       })
       .catch(handleError)
       .finally(hideLoading)
   }
 
-  showResults(s: UserFilter, sr: SearchResult<User>): void {
-    const results = sr.list;
-    this.pageIndex = (s.page && s.page >= 1 ? s.page : 1);
-    if (sr.total) {
-      this.itemTotal = sr.total;
-    }
-    showPaging(this, sr.list, s.limit, sr.total);
-    this.list = results;
-    this.tmpPageIndex = s.page;
-    if (s.limit) {
-      showMessage(buildMessage(this.searchParam.resource, s.page, s.limit, sr.list, sr.total));
-    }
-    hideLoading();
-    if (this.triggerSearch) {
-      this.triggerSearch = false;
-      this.resetAndSearch();
-    }
-  }
-  resetAndSearch() {
-    reset(this);
-    this.tmpPageIndex = 1;
-    this.doSearch();
-  }
   edit(userId: string) {
-    navigate(this.router, 'users', [userId]);
+    this.router.navigate(['users', userId]);
   }
   add() {
-    navigate(this.router, 'users/new');
+    this.router.navigate(['users/new']);
   }
-  changeView(v: string, event?: any): void {
-    this.view = v;
+  changeView(view: string): void {
+    this.view = view;
   }
-  toggleFilter(event: any): void {
-    const x = !this.hideFilter;
-    handleToggle(event.target as HTMLInputElement, !x)
-    this.hideFilter = x;
+  toggleFilter(event: Event): void {
+    this.hideFilter = handleToggle(event.target as HTMLInputElement, this.hideFilter)
   }
-  clearQ = () => {
+  clearQ() {
     this.filter.q = '';
   }
   includes(checkedList: Array<string> | string, v: string): boolean {
@@ -167,43 +118,7 @@ export class UsersComponent implements OnInit {
       }
     }
   }
-  onPageSizeChanged(event: Event): void {
-    const ctrl = event.currentTarget as HTMLInputElement;
-    changePageSize(this, Number(ctrl.value));
-    this.tmpPageIndex = 1;
-    this.doSearch();
-  }
-  onPageChanged(event?: any): void {
-    if (this.loadTime) {
-      const now = new Date();
-      const d = Math.abs(this.loadTime.getTime() - now.getTime());
-      if (d < 610) {
-        if (event) {
-          if (event.page && event.itemsPerPage && event.page !== this.loadPage) {
-            changePage(this, this.loadPage, event.itemsPerPage);
-          }
-        }
-        return;
-      }
-    }
-    changePage(this, event.page, event.itemsPerPage);
-    this.doSearch();
-  }
-  sort(event: Event): void {
-    handleSortEvent(event, this);
-    if (!this.appendMode) {
-      this.doSearch();
-    } else {
-      this.resetAndSearch();
-    }
-  }
-  search(event: Event): void {
-    if (event && !this.form) {
-      const f = (event.currentTarget as HTMLInputElement).form;
-      if (f) {
-        this.form = f;
-      }
-    }
-    this.resetAndSearch();
+  getStatusName(value: ValueText): string | undefined {
+    return value.text ? value.text : getStatusName(value.value, useResource())
   }
 }

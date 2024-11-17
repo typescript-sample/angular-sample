@@ -1,14 +1,14 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StringMap, clone, createModel, initElement, isSuccessful, makeDiff } from 'angularx';
-import { formatter, registerEvents, showFormError, validateForm } from 'ui-plus';
-import { Status, confirm, emailOnBlur, handleError, numberOnFocus, phoneOnBlur, requiredOnBlur, useLocale, useResource } from 'uione';
+import { StringMap, clone, createModel, hasDiff, initElement, isEmptyObject, isSuccessful, makeDiff, setReadOnly } from 'angularx';
+import { emailOnBlur, formatter, numberOnFocus, phoneOnBlur, registerEvents, requiredOnBlur, showFormError, validateForm } from 'ui-plus';
+import { Status,handleError, hasPermission, useLocale, useResource, write } from 'uione';
 import { Gender } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient } from './service/user';
 import { Item, Result } from 'onecore';
 import { hideLoading, showLoading } from 'ui-loading';
-import { alertError, alertSuccess, alertWarning } from 'ui-alert';
+import { alertError, alertSuccess, alertWarning, confirm } from 'ui-alert';
 
 function createUser(): User {
   const user = createModel<User>();
@@ -22,23 +22,26 @@ function createUser(): User {
   providers: [UserClient]
 })
 export class UserComponent implements OnInit {
-  constructor(private viewContainerRef: ViewContainerRef, private route: ActivatedRoute, private userService: UserClient, protected masterDataService: MasterDataClient) {
-    this.user = createUser();
+  constructor(private viewContainerRef: ViewContainerRef, private route: ActivatedRoute, private service: UserClient, protected masterDataService: MasterDataClient) {
     this.resource = useResource();
+    this.user = createUser();
+    this.originUser = createUser();
+    this.isReadOnly = !hasPermission(write, 1)
   }
-  refForm?: HTMLFormElement;
+  resource: StringMap;
+  form?: HTMLFormElement;
   isReadOnly?: boolean;
   newMode?: boolean;
-
-  resource: StringMap;
   id?: string;
-  originUser: User = {} as any;
+
+  originUser: User;
   user: User;
+
   titles: Item[] = [];
   positions: Item[] = [];
 
   ngOnInit() {
-    this.refForm = initElement(this.viewContainerRef, registerEvents);
+    this.form = initElement(this.viewContainerRef, registerEvents);
     this.id = this.route.snapshot.params.id;
     this.newMode = !this.id;
     Promise.all([
@@ -53,14 +56,17 @@ export class UserComponent implements OnInit {
         this.originUser = clone(this.user);
       } else {
         showLoading();
-        this.userService
+        this.service
           .load(this.id)
           .then((user) => {
-            if (!user) {
-              alertError(this.resource.error_404, () => window.history.back())
-            } else {
+            if (user) {
               this.originUser = clone(user);
               this.user = user;
+              if (this.isReadOnly) {
+                setReadOnly(this.form)
+              }
+            } else {
+              alertError(this.resource.error_404, () => window.history.back())
             }
           })
           .catch(handleError)
@@ -68,23 +74,20 @@ export class UserComponent implements OnInit {
       }
     }).catch(handleError);
   }
-  requiredOnBlur(event: any) {
+  requiredOnBlur(event: Event) {
     requiredOnBlur(event);
   }
-  numberOnFocus(event: any) {
+  numberOnFocus(event: Event) {
     numberOnFocus(event, useLocale());
   }
-  emailOnBlur(event: any) {
+  emailOnBlur(event: Event) {
     emailOnBlur(event);
   }
-  phoneOnBlur(event: any) {
+  phoneOnBlur(event: Event) {
     phoneOnBlur(event);
   }
   formatPhone(phone: string) {
     this.user.phone = formatter.formatPhone(phone);
-  }
-  getModelName(): string {
-    return 'user';
   }
   loadGender(user?: User) {
     user = user === undefined ? this.user : user;
@@ -94,32 +97,35 @@ export class UserComponent implements OnInit {
       this.user = { ...user, gender: Gender.Female };
     }
   }
-  back(event: Event) {
-    window.history.back();
+  back() {
+    if (!hasDiff(this.originUser, this.user)) {
+      window.history.back()
+    } else {
+      confirm(this.resource.msg_confirm_back, () => window.history.back())
+    }
   }
-  validate(user: User): boolean {
-    return validateForm(this.refForm, useLocale())
+  validate(): boolean {
+    return validateForm(this.form, useLocale())
   }
   save(event: Event): void {
     event.preventDefault()
-    const valid = this.validate(this.user)
+    const valid = this.validate()
     if (valid) {
       confirm(this.resource.msg_confirm_save, () => {
         if (this.newMode) {
           showLoading();
-          this.userService
+          this.service
             .create(this.user)
             .then((res) => this.afterSaved(res))
             .catch(handleError)
             .finally(hideLoading)
         } else {
           const diff = makeDiff(this.originUser, this.user, ["userId"])
-          const l = Object.keys(diff as any).length
-          if (l === 0) {
+          if (isEmptyObject(diff)) {
             alertWarning(this.resource.msg_no_change)
           } else {
             showLoading()
-            this.userService
+            this.service
               .update(this.user)
               .then((res) => this.afterSaved(res))
               .catch(handleError)
@@ -131,7 +137,7 @@ export class UserComponent implements OnInit {
   }
   afterSaved(res: Result<User>): void {
     if (Array.isArray(res)) {
-      showFormError(this.refForm, res)
+      showFormError(this.form, res)
     } else if (isSuccessful(res)) {
       alertSuccess(this.resource.msg_save_success, () => window.history.back())
     } else if (res === 0) {

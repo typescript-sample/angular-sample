@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { addParametersIntoUrl, buildFromUrl, buildMessage, buildSort, changePage, changePageSize, clone, getFields, getNumber, getOffset, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, Pagination, reset, resources, showPaging, Sortable } from 'angularx';
+import { addParametersIntoUrl, buildFromUrl, buildMessage, buildSort, buildSortFilter, changePage, changePageSize, clone, getFields, getNumber, getOffset, handleSortEvent, handleToggle, initElement, initFilter, mergeFilter, Pagination, reset, resources, setSort, showPaging, Sortable } from 'angularx';
 import { Permission, StringMap, getStatusName, handleError, hasPermission, showMessage, useResource } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { User, UserClient, UserFilter } from './service/user';
@@ -47,10 +47,10 @@ export class UsersComponent implements OnInit, Sortable, Pagination {
 
   ngOnInit() {
     this.form = initElement(this.viewContainerRef, registerEvents);
-    const filter = mergeFilter(buildFromUrl<UserFilter>(), this.filter, this.pageSizes, ['status', 'userType']);
+    const filter: UserFilter = mergeFilter(buildFromUrl<UserFilter>(), this.filter, this.pageSizes, ['status', 'userType']);
     this.masterDataService.getStatus().then(status => {
       this.statusList = status;
-      initFilter(filter, this);
+      setSort(this, filter.sort);
       this.filter = filter;
       this.search(true);
     }).catch(handleError);
@@ -72,11 +72,11 @@ export class UsersComponent implements OnInit, Sortable, Pagination {
     this.search();
   }
   search(isFirstLoad?: boolean) {
-    showLoading();
-    addParametersIntoUrl(this.filter, isFirstLoad, this.pageIndex);
-    this.fields = getFields(this.form, this.fields);
     const offset = getOffset(this.pageSize, this.pageIndex);
-    buildSort(this.filter, this)
+    showLoading();
+    const filter = buildSortFilter(this.filter, this)
+    addParametersIntoUrl(filter, isFirstLoad, this.pageIndex);
+    this.fields = getFields(this.form, this.fields);
     this.service
       .search(this.filter, this.pageSize, offset, this.fields)
       .then((res) => {

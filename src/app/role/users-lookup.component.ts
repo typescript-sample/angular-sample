@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { buildMessage, buildSort, changePage, changePageSize, getFields, getNumber, getOffset, handleSortEvent, initElement, initFilter, Pagination, reset, resources, showPaging, Sortable } from 'angularx';
+import { buildMessage, buildSort, buildSortFilter, changePage, changePageSize, getFields, getNumber, getOffset, handleSortEvent, initElement, initFilter, Pagination, reset, resources, showPaging, Sortable } from 'angularx';
 import { hideLoading, showLoading } from 'ui-loading';
 import { handleError, registerEvents, showMessage, StringMap, useResource } from 'uione';
 import { User, UserClient, UserFilter } from './service/user';
@@ -64,11 +64,11 @@ export class UsersLookupComponent implements OnInit, Sortable, Pagination {
   }
   search() {
     showLoading();
-    this.fields = getFields(this.form, this.fields);
     const offset = getOffset(this.pageSize, this.pageIndex);
-    buildSort(this.filter, this)
+    const filter = buildSortFilter(this.filter, this)
+    this.fields = getFields(this.form, this.fields);
     this.service
-      .search(this.filter, this.pageSize, offset, this.fields)
+      .search(filter, this.pageSize, offset, this.fields)
       .then((res) => {
         this.list = res.list;
         showPaging(this, res.list, this.pageSize, res.total);

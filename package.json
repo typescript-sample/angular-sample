@@ -19,7 +19,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "angularx": "^0.1.9",
+    "angularx": "^0.2.0",
     "authen-client": "^0.1.0",
     "axios": "^1.7.7",
     "axios-core": "^1.0.0",
@@ -43,7 +43,7 @@
     "ui-toast": "^0.0.5",
     "uione": "^0.2.6",
     "validation-core": "^1.0.1",
-    "web-clients": "^0.2.4",
+    "web-clients": "^0.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

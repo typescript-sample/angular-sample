@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { buildFromUrl, initElement, navigate, mergeFilter, initFilter, addParametersIntoUrl, clone, showPaging, buildMessage, reset, changePageSize, changePage, handleSortEvent, handleToggle, resources, Sortable, Pagination, getFields, getOffset, buildSort, getNumber } from 'angularx';
+import { buildFromUrl, initElement, navigate, mergeFilter, initFilter, addParametersIntoUrl, clone, showPaging, buildMessage, reset, changePageSize, changePage, handleSortEvent, handleToggle, resources, Sortable, Pagination, getFields, getOffset, buildSort, getNumber, buildSortFilter } from 'angularx';
 import { StringMap, getStatusName, handleError, hasPermission, registerEvents, showMessage, useResource, write } from 'uione';
 import { MasterDataClient } from './service/master-data';
 import { Role, RoleClient, RoleFilter } from './service/role';
@@ -68,12 +68,12 @@ export class RolesComponent implements OnInit, Sortable, Pagination {
   }
   search(isFirstLoad?: boolean) {
     showLoading();
+    const offset = getOffset(this.pageSize, this.pageIndex);
+    const filter = buildSortFilter(this.filter, this)
     addParametersIntoUrl(this.filter, isFirstLoad, this.pageIndex);
     this.fields = getFields(this.form, this.fields);
-    const offset = getOffset(this.pageSize, this.pageIndex);
-    buildSort(this.filter, this)
     this.service
-      .search(this.filter, this.pageSize, offset, this.fields)
+      .search(filter, this.pageSize, offset, this.fields)
       .then((res) => {
         this.list = res.list;
         showPaging(this, res.list, this.pageSize, res.total);
